@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // 컴파일된 JavaScript의 ECMAScript 버전 설정 (최신 버전)
+    "useDefineForClassFields": true, // 클래스 필드에 대해 'define'을 사용하여 정의함
+    "lib": ["ES2020", "DOM", "DOM.Iterable"], // 포함할 라이브러리 (ES2020 및 DOM 관련)
+    "module": "ESNext", // 모듈 시스템 설정 (최신 버전)
+    "skipLibCheck": true, // 라이브러리 파일의 타입 체크를 건너뜀
+
+    /* Bundler mode */
+    "moduleResolution": "Node", // 모듈 해석 방법 설정 (Node.js 스타일)
+    "allowImportingTsExtensions": true, // .ts 확장자를 가진 모듈을 import 할 수 있음
+    "allowSyntheticDefaultImports": true, // 기본 수출이 없는 모듈에 대해 기본 import 허용
+    "resolveJsonModule": true, // JSON 모듈을 import 할 수 있음
+    "isolatedModules": true, // 모듈 단위로 독립적인 변환을 적용
+    "moduleDetection": "force", // 모듈 탐지 방법을 강제로 적용
+    "noEmit": true, // 출력 파일을 생성하지 않음 (tsc만 타입 체크 및 검사 수행)
+    "jsx": "react-jsx", // JSX 코드에 대한 변환 설정 (React 17+의 새로운 JSX 변환 사용)
+
+    /* Linting */
+    "strict": true, // 모든 엄격한 타입-체크 옵션 활성화
+    "noUnusedLocals": true, // 사용하지 않는 지역 변수를 오류로 처리
+    "noUnusedParameters": true, // 사용하지 않는 함수 매개변수를 오류로 처리
+    "noFallthroughCasesInSwitch": true, // switch 문에서 fallthrough 케이스 오류 처리
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
+      "@store/*": ["src/store/*"],
+      "@typings/*": ["src/typings/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+    "types": ["vite-plugin-svgr/client"]
+  },
+  "include": ["src", "svg.d.ts"], // 컴파일할 파일 포함 (src 디렉토리)
+  "exclude": ["node_modules", "vite.config"] // 컴파일에서 제외할 파일
+}
