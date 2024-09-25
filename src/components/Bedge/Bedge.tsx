@@ -1,6 +1,6 @@
 import './Bedge.css'
 
-interface Bedge {
+interface BedgeProps {
   type: 'mbti' | 'agree' | 'disagree' | 'best' | 'type'
   body: string
 }
@@ -9,12 +9,10 @@ interface Bedge {
  *
  * @param type : 벳지의 타입을 넘겨주세요
  * @param body : 벳지 안의 내용
- * @param onClick : 이벤트
- *
  * @returns
  */
 
-const Bedge = ({ type, body }: Bedge) => {
+const Bedge = ({ type, body }: BedgeProps) => {
   return (
     <button
       className='bedge'
