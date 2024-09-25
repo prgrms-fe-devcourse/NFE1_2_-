@@ -1,0 +1,35 @@
+.bedge {
+  font-family: 'NotoSansKR';
+  width: 50px;
+  height: 24px;
+  margin-right: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 3px;
+  border: none;
+}
+
+#mbti {
+  background: #ede7f6;
+  color: #a157c2;
+}
+
+#agree {
+  background: #d6e5fb;
+  color: #5e7ff7;
+}
+
+#disagree {
+  background: #ffebea;
+  color: #fd3747;
+}
+
+#best {
+  background: #fd3747;
+  color: #ffffff;
+}
+
+#type {
+  background: #dbeddb;
+  color: #1c3829;
+}
