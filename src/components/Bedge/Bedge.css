@@ -1,12 +1,10 @@
 .bedge {
-  font-family: 'NotoSansKR';
   width: 50px;
   height: 24px;
   margin-right: 5px;
   font-size: 14px;
   font-weight: bold;
   border-radius: 3px;
-  border: none;
 }
 
 #mbti {
