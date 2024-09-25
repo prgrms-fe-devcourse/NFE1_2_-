@@ -1,0 +1,11 @@
+.post-page-button {
+  font-size : 10px;
+  font-family : 'NotoSansKR';
+  font-weight: normal;
+  width : 55px;
+  height : 17px;
+  border-radius : 5px;
+  border : none;
+  background-color : #565656;
+  color : #FFFFFF;
+}
