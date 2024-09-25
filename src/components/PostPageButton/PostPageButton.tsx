@@ -7,7 +7,7 @@ interface PostPageButtonProps {
 
 const PostPageButton = ({ title, onClick }: PostPageButtonProps) => {
   return (
-    <button className='add-button' onClick={onClick}>
+    <button className='post-page-button' onClick={onClick}>
       {title}
       </button>
   );
