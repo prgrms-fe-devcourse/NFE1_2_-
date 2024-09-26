@@ -12,7 +12,9 @@ const TopNavigator = ({ pageText }: { pageText?: string }) => {
   return (
     <div className='top-navigator'>
       <button className='back-button' onClick={handleBackPage}>
-        <BackButton />
+        <BackButton 
+        width={30}
+        height={30}/>
       </button>
       {pageText && <p>{pageText}</p>}
     </div>
