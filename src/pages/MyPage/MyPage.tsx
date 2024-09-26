@@ -3,16 +3,31 @@ import Container from '@components/Conatiner/Container'
 import Navigator from '@/components/Navigatior/Navigator'
 import BottomModal from '@/components/BottomModal/BottomModal'
 import './MyPage.css'
+
 const MyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentModalType, setCurrentModalType] = useState(null)
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [deletePassword, setDeletePassword] = useState('')
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (modalType) => {
+    setCurrentModalType(modalType)
     setIsModalOpen(true)
   }
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
+    setOldPassword('')
+    setNewPassword('')
+    setConfirmPassword('')
+    setDeletePassword('')
   }
+
+  const isPasswordInputFilled = oldPassword || newPassword || confirmPassword
+  const isDeleteInputFilled = deletePassword
+
   return (
     <Container>
       <section>
@@ -39,14 +54,14 @@ const MyPage = () => {
           </p>
           <button
             className='item'
-            onClick={handleOpenModal}
+            onClick={() => handleOpenModal('passwordChange')}
           >
             비밀번호 변경
           </button>
-          {isModalOpen && (
+          {isModalOpen && currentModalType === 'passwordChange' && (
             <BottomModal
               onClick={handleCloseModal}
-              buttonText='닫기'
+              buttonText={isPasswordInputFilled ? '확인' : '닫기'}
             >
               <div className='modal-section'>
                 <p className='instruction'>새로운 비밀번호를 입력해주세요!</p>
@@ -56,7 +71,10 @@ const MyPage = () => {
                     type='password'
                     placeholder=''
                     className='input'
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
                   />
+                  <p className='check'>비밀번호를 확인해주세요</p>
                 </div>
                 <div>
                   <p className='label'>새로운 비밀번호</p>
@@ -64,6 +82,8 @@ const MyPage = () => {
                     type='password'
                     placeholder='8~16글자의 영문, 숫자만 입력해주세요'
                     className='input'
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                   />
                 </div>
                 <div>
@@ -72,7 +92,10 @@ const MyPage = () => {
                     type='password'
                     placeholder='8~16글자의 영문, 숫자만 입력해주세요'
                     className='input'
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
+                  <p className='check'>비밀번호를 확인해주세요</p>
                 </div>
               </div>
             </BottomModal>
@@ -80,7 +103,33 @@ const MyPage = () => {
         </div>
         <div className='section'>
           <p className='title'>기타</p>
-          <p className='item'>회원탈퇴</p>
+          <button
+            className='item'
+            onClick={() => handleOpenModal('accountDelete')}
+          >
+            회원탈퇴
+          </button>
+          {isModalOpen && currentModalType === 'accountDelete' && (
+            <BottomModal
+              onClick={handleCloseModal}
+              buttonText={isDeleteInputFilled ? '확인' : '닫기'}
+            >
+              <div className='modal-section'>
+                <p className='instruction'>탈퇴 하시겠습니까?</p>
+                <div className='inner-section'>
+                  <p className='label'>비밀번호 확인</p>
+                  <input
+                    type='password'
+                    placeholder=''
+                    className='input'
+                    value={deletePassword}
+                    onChange={(e) => setDeletePassword(e.target.value)}
+                  />
+                  <p className='check'>비밀번호를 확인해주세요</p>
+                </div>
+              </div>
+            </BottomModal>
+          )}
           <p className='item'>로그아웃</p>
         </div>
       </section>
