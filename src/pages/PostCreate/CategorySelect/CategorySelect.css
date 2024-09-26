@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 12px;
   width: 100%;
+  padding: 12px;
 
   .category-container {
     display: flex;
@@ -16,24 +16,23 @@
       font-size: 14px;
       font-weight: normal;
     }
-  
+
     .category-button {
       display: flex;
       align-items: center;
-      background : none;
+      background: none;
       cursor: pointer;
     }
   }
-
 }
 
 .category-list {
-    font-size: 14px;
-    font-weight: normal; 
-    width: 80%;
+  width: 80%;
+  font-size: 14px;
+  font-weight: normal;
 
-    li {
-      width: 6rem;
-      text-align: center;
-    }
+  li {
+    width: 6rem;
+    text-align: center;
+  }
 }

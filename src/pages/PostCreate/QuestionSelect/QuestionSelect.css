@@ -3,10 +3,11 @@
   flex-direction: column;
   align-items: center;
   height: 200px;
+
   .question-select-button {
-    margin: 12px;
     width: 80%;
     height: 50px;
+    margin: 12px;
     background-color: #f2f2f2;
     border-radius: 5px;
     color: #7d7d7d;
@@ -17,32 +18,31 @@
     flex-direction: column;
     width: 80%;
     height: 100%;
-  
+
     .question-selected-title {
+      margin: 1rem 0;
       font-size: 16px;
       font-weight: 500;
       color: #393939;
-      margin: 1rem 0;
     }
-  
+
     .question-selected-name {
       display: flex;
       align-items: center;
-      padding: 1rem;
-      font-size: 14px;
-      color: #393939;
       width: 100%;
       height: 50px;
-      border: 1px solid #FD3747;
+      padding: 1rem;
+      border: 1px solid #fd3747;
       border-radius: 5px;
+      font-size: 14px;
+      color: #393939;
     }
-  
+
     .question-reselect {
+      margin: 1.5rem 0;
       font-size: 14px;
       color: #7d7d7d;
       background: none;
-      margin: 1.5rem 0;
     }
   }
 }
-
