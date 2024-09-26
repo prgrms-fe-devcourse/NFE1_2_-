@@ -16,6 +16,7 @@ section {
 
 button {
   border: none;
+  cursor: pointer;
 }
 
 /* NotoSansKR Medium */
