@@ -1,53 +1,30 @@
 import './postComponent.css'
 import ViewsIcon from '@/assets/icons/views.svg?react'
-interface PostDetail {
-  type: '이별' | '짝사랑' | '썸' | '데이트' | '기타'
-  title: string
-  body: string
-  checkCount: number
-}
+import { Post } from '@/typings/types'
 
-interface FullName {
-  mbti: string
-  gender: string
-  ageGroup: string
-}
-
-interface User {
-  fullName: FullName
-}
-
-interface PostCardProps {
-  title: PostDetail
-  author: User
-  image?: string
-  createdAt: string
-}
-
-const PostCard = ({ title, author, image, createdAt }: PostCardProps) => {
+const PostCard = ({ post }: { post: Post }) => {
   return (
     <div className='post-card'>
-      <div className='title'>{title.title}</div>
+      <div className='title'>{post.title.title}</div>
       <div className='category'>
         <div>
-          {title.type} {author.fullName.mbti} {author.fullName.gender} /
-          {author.fullName.ageGroup}
+          {post.title.type} {post.author.fullName.mbti}{' '}
+          {post.author.fullName.gender}/{post.author.fullName.ageGroup}
         </div>
-        {new Date(createdAt).toLocaleDateString()}
+        {new Date(post.createdAt).toLocaleDateString()}
         <ViewsIcon
           width={20}
           height={20}
         />
-        {title.checkCount}
+        {post.title.checkCount}
       </div>
-
-      {image && (
+      {post.image && (
         <img
-          src={image}
-          alt={title.title}
+          src={post.image}
+          alt={post.title.title}
         />
       )}
-      <p className='body'>{title.body}</p>
+      <p className='body'>{post.title.body}</p>
     </div>
   )
 }
