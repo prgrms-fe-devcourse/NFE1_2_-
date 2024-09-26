@@ -1,26 +1,23 @@
-import CategorySelect from './CategorySelect'
-import PostContent from './PostContent'
-import PostCreateButton from './PostCreateButton'
-import QuestionSelect from './QuestionSelect'
+import CategorySelect from './CategorySelect/CategorySelect'
+import PostContent from './PostContent/PostContent'
+import PostCreateButton from './PostCreateButton/PostCreateButton'
+import QuestionSelect from './QuestionSelect/QuestionSelect'
 
 import './PostCreate.css'
-import PostPageButton from '@/components/PostPageButton/PostPageButton'
+import AddImage from './AddImage/AddImage'
+import Container from '@/components/Conatiner/Container'
 
 const PostCreate = () => {
-  const handleAddPhoto = () => {}
   return (
-    <div className='post-create'>
-      <CategorySelect />
-      <PostContent />
-      <div className='add-image'>
-        <div className='add-image-container'>
-          <p className='add-image-name'>ddd.jpg</p>
-          <PostPageButton onClick={handleAddPhoto} title='사진추가'/>
-        </div>
+    <Container>
+      <div className='post-create'>
+        <CategorySelect />
+        <PostContent />
+        <AddImage />
+        <QuestionSelect />
+        <PostCreateButton />
       </div>
-      <QuestionSelect />
-      <PostCreateButton />
-    </div>
+    </Container>
   )
 }
 

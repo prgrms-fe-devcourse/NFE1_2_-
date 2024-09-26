@@ -1,0 +1,17 @@
+.add-image {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+
+  .add-image-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 80%;
+
+    .add-image-name {
+      font-size: 12px;
+      color: #393939;
+      margin: 0 1rem;
+    }
+  }
+}
