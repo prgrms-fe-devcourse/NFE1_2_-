@@ -1,7 +1,13 @@
+import CategorySelect from "./CategorySelect"
+import PostContent from "./PostContent"
+
+import './PostCreate.css'
+
 const PostCreate = () => {
   return (
-    <div>
-      
+    <div className='post-create'>
+      <CategorySelect />
+      <PostContent />
     </div>
   )
 }

@@ -1,0 +1,40 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 80px 0 0 0;
+  padding: 12px;
+  width: 100%;
+
+  .category-container {
+    display: flex;
+    align-items: center;
+    width: 80%;
+
+    .category-title {
+      width: 6rem;
+      font-size: 14px;
+      font-weight: normal;
+    }
+  
+    .category-button {
+      display: flex;
+      align-items: center;
+      background : none;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.category-list {
+    font-size: 14px;
+    font-weight: normal; 
+    width: 80%;
+
+    li {
+      width: 6rem;
+      text-align: center;
+    }
+}
