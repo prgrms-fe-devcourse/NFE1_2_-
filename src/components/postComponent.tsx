@@ -1,5 +1,5 @@
 import './postComponent.css'
-import ViewsIcon from '@/assets/icons/views.svg'
+import ViewsIcon from '@/assets/icons/views.svg?react'
 interface PostDetail {
   type: '이별' | '짝사랑' | '썸' | '데이트' | '기타'
   title: string
@@ -35,8 +35,8 @@ const PostCard = ({ title, author, image, createdAt }: PostCardProps) => {
         </div>
         {new Date(createdAt).toLocaleDateString()}
         <ViewsIcon
-          width='20px'
-          height='20px'
+          width={20}
+          height={20}
         />
         {title.checkCount}
       </div>
