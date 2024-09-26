@@ -1,0 +1,37 @@
+.poll-container {
+  display: flex;
+  padding-block: 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  background: #282828;
+  color: white;
+  gap: 1.5rem;
+}
+.poll-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.poll-option-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-inline: 5rem;
+}
+
+.poll-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.poll-button {
+  margin-top: 0.7rem;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.poll-subtitle {
+  color: #7d7d7d;
+  font-size: 0.8rem;
+}

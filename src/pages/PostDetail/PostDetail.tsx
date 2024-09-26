@@ -1,11 +1,9 @@
 import Container from '@components/Conatiner/Container'
-
+import PostPoll from './PostPoll/PostPoll'
 const PostDetail = () => {
   return (
     <Container>
-      <section>
-        <p>Post Page</p>
-      </section>
+      <PostPoll />
     </Container>
   )
 }
