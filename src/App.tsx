@@ -10,7 +10,7 @@ const App = () => {
         element={<PostDetail />}
       />
       <Route
-        path='/posts/create'
+        path='/create-post'
         element={<PostCreate />}
       />
     </Routes>
