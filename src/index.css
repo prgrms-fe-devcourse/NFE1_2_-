@@ -6,6 +6,16 @@
   list-style: none;
   text-decoration: none;
   color: inherit;
+  font-family: 'NotoSansKR';
+  font-weight: normal;
+}
+
+section {
+  padding-inline: 1.5rem;
+}
+
+button {
+  border: none;
 }
 
 /* NotoSansKR Medium */

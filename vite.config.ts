@@ -5,19 +5,7 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    svgr({
-      // svgr options: https://react-svgr.com/docs/options/
-      svgrOptions: {
-        exportType: 'default',
-        ref: true,
-        svgo: false,
-        titleProp: true,
-      },
-      include: '**/*.svg',
-    }),
-  ],
+  plugins: [react(), svgr()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
