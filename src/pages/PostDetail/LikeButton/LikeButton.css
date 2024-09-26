@@ -1,6 +1,7 @@
 .like-btn-container {
   display: flex;
   width: 4.8rem;
+  margin-inline: auto;
   border-radius: 60px;
   align-items: center;
   background: #eee;

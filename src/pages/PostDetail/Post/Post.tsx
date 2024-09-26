@@ -1,15 +1,17 @@
 import Container from '@components/Conatiner/Container'
 import PostPoll from '@pages/PostDetail/PollSection/PostPoll'
 import CommentSection from '@pages/PostDetail/CommentSection/CommentSection'
-import LikeButton from '../LikeButton/LikeButton'
+
 import MessageBtn from '../MessageBtn/MessageBtn'
+import PostSection from '../PostSection/PostSection'
+
 const PostDetail = () => {
   return (
     <Container>
-      <MessageBtn />
-      <LikeButton />
+      <PostSection />
       <PostPoll />
       <CommentSection />
+      <MessageBtn />
     </Container>
   )
 }
