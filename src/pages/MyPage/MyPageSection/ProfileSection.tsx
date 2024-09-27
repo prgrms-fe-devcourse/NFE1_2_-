@@ -1,8 +1,9 @@
+import Section from '../Component/Section'
 import '../MyPage.css'
+
 const ProfileSection = () => {
   return (
-    <div className='card'>
-      <p className='title'>프로필</p>
+    <Section title='프로필'>
       <p className='item'>
         MBTI<span className='value'>istp</span>
       </p>
@@ -13,7 +14,7 @@ const ProfileSection = () => {
         나이<span className='value'>20대</span>
       </p>
       <div className='edit'>프로필 수정</div>
-    </div>
+    </Section>
   )
 }
 

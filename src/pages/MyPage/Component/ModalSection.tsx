@@ -9,7 +9,7 @@ interface ModalSectionProps {
   inputFields: {
     label: string
     value: string
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     type?: string
   }[]
 }
@@ -38,7 +38,7 @@ const ModalSection = ({
                     type={field.type || 'text'}
                     className='input'
                     value={field.value}
-                    onChange={field.onChange}
+                    onChange={field.handleChange}
                   />
                 </div>
               ))}
