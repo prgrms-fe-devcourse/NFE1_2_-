@@ -9,22 +9,31 @@ import DetailPageLayout from '@/layouts/DetailPageLayout/DetailPageLayout'
 import { useState } from 'react'
 
 const PostCreate = () => {
-  const [category, setCategory] = useState('')
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const [postData, setPostData] = useState({
+    category: '',
+    title: '',
+    content: '',
+  })
 
+  const handlePostChange = (key : string) => (value : string) => {
+    setPostData((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
+  console.log(postData)
   return (
     <DetailPageLayout>
       <div className='post-create'>
         <CategorySelect
-          category={category}
-          onChangeCategory={setCategory}
+          category={postData.category}
+          onChangeCategory={handlePostChange('category')}
         />
         <PostContent
-          title={title}
-          content={content}
-          onChangeTitle={setTitle}
-          onChangeContent={setContent}
+          title={postData.title}
+          content={postData.content}
+          onChangeTitle={handlePostChange('title')}
+          onChangeContent={handlePostChange('content')}
         />
         <AddImage />
         <QuestionSelect />
