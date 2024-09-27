@@ -5,11 +5,11 @@ import QuestionSelect from './QuestionSelect/QuestionSelect'
 
 import './PostCreate.css'
 import AddImage from './AddImage/AddImage'
-import Container from '@/components/Conatiner/Container'
+import DetailPageLayout from '@/layouts/DetailPageLayout/DetailPageLayout'
 
 const PostCreate = () => {
   return (
-    <Container>
+    <DetailPageLayout>
       <div className='post-create'>
         <CategorySelect />
         <PostContent />
@@ -17,7 +17,7 @@ const PostCreate = () => {
         <QuestionSelect />
         <PostCreateButton />
       </div>
-    </Container>
+    </DetailPageLayout>
   )
 }
 
