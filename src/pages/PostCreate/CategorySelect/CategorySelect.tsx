@@ -5,8 +5,14 @@ import './CategorySelect.css'
 
 const CategorySelect = () => {
   const [showlist, setShowlist] = useState(false)
-  // const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('')
 
+  const categories = ['이별', '짝사랑', '썸', '데이트', '기타']
+
+  const selectCategory = (value: string) => {
+    setCategory(value)
+    setShowlist(!showlist)
+  }
   return (
     <div className='category'>
       <div className='category-container'>
@@ -14,18 +20,20 @@ const CategorySelect = () => {
           className='category-button'
           onClick={() => setShowlist(!showlist)}
         >
-          <p className='category-title'>카테고리 선택</p>
+          <p className='category-title'>
+            {category === '' ? '카테고리' : category}
+          </p>
           {showlist ? <DropUpButton /> : <DropDownButton />}
         </button>
       </div>
       {showlist && (
         <div className='category-list-container'>
           <ul className='category-list'>
-            <li>이별</li>
-            <li>짝사랑</li>
-            <li>썸</li>
-            <li>데이트</li>
-            <li>기타</li>
+            {categories.map((item) => (
+              <li key={item} onClick={() => selectCategory(item)}>
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
       )}
