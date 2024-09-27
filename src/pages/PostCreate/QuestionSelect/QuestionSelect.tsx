@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './QuestionSelect.css'
+import BottomModal from '@/components/BottomModal/BottomModal'
+import QuestionModal from '../QuestionModal/QuestionModal'
 
 const QuestionSelect = () => {
   const [isSelect, setQuestion] = useState(false)
@@ -19,6 +21,9 @@ const QuestionSelect = () => {
           질문 선택
         </button>
       )}
+      <BottomModal onClick={()=>setQuestion(false)} buttonText='닫기'>
+        <QuestionModal />
+      </BottomModal>
     </div>
   )
 }
