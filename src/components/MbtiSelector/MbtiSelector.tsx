@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './MbtiSelector.css';
 
 type MbtiType = 'EI' | 'SN' | 'TF' | 'JP';
@@ -38,8 +38,7 @@ const MbtiSelector = () => {
 
   return (
     <div className="mbti-container">
-      <h2 className="mbti-title">MBTI</h2>
-      
+
       <div className="mbti-flex-container">
         <MbtiRow 
           label="에너지의 방향"
