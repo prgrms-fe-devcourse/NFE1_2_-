@@ -3,12 +3,16 @@ import './QuestionModal.css'
 import BeforeSelect from '@assets/icons/write_before_select.svg?react'
 import AfterSelect from '@assets/icons/write_after_select.svg?react'
 
-const QuestionModal = () => {
-  const [question, setQuestion] = useState('')
-  const [isQuestion, setIsQuestion] = useState(true)
+interface QuestionProps {
+  question: string
+  onChangeQuestion: (question: string) => void
+}
+
+const QuestionModal = (props: QuestionProps) => {
+  const { question, onChangeQuestion } = props
+  const [isQuestion, setIsQuestion] = useState(false)
   const [isInputActive, setIsInputActive] = useState(false)
 
-  console.log(question)
   const questionList: string[] = [
     '헤어질까요?',
     '사과할까요?',
@@ -17,18 +21,20 @@ const QuestionModal = () => {
   ]
 
   const handleQuestion = (value: string) => {
-    setQuestion(value)
+    onChangeQuestion(value)
     setIsInputActive(false)
   }
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuestion: string = e.target.value
     setIsQuestion(newQuestion.includes('?'))
-    setQuestion(newQuestion)
+    if (newQuestion.includes('?')) {
+      onChangeQuestion(newQuestion)
+    }
   }
   const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
     const currentValue = (e.target as HTMLInputElement).value
-    setQuestion(currentValue)
+    onChangeQuestion(currentValue)
     setIsInputActive(true)
   }
 
@@ -56,7 +62,7 @@ const QuestionModal = () => {
       </div>
       <div className='question-list-input-container'>
         <p
-          className={`question-list-input-title ${isQuestion ? '' : 'question-false'}`}
+          className={`question-list-input-title ${!isInputActive || isQuestion ? '' : 'question-false'}`}
         >
           질문 형태로 입력해주세요.
         </p>
