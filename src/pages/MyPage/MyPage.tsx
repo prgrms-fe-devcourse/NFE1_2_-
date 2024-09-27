@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import Container from '@components/Conatiner/Container'
-import Navigator from '@/components/Navigatior/Navigator'
 import BottomModal from '@/components/BottomModal/BottomModal'
 import './MyPage.css'
+import MainPageLayout from '@/layouts/MainPageLayout/MainPageLayout'
 
 const MyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -29,7 +28,7 @@ const MyPage = () => {
   const isDeleteInputFilled = deletePassword
 
   return (
-    <Container>
+    <MainPageLayout>
       <section>
         <div className='user-info'>
           <p className='info-title'>내 정보</p>
@@ -133,9 +132,7 @@ const MyPage = () => {
           <p className='item'>로그아웃</p>
         </div>
       </section>
-
-      {/* <Navigator /> */}
-    </Container>
+    </MainPageLayout>
   )
 }
 
