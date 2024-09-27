@@ -6,7 +6,9 @@ import AfterSelect from '@assets/icons/write_after_select.svg?react'
 const QuestionModal = () => {
   const [question, setQuestion] = useState('')
   const [isQuestion, setIsQuestion] = useState(true)
-  
+  const [isInputActive, setIsInputActive] = useState(false)
+
+  console.log(question)
   const questionList: string[] = [
     '헤어질까요?',
     '사과할까요?',
@@ -14,14 +16,20 @@ const QuestionModal = () => {
     '다시 연락할까요?',
   ]
 
-  const handleQuestion = (value : string) => {
+  const handleQuestion = (value: string) => {
     setQuestion(value)
+    setIsInputActive(false)
   }
-  
+
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuestion : string = e.target.value
+    const newQuestion: string = e.target.value
     setIsQuestion(newQuestion.includes('?'))
     setQuestion(newQuestion)
+  }
+  const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    const currentValue = (e.target as HTMLInputElement).value
+    setQuestion(currentValue)
+    setIsInputActive(true)
   }
 
   return (
@@ -47,13 +55,17 @@ const QuestionModal = () => {
         ))}
       </div>
       <div className='question-list-input-container'>
-        <p 
-        className={`question-list-input-title ${isQuestion ? '' : 'question-false'}`}>질문 형태로 입력해주세요.</p>
+        <p
+          className={`question-list-input-title ${isQuestion ? '' : 'question-false'}`}
+        >
+          질문 형태로 입력해주세요.
+        </p>
         <input
           type='text'
           placeholder='질문 직접 입력'
-          className='question-list-input'
+          className={`question-list-input ${isInputActive ? 'active' : ''}`}
           onChange={handleQuestionChange}
+          onClick={handleInputClick}
         />
       </div>
     </div>
