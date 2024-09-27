@@ -1,13 +1,10 @@
-import Container from '@components/Conatiner/Container'
+import MainPageLayout from '@/layouts/MainPageLayout/MainPageLayout'
 import MyPage from '../MyPage/MyPage'
 const PostDetail = () => {
   return (
-    <Container>
-      <section>
-        <p>Post Page</p>
-        <MyPage></MyPage>
-      </section>
-    </Container>
+    <MainPageLayout>
+      <section></section>
+    </MainPageLayout>
   )
 }
 
