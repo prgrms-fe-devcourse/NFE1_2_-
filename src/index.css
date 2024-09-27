@@ -17,6 +17,7 @@
 button {
   border: none;
   cursor: pointer;
+  background: none;
 }
 
 /* NotoSansKR Medium */
