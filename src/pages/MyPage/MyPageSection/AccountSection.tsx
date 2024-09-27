@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import ModalSection from '../Component/ModalSection'
-import Section from '../Component/Section'
+import ModalComponent from '../Component/ModalComponent'
+import InfoSection from '../Component/InfoSection'
 import '../MyPage.css'
 
 const AccountSection = () => {
@@ -45,17 +45,17 @@ const AccountSection = () => {
   ]
 
   return (
-    <Section title='계정'>
-      <p className='item'>
+    <InfoSection title='계정'>
+      <p className='info-item'>
         아이디<span className='value'>djfkd</span>
       </p>
       <button
-        className='item'
+        className='info-item'
         onClick={handleOpenModal}
       >
         비밀번호 변경
       </button>
-      <ModalSection
+      <ModalComponent
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         buttonText={
@@ -64,7 +64,7 @@ const AccountSection = () => {
         instruction='새로운 비밀번호를 입력해주세요!'
         inputFields={inputFields}
       />
-    </Section>
+    </InfoSection>
   )
 }
 

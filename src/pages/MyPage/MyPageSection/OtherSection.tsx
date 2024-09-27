@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import ModalSection from '../Component/ModalSection'
-import Section from '../Component/Section'
+import ModalComponent from '../Component/ModalComponent'
+import InfoSection from '../Component/InfoSection'
 import '../MyPage.css'
 
 const OtherSection = () => {
@@ -27,22 +27,22 @@ const OtherSection = () => {
   ]
 
   return (
-    <Section title='기타'>
+    <InfoSection title='기타'>
       <button
         onClick={handleOpenModal}
-        className='item'
+        className='info-item'
       >
         회원탈퇴
       </button>
-      <ModalSection
+      <ModalComponent
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         buttonText={deletePassword ? '확인' : '닫기'}
         instruction='탈퇴 하시겠습니까?'
         inputFields={inputFields}
       />
-      <p className='item'>로그아웃</p>
-    </Section>
+      <p className='info-item'>로그아웃</p>
+    </InfoSection>
   )
 }
 
