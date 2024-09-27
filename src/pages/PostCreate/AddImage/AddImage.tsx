@@ -1,23 +1,27 @@
 import PostPageButton from '@/components/PostPageButton/PostPageButton'
 import './AddImage.css'
 import { useRef, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 
 const AddImage = () => {
   const [uploadImgUrl, setUploadImgUrl] = useState<string>('')
+  const [isUpload, setIsUpload] = useState(false)
   const fileInput = useRef<HTMLInputElement | null>(null)
   const handleAddImage = () => {
     fileInput.current?.click()
   }
+  const handleDeleteImage = () => {
+    setUploadImgUrl('')
+    setIsUpload(false)
+    if (fileInput.current) {
+      fileInput.current.value = ''
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFile = e.target.files?.[0]
     if (imgFile) {
-      if (!imgFile.type.startsWith('image/')) {
-        toast.error('이미지 파일만 업로드 가능합니다.')
-        return
-      }
       setUploadImgUrl(imgFile.name)
+      setIsUpload(true)
     }
   }
   return (
@@ -25,8 +29,8 @@ const AddImage = () => {
       <div className='add-image-container'>
         <p className='add-image-name'>{uploadImgUrl}</p>
         <PostPageButton
-          onClick={handleAddImage}
-          title={uploadImgUrl === '' ? '사진추가' : '사진삭제'}
+          onClick={isUpload ? handleDeleteImage : handleAddImage}
+          title={isUpload ? '사진삭제' : '사진추가'}
         />
         <input
           type='file'
@@ -34,16 +38,6 @@ const AddImage = () => {
           accept='image/*'
           onChange={handleChange}
           style={{ display: 'none' }}
-        />
-        <ToastContainer
-          position='top-center'
-          autoClose={3000}
-          hideProgressBar={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          theme='colored'
         />
       </div>
     </div>
