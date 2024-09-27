@@ -10,7 +10,7 @@ interface QuestionProps {
 
 const QuestionSelect = (props: QuestionProps) => {
   const { question, onChangeQuestion } = props
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   return (
     <div className='question-select'>
       {question === '' ? (

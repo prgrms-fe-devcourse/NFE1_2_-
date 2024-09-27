@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import './QuestionModal.css'
 import BeforeSelect from '@assets/icons/write_before_select.svg?react'
 import AfterSelect from '@assets/icons/write_after_select.svg?react'
+import './QuestionModal.css'
 
 interface QuestionProps {
   question: string
@@ -10,8 +10,8 @@ interface QuestionProps {
 
 const QuestionModal = (props: QuestionProps) => {
   const { question, onChangeQuestion } = props
-  const [isQuestion, setIsQuestion] = useState(false)
-  const [isInputActive, setIsInputActive] = useState(false)
+  const [isQuestion, setIsQuestion] = useState<boolean>(false)
+  const [isInputActive, setIsInputActive] = useState<boolean>(false)
 
   const questionList: string[] = [
     '헤어질까요?',

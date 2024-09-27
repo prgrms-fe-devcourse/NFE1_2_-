@@ -10,9 +10,9 @@ interface CategorySelectProps {
 
 const CategorySelect = (props : CategorySelectProps) => {
   const { category, onChangeCategory } = props
-  const [showlist, setShowlist] = useState(false)
+  const [showlist, setShowlist] = useState<boolean>(false)
 
-  const categories = ['이별', '짝사랑', '썸', '데이트', '기타']
+  const categories: string[] = ['이별', '짝사랑', '썸', '데이트', '기타']
 
   const handleCategorySelect = (value: string) => {
     onChangeCategory(value)

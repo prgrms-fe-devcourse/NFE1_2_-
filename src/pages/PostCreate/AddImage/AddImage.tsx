@@ -1,10 +1,10 @@
+import { useRef, useState } from 'react'
 import PostPageButton from '@/components/PostPageButton/PostPageButton'
 import './AddImage.css'
-import { useRef, useState } from 'react'
 
 const AddImage = () => {
   const [uploadImgUrl, setUploadImgUrl] = useState<string>('')
-  const [isUpload, setIsUpload] = useState(false)
+  const [isUpload, setIsUpload] = useState<boolean>(false)
   const fileInput = useRef<HTMLInputElement | null>(null)
   const handleAddImage = () => {
     fileInput.current?.click()

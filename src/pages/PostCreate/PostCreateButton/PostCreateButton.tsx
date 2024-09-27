@@ -1,6 +1,6 @@
-import './PostCreateButton.css'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import './PostCreateButton.css'
 
 interface PostData {
   category: string
@@ -15,6 +15,7 @@ interface PostCreateProps {
 
 const PostCreateButton = (props: PostCreateProps) => {
   const { postData, question } = props
+  
   const handlePostCreate = () => {
     if (!postData.category) {
       toast.error('카테고리를 입력하세요')
