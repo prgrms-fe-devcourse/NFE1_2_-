@@ -1,4 +1,4 @@
-import PostDetail from '@pages/PostDetail/PostDetail'
+import PostDetail from '@pages/PostDetail/Post/Post'
 import { Routes, Route } from 'react-router-dom'
 
 const App = () => {
