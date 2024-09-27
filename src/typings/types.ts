@@ -14,7 +14,7 @@ export interface User {
   notifications: Notification[]
   messages: Message[]
   _id: string
-  fullName: UserDetailData
+  fullName: string
   email: string
   createdAt: string
   updatedAt: string
