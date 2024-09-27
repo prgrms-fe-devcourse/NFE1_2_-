@@ -1,6 +1,6 @@
 import './Container.css'
 
-const Container = ({ children }: { children: JSX.Element[] }) => {
+const Container = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
   return <div className='container'>{children}</div>
 }
 
