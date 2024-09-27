@@ -2,11 +2,10 @@ import CategorySelect from './CategorySelect/CategorySelect'
 import PostContent from './PostContent/PostContent'
 import PostCreateButton from './PostCreateButton/PostCreateButton'
 import QuestionSelect from './QuestionSelect/QuestionSelect'
-
-import './PostCreate.css'
 import AddImage from './AddImage/AddImage'
 import DetailPageLayout from '@/layouts/DetailPageLayout/DetailPageLayout'
 import { useState } from 'react'
+import './PostCreate.css'
 
 const PostCreate = () => {
   const [postData, setPostData] = useState({
@@ -14,14 +13,14 @@ const PostCreate = () => {
     title: '',
     content: '',
   })
+  const [question, setQuestion] = useState('')
 
-  const handlePostChange = (key : string) => (value : string) => {
+  const handlePostChange = (key: string) => (value: string) => {
     setPostData((prevState) => ({
       ...prevState,
       [key]: value,
-    }));
-  };
-  console.log(postData)
+    }))
+  }
   return (
     <DetailPageLayout>
       <div className='post-create'>
@@ -36,8 +35,14 @@ const PostCreate = () => {
           onChangeContent={handlePostChange('content')}
         />
         <AddImage />
-        <QuestionSelect />
-        <PostCreateButton postData={postData}/>
+        <QuestionSelect
+          question={question}
+          onChangeQuestion={setQuestion}
+        />
+        <PostCreateButton
+          postData={postData}
+          question={question}
+        />
       </div>
     </DetailPageLayout>
   )

@@ -3,10 +3,14 @@ import './QuestionSelect.css'
 import BottomModal from '@/components/BottomModal/BottomModal'
 import QuestionModal from '../QuestionModal/QuestionModal'
 
-const QuestionSelect = () => {
-  const [question, setQuestion] = useState('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
+interface QuestionProps {
+  question: string
+  onChangeQuestion: (question: string) => void
+}
 
+const QuestionSelect = (props: QuestionProps) => {
+  const { question, onChangeQuestion } = props
+  const [isModalOpen, setIsModalOpen] = useState(false)
   return (
     <div className='question-select'>
       {question === '' ? (
@@ -35,7 +39,7 @@ const QuestionSelect = () => {
         >
           <QuestionModal
             question={question}
-            onChangeQuestion={setQuestion}
+            onChangeQuestion={onChangeQuestion}
           />
         </BottomModal>
       )}
