@@ -5,6 +5,7 @@ interface ModalSectionProps {
   isOpen: boolean
   onClose: () => void
   buttonText: string
+  detail?: string
   instruction: string
   inputFields: {
     label: string
@@ -18,6 +19,7 @@ const ModalComponent = ({
   isOpen,
   onClose,
   buttonText,
+  detail = '',
   instruction,
   inputFields,
 }: ModalSectionProps) => {
@@ -30,6 +32,7 @@ const ModalComponent = ({
         >
           <div className='modal-section'>
             <p className='modal-instruction'>{instruction}</p>
+            <p className='modal-label'>{detail}</p>
             <div className='modal-inner-section'>
               {inputFields.map((field, index) => (
                 <div key={index}>
