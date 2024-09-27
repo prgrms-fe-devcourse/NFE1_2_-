@@ -1,32 +1,31 @@
+import { useQuery } from '@tanstack/react-query'
 import PostComponent from '@components/PostComponent/PostComponent'
 import LikeButton from '../LikeButton/LikeButton'
 import './PostSection.css'
+import axios from 'axios'
+
+const getData = async () => {
+  const response = await axios.get(
+    'https://kdt.frontend.5th.programmers.co.kr:5001/posts/66f627e8d9565f243fe31876',
+  )
+
+  return response.data
+}
 
 const PostSection = () => {
-  return (
-    <section className='post-section'>
-      {/* 목데이터 집어 넣어서 타입 에러 뜹니다. 추후 수정 예정 */}
-      <PostComponent
-        post={{
-          likes: [],
-          comments: [],
-          _id: '123',
-          title: {
-            type: '이별',
-            title: '헤어질까요',
-            body: '진짜 헤어질까요?',
-            poll: { agree: 0, disagree: 0, title: '진짜 헤어질까요?' },
-            checkCount: 0,
-          },
-          author: {
-            fullName: { ageGroup: '20', gender: '남', mbti: 'INTP' },
-          },
-          createdAt: '123123123',
-        }}
-      />
-      <LikeButton />
-    </section>
-  )
+  const { data } = useQuery({ queryKey: ['post'], queryFn: getData })
+  if (data) {
+    const { title } = data
+    const postDetail = JSON.parse(title)
+    const post = { ...data, title: postDetail }
+    console.log(post)
+    return (
+      <section className='post-section'>
+        <PostComponent post={post} />
+        <LikeButton />
+      </section>
+    )
+  }
 }
 
 export default PostSection
