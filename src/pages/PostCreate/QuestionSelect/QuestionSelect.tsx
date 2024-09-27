@@ -4,7 +4,7 @@ import BottomModal from '@/components/BottomModal/BottomModal'
 import QuestionModal from '../QuestionModal/QuestionModal'
 
 const QuestionSelect = () => {
-  const [isSelect, setQuestion] = useState(false)
+  const [isSelect, setIsSelect] = useState(false)
   return (
     <div className='question-select'>
       {isSelect ? (
@@ -15,13 +15,13 @@ const QuestionSelect = () => {
         </div>
       ) : (
         <button
-          onClick={() => setQuestion(true)}
+          onClick={() => setIsSelect(true)}
           className='question-select-button'
         >
           질문 선택
         </button>
       )}
-      <BottomModal onClick={()=>setQuestion(false)} buttonText='닫기'>
+      <BottomModal onClick={()=>setIsSelect(false)} buttonText='닫기'>
         <QuestionModal />
       </BottomModal>
     </div>
