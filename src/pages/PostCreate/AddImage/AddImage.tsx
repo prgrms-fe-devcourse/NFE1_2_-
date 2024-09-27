@@ -15,7 +15,7 @@ const AddImage = () => {
     if (fileInput.current) {
       fileInput.current.value = ''
     }
-  };
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFile = e.target.files?.[0]
