@@ -37,7 +37,7 @@ const PostCreate = () => {
         />
         <AddImage />
         <QuestionSelect />
-        <PostCreateButton />
+        <PostCreateButton postData={postData}/>
       </div>
     </DetailPageLayout>
   )
