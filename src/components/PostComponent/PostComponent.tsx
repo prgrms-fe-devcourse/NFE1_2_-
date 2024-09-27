@@ -3,7 +3,18 @@ import ViewsIcon from '@/assets/icons/views.svg?react'
 import { Post } from '@/typings/types'
 import Bedge from '../Bedge/Bedge'
 
-const PostCard = ({ post }: { post: Post }) => {
+const PostCard = ({
+  post,
+  truncate = false,
+}: {
+  post: Post
+  truncate?: boolean
+}) => {
+  // 50자로 자르는 함수
+  const truncateText = (text: string, limit: number) => {
+    return text.length > limit ? text.substring(0, limit) + '...' : text
+  }
+
   return (
     <div className='post-card'>
       <div className='title'>{post.title.title}</div>
@@ -36,7 +47,10 @@ const PostCard = ({ post }: { post: Post }) => {
           alt={post.title.title}
         />
       )}
-      <p className='body'>{post.title.body}</p>
+      <p className='body'>
+        {truncate ? truncateText(post.title.body, 100) : post.title.body}{' '}
+        {/* truncate에 따라 텍스트 자름 */}
+      </p>
     </div>
   )
 }
