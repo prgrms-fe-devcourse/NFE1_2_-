@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import './MbtiSelector.css';
 
 type MbtiType = 'EI' | 'SN' | 'TF' | 'JP';
