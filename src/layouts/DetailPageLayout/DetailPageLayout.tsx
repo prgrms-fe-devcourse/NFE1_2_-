@@ -1,15 +1,19 @@
 import TopNavigator from '@components/TopNavigator/TopNavigator'
 import Container from '@components/Conatiner/Container'
 
+interface DetailPageLayoutProps {
+  children: React.ReactNode
+  pageText?: string
+  pageName?: string
+}
+
 const DetailPageLayout = ({
   children,
   pageText,
-}: {
-  children: JSX.Element
-  pageText?: string
-}) => {
+  pageName,
+}: DetailPageLayoutProps) => {
   return (
-    <Container>
+    <Container pageName={pageName}>
       <TopNavigator pageText={pageText} />
       {children}
     </Container>

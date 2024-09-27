@@ -7,6 +7,7 @@ const LikeButton = () => {
         <LikeIcon
           width={40}
           height={40}
+          fill='#eee'
         />
       </button>
       <p>1</p>

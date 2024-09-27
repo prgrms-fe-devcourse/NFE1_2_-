@@ -38,15 +38,16 @@ const CommentCard = () => {
             <DetailLikeIcon
               width={16}
               height={16}
+              fill='#7d7d7d'
             />
-            <span>1 시간</span>
+            <span>좋아요</span>
           </div>
           <div className='comment-detail'>
             <DetailMessage
               width={16}
               height={16}
             />
-            <span>1 시간</span>
+            <span>대댓글</span>
           </div>
         </div>
         <div className='comment-detail-right'>

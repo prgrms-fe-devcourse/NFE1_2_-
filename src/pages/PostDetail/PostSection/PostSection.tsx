@@ -5,6 +5,7 @@ import './PostSection.css'
 const PostSection = () => {
   return (
     <section className='post-section'>
+      {/* 목데이터 집어 넣어서 타입 에러 뜹니다. 추후 수정 예정 */}
       <PostComponent
         post={{
           likes: [],
