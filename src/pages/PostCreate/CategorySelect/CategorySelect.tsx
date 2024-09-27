@@ -3,14 +3,19 @@ import DropDownButton from '@assets/icons/dropdown_button.svg?react'
 import DropUpButton from '@assets/icons/dropup_button.svg?react'
 import './CategorySelect.css'
 
-const CategorySelect = () => {
+interface CategorySelectProps {
+  category: string;
+  onChangeCategory: (value: string) => void;
+}
+
+const CategorySelect = (props : CategorySelectProps) => {
+  const { category, onChangeCategory } = props
   const [showlist, setShowlist] = useState(false)
-  const [category, setCategory] = useState('')
 
   const categories = ['이별', '짝사랑', '썸', '데이트', '기타']
 
-  const selectCategory = (value: string) => {
-    setCategory(value)
+  const handleCategorySelect = (value: string) => {
+    onChangeCategory(value)
     setShowlist(!showlist)
   }
   return (
@@ -30,7 +35,10 @@ const CategorySelect = () => {
         <div className='category-list-container'>
           <ul className='category-list'>
             {categories.map((item) => (
-              <li key={item} onClick={() => selectCategory(item)}>
+              <li
+                key={item}
+                onClick={() => handleCategorySelect(item)}
+              >
                 {item}
               </li>
             ))}

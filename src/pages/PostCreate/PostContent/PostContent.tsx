@@ -1,12 +1,38 @@
 import './PostContent.css'
 
-const PostContent = () => {
+interface PostContentProps {
+  title: string
+  content: string
+  onChangeTitle: (title: string) => void
+  onChangeContent: (content: string) => void
+}
+
+const PostContent = (props: PostContentProps) => {
+  const { title, content, onChangeTitle, onChangeContent } = props
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeTitle(e.target.value)
+  }
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    onChangeContent(e.target.value)
+  }
+
   return (
     <div className='title-content'>
-        <input type='text' placeholder='제목을 입력하세요' className="title-input"/>
-        <textarea placeholder='내용을 입력하세요' className='content-input'/>
+      <input
+        type='text'
+        value={title}
+        placeholder='제목을 입력하세요'
+        className='title-input'
+        onChange={handleTitleChange}
+      />
+      <textarea
+        value={content}
+        placeholder='내용을 입력하세요'
+        className='content-input'
+        onChange={handleContentChange}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default PostContent;
+export default PostContent
