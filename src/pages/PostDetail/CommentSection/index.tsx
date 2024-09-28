@@ -1,6 +1,6 @@
-import CommentCard from '../CommentCard/CommentCard'
-import ReplyCard from '../ReplyCard/ReplyCard'
-import './CommentSection.css'
+import CommentCard from '../CommentCard/indext'
+import ReplyCard from '../ReplyCard'
+import './index.css'
 
 const CommentSection = () => {
   return (

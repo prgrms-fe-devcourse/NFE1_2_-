@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react'
 import AfterPoll from './AfterPoll'
 import BeforePoll from './BeforePoll'
-import './PostPoll.css'
+import './index.css'
 
-const PostPoll = () => {
+const PollSection = () => {
   const [isPoll, setIsPoll] = useState(false)
   const handleOnclick = useCallback(() => {
     setIsPoll(true)
@@ -22,4 +22,4 @@ const PostPoll = () => {
   )
 }
 
-export default PostPoll
+export default PollSection

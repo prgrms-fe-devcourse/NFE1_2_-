@@ -1,4 +1,4 @@
-import PostDetail from '@pages/PostDetail/Post/Post'
+import PostDetailPage from '@pages/PostDetail/PostDetailPage'
 import MyPage from './pages/MyPage/MyPage'
 import PostCreate from './pages/PostCreate/PostCreate'
 import { Routes, Route } from 'react-router-dom'
@@ -8,7 +8,7 @@ const App = () => {
     <Routes>
       <Route
         path='/postdetail'
-        element={<PostDetail />}
+        element={<PostDetailPage />}
       />
       <Route
         path='/my'
