@@ -8,9 +8,10 @@ import DetailPageLayout from '@/layouts/DetailPageLayout/DetailPageLayout'
 import './PostCreate.css'
 
 interface PostData {
-  category: string;
-  title: string;
-  content: string;
+  category: string
+  title: string
+  content: string
+  question: string
 }
 
 const PostCreate = () => {
@@ -18,8 +19,10 @@ const PostCreate = () => {
     category: '',
     title: '',
     content: '',
+    question: '',
   })
-  const [question, setQuestion] = useState<string>('')
+
+  const [postImgUrl, setPostImgUrl] = useState<string | null>(null) 
 
   const handlePostChange = (key: keyof PostData) => (value: string) => {
     setPostData((prevState) => ({
@@ -40,14 +43,17 @@ const PostCreate = () => {
           onChangeTitle={handlePostChange('title')}
           onChangeContent={handlePostChange('content')}
         />
-        <AddImage />
+        <AddImage 
+        postImgUrl = {postImgUrl}
+        onChangeImgUrl = {setPostImgUrl}
+        />
         <QuestionSelect
-          question={question}
-          onChangeQuestion={setQuestion}
+          question={postData.question}
+          onChangeQuestion={handlePostChange('question')}
         />
         <PostCreateButton
           postData={postData}
-          question={question}
+          postImgUrl={postImgUrl}
         />
       </div>
     </DetailPageLayout>
