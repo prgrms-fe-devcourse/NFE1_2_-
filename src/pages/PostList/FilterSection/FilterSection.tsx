@@ -1,17 +1,17 @@
-import './FilterSection.css';
-import { useState } from 'react';
+import { useState } from 'react'
+import './FilterSection.css'
 
 const FilterSection = () => {
-  const [selectedSort, setSelectedSort] = useState('popular');
-  const [isCollectionActive, setCollectionActive] = useState(false);
+  const [selectedSort, setSelectedSort] = useState('popular')
+  const [isCollectionActive, setCollectionActive] = useState(false)
 
-  const handleSortClick = (sortType) => {
-    setSelectedSort(sortType);
-  };
+  const handleSortClick = (sortType: string) => {
+    setSelectedSort(sortType)
+  }
 
   const handleCollectionClick = () => {
-    setCollectionActive(!isCollectionActive);
-  };
+    setCollectionActive(!isCollectionActive)
+  }
   return (
     <div className='post-collection'>
       <div
@@ -35,7 +35,7 @@ const FilterSection = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FilterSection;
+export default FilterSection

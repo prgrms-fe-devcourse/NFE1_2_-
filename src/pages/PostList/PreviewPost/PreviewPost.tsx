@@ -1,6 +1,6 @@
 import PostCard from '@/components/PostComponent/PostComponent'
-import './PreviowPost.css'
 import Interaction from '../Interaction/Interaction'
+
 const PreviewPost = () => {
   return (
     <section className='post-section'>
@@ -24,7 +24,7 @@ const PreviewPost = () => {
         }}
         truncate={true}
       />
-      <Interaction></Interaction>
+      <Interaction />
     </section>
   )
 }

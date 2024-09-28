@@ -1,7 +1,7 @@
 import BottomModal from '@/components/BottomModal/BottomModal'
-import '../MyPage.css'
-import MbtiSelector from '@/components/MbtiSelector/MbtiSelector'
 import SearchButton from '@assets/icons/list_search.svg?react'
+import MbtiToggle from '@/pages/PostList/MbtiToggle/MbtiToggle'
+import './ModalComponent.css'
 
 interface ModalSectionProps {
   isOpen: boolean
@@ -43,26 +43,10 @@ const ModalComponent = ({
             <p className='modal-instruction'>{instruction}</p>
             <p className='modal-label'>{detail}</p>
             {filter && (
-              <>
-                <div className='toggle-container'>
-                  <label className='toggle-label'>MBTI 필터링</label>
-                  <div
-                    className={`toggle-slider ${isMbtiFilterVisible ? 'active' : ''}`}
-                    onClick={onToggleFilter}
-                  >
-                    <div
-                      className={`slider ${isMbtiFilterVisible ? 'active' : ''}`}
-                    ></div>
-                  </div>
-                </div>
-                {isMbtiFilterVisible && (
-                  <div className='modal-filter'>
-                    <div>
-                      <MbtiSelector />
-                    </div>
-                  </div>
-                )}
-              </>
+              <MbtiToggle
+                isMbtiFilterVisible={isMbtiFilterVisible}
+                onToggleFilter={onToggleFilter}
+              />
             )}
             <div className='modal-inner-section'>
               {inputFields.map((field, index) => (

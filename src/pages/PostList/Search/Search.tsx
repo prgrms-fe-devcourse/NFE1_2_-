@@ -1,8 +1,7 @@
-import ModalComponent from '@/pages/MyPage/Component/ModalComponent'
+import ModalComponent from '@/pages/MyPage/Component/ModalComponent/ModalComponent'
 import { useState } from 'react'
-import SearchButton from '@assets/icons/list_search.svg?react'
 
-const Search = ({ onClose }) => {
+const Search = ({ onClose }: { onClose: () => void }) => {
   const [search, setSearch] = useState('')
   const [isMbtiFilterVisible, setIsMbtiFilterVisible] = useState(false)
 
@@ -28,19 +27,17 @@ const Search = ({ onClose }) => {
   }
 
   return (
-    <>
-      <ModalComponent
-        isOpen={true}
-        onClose={handleCloseModal}
-        buttonText={'닫기'}
-        instruction='검색'
-        detail='검색할 포스트 제목을 입력하거나, MBTI 필터링 기능을 이용해보세요.'
-        filter={true}
-        inputFields={inputFields}
-        isMbtiFilterVisible={isMbtiFilterVisible}
-        onToggleFilter={handleToggleFilter}
-      />
-    </>
+    <ModalComponent
+      isOpen={true}
+      onClose={handleCloseModal}
+      buttonText={'닫기'}
+      instruction='검색'
+      detail='검색할 포스트 제목을 입력하거나, MBTI 필터링 기능을 이용해보세요.'
+      filter={true}
+      inputFields={inputFields}
+      isMbtiFilterVisible={isMbtiFilterVisible}
+      onToggleFilter={handleToggleFilter}
+    />
   )
 }
 

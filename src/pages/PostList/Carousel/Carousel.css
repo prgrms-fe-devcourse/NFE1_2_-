@@ -1,35 +1,32 @@
 .carousel {
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
-  position: relative;
   overflow: hidden;
 }
 
 .image-wrapper {
   display: flex;
+  width:500px;
   flex-direction: row;
   align-items: center;
   transition: transform 0.5s ease;
   gap:70px;
-width:500px;
 }
 
 .image-container {
   position: relative;
-  display: inline-block;
   width: 170px;
+  display: inline-block;
   flex-shrink: 0;
   transition: transform 0.5s ease;
   right:-170px;
-
 }
 
 .image-container:not(.active) {
   opacity:1;
 }
-
-
 
 .img {
   border-radius: 10px;
@@ -67,6 +64,7 @@ width:500px;
 .carousel-button:last-child {
   right: 0px;
 }
+
 .text-overlay{
 position: absolute;  
 left: 38%;

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import ModalComponent from '../Component/ModalComponent'
-import InfoSection from '../Component/InfoSection'
+import ModalComponent from '../Component/ModalComponent/ModalComponent'
+import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
 
 const AccountSection = () => {
