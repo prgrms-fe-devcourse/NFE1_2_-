@@ -7,30 +7,17 @@ const OtherSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [deletePassword, setDeletePassword] = useState('')
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
-  }
-
+  const handleOpenModal = () => setIsModalOpen(true)
   const handleCloseModal = () => {
     setIsModalOpen(false)
     setDeletePassword('')
   }
 
-  const inputFields = [
-    {
-      label: '비밀번호 확인',
-      value: deletePassword,
-      handleChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-        setDeletePassword(e.target.value),
-      type: 'password',
-    },
-  ]
-
   return (
     <InfoSection title='기타'>
       <button
-        onClick={handleOpenModal}
         className='info-item'
+        onClick={handleOpenModal}
       >
         회원탈퇴
       </button>
@@ -39,8 +26,15 @@ const OtherSection = () => {
         onClose={handleCloseModal}
         buttonText={deletePassword ? '확인' : '닫기'}
         instruction='탈퇴 하시겠습니까?'
-        inputFields={inputFields}
-      />
+      >
+        <p className='modal-label'>비밀번호 확인</p>
+        <input
+          type='password'
+          className='modal-input'
+          value={deletePassword}
+          onChange={(e) => setDeletePassword(e.target.value)}
+        />
+      </ModalComponent>
       <p className='info-item'>로그아웃</p>
     </InfoSection>
   )

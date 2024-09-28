@@ -1,0 +1,10 @@
+
+.search-button{
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+}
+
+.modal-input-active{
+  margin-left: 35px;
+}

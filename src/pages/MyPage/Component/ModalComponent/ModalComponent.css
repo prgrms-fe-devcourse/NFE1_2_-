@@ -17,7 +17,7 @@
   }
 
   .modal-input {
-    width: 400px;
+    width: 430px;
     height: 40px;
     padding: 1rem;
     margin-top: 0.5rem;
@@ -35,10 +35,11 @@
   .modal-filter{
     display: flex;
     flex-direction: column;
+    
   }
 
   .modal-filter .modal-label{ 
-    padding-left: 2rem;
+    padding-left: rem;
    }
    
    .modal-input-filter{
@@ -51,10 +52,4 @@
     border: none;
     border-radius: 5px;
    }
-}
-
-.search-button{
-  position: absolute;
-  right: 40px;
-  bottom: 50px;
 }

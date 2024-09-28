@@ -1,5 +1,8 @@
 import ModalComponent from '@/pages/MyPage/Component/ModalComponent/ModalComponent'
 import { useState } from 'react'
+import SearchButton from '@assets/icons/list_search.svg?react'
+import MbtiToggle from '@/pages/PostList/MbtiToggle/MbtiToggle'
+import './Searc.css'
 
 const Search = ({ onClose }: { onClose: () => void }) => {
   const [search, setSearch] = useState('')
@@ -37,7 +40,24 @@ const Search = ({ onClose }: { onClose: () => void }) => {
       inputFields={inputFields}
       isMbtiFilterVisible={isMbtiFilterVisible}
       onToggleFilter={handleToggleFilter}
-    />
+    >
+      <div className='mbti'>
+        <MbtiToggle
+          isMbtiFilterVisible={isMbtiFilterVisible}
+          onToggleFilter={handleToggleFilter}
+        />
+      </div>
+      <input
+        type='text'
+        className={`modal-input ${isMbtiFilterVisible ? 'modal-input-active' : ''}`}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder='검색어를 입력해주세요'
+      />
+      <button className='search-button'>
+        <SearchButton />
+      </button>
+    </ModalComponent>
   )
 }
 

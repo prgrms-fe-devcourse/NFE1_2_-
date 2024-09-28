@@ -13,7 +13,11 @@ const MbtiToggle: React.FC<MbtiToggleProps> = ({
   return (
     <>
       <div className='toggle-container'>
-        <label className='toggle-label'>MBTI 필터링</label>
+        <label
+          className={`toggle-label ${isMbtiFilterVisible ? 'active' : ''}`}
+        >
+          MBTI 필터링
+        </label>{' '}
         <div
           className={`toggle-slider ${isMbtiFilterVisible ? 'active' : ''}`}
           onClick={onToggleFilter}

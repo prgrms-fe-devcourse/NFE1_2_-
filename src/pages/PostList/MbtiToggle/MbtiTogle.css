@@ -1,7 +1,5 @@
 .toggle-container {
   display: flex;
-  margin-left: -290px;
-  margin-bottom: -20px;
   margin-top: 10px;
   flex-direction: row;
   gap:0.5rem;
@@ -38,5 +36,8 @@
 
 .slider.active {
   transform: translateX(27px); 
- 
+}
+
+.toggle-label.active{
+  margin-left: 32px;
 }
