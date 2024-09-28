@@ -16,6 +16,12 @@
   font-size:0.9rem;
   }
 
+  .modal-check{
+    font-size: 0.5rem;
+    color:#FD3747;
+    font-weight: bold;
+  }
+
   .modal-input {
     width: 430px;
     height: 40px;
@@ -26,30 +32,13 @@
     border-radius: 5px;
   }
 
-  .modal-check{
-    font-size: 0.5rem;
-    color:#FD3747;
-    font-weight: bold;
+  .search-button{
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
   }
-
-  .modal-filter{
-    display: flex;
-    flex-direction: column;
-    
+  
+  .modal-input.active{
+    margin-left: 35px;
   }
-
-  .modal-filter .modal-label{ 
-    padding-left: rem;
-   }
-   
-   .modal-input-filter{
-    width: 450px;
-    height: 40px;
-    padding: 1rem;
-    margin-left: 0.1rem;
-    margin-top: 0.5rem;
-    background-color: #ededed;
-    border: none;
-    border-radius: 5px;
-   }
 }

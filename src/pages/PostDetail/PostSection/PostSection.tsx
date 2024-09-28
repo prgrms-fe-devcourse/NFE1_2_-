@@ -1,6 +1,5 @@
 import PostComponent from '@components/PostComponent/PostComponent'
 import LikeButton from '../LikeButton/LikeButton'
-import './PostSection.css'
 
 const PostSection = () => {
   return (

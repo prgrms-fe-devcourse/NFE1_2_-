@@ -22,13 +22,13 @@ const FilterSection = () => {
       </div>
       <div className='sort-options'>
         <div
-          className={`sort-option popular ${selectedSort === 'popular' ? 'active' : ''}`}
+          className={`popular ${selectedSort === 'popular' ? 'active' : ''}`}
           onClick={() => handleSortClick('popular')}
         >
           인기순
         </div>
         <div
-          className={`sort-option latest ${selectedSort === 'latest' ? 'active' : ''}`}
+          className={`latest ${selectedSort === 'latest' ? 'active' : ''}`}
           onClick={() => handleSortClick('latest')}
         >
           최신순
