@@ -3,29 +3,16 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './PostCreateButton.css'
 import { useMutation } from '@tanstack/react-query'
-
-interface PostData {
-  category: string
-  title: string
-  content: string
-  question: string
-}
+import { PostDetail } from '@/typings/types'
 
 interface PostCreateProps {
-  postData: PostData
+  postData: PostDetail
   postImgUrl: string | null //수정필요
 }
 
-// interface CreatePost {
-//   title: string
-//   image: string | null
-//   channelId: string
-// }
-//title: String,image: Binary | null,channelId: String
-//FormData
-
 const createPost = async (newPost: FormData) => {
-  const token = 'aaaaaaaa'
+  const token =
+    '' //localStorage에서 가져오도록 추후 수정
   const response = await axios.post(
     'https://kdt.frontend.5th.programmers.co.kr:5001/posts/create',
     newPost,
@@ -52,16 +39,16 @@ const PostCreateButton = (props: PostCreateProps) => {
   })
 
   const handlePostCreate = () => {
-    if (!postData.category) {
+    if (!postData.type) {
       toast.error('카테고리를 입력하세요')
       return
     } else if (!postData.title.trim()) {
       toast.error('제목을 입력하세요')
       return
-    } else if (!postData.content.trim()) {
+    } else if (!postData.body.trim()) {
       toast.error('내용을 입력하세요')
       return
-    } else if (!postData.question) {
+    } else if (!postData.poll.title) {
       toast.error('질문을 선택하세요')
       return
     }
@@ -71,7 +58,7 @@ const PostCreateButton = (props: PostCreateProps) => {
     if (postImgUrl) {
       newFormData.append('image', postImgUrl)
     }
-    newFormData.append('channdelId', '66f4aabccdb3ce68a6a139bf')
+    newFormData.append('channelId', '66f4aabccdb3ce68a6a139bf')
     addPostMutation.mutate(newFormData)
   }
 

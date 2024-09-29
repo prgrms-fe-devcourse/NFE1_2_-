@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import CategorySelect from './CategorySelect/CategorySelect'
 import PostContent from './PostContent/PostContent'
 import PostCreateButton from './PostCreateButton/PostCreateButton'
@@ -6,50 +6,66 @@ import QuestionSelect from './QuestionSelect/QuestionSelect'
 import AddImage from './AddImage/AddImage'
 import DetailPageLayout from '@/layouts/DetailPageLayout/DetailPageLayout'
 import './PostCreate.css'
-
-interface PostData {
-  category: string
-  title: string
-  content: string
-  question: string
-}
+import { PostDetail } from '@/typings/types'
 
 const PostCreate = () => {
-  const [postData, setPostData] = useState<PostData>({
-    category: '',
+  const [postData, setPostData] = useState<PostDetail>({
+    type: '기타',
     title: '',
-    content: '',
-    question: '',
+    body: '',
+    checkCount: 0,
+    poll: {
+      title: '',
+      agree: 0,
+      disagree: 0,
+    },
   })
 
-  const [postImgUrl, setPostImgUrl] = useState<string | null>(null) 
+  const [postImgUrl, setPostImgUrl] = useState<string | null>(null)
 
-  const handlePostChange = (key: keyof PostData) => (value: string) => {
-    setPostData((prevState) => ({
-      ...prevState,
-      [key]: value,
-    }))
-  }
+  const handlePostChange = useCallback(
+    (key: keyof PostDetail) => (value: string) => {
+      setPostData((prevState) => ({
+        ...prevState,
+        [key]: value,
+      }))
+    },
+    [],
+  )
+
+  const handlePollChange = useCallback(
+    (key: keyof PostDetail['poll']) => (value: string) => {
+      setPostData((prevState) => ({
+        ...prevState,
+        poll: {
+          ...prevState.poll,
+          [key]: value,
+        },
+      }))
+    },
+    [],
+  )
+
   return (
     <DetailPageLayout>
       <div className='post-create'>
         <CategorySelect
-          category={postData.category}
-          onChangeCategory={handlePostChange('category')}
+          category={postData.type}
+          onChangeCategory={handlePostChange('type')}
         />
         <PostContent
           title={postData.title}
-          content={postData.content}
+          content={postData.body}
           onChangeTitle={handlePostChange('title')}
-          onChangeContent={handlePostChange('content')}
+          onChangeContent={handlePostChange('body')}
         />
-        <AddImage 
-        postImgUrl = {postImgUrl}
-        onChangeImgUrl = {setPostImgUrl}
+        <AddImage
+          postImgUrl={postImgUrl}
+          onChangeImgUrl={setPostImgUrl}
         />
         <QuestionSelect
-          question={postData.question}
-          onChangeQuestion={handlePostChange('question')}
+          question={postData.poll.title}
+          onChangeQuestion={handlePollChange('title')}
         />
         <PostCreateButton
           postData={postData}
