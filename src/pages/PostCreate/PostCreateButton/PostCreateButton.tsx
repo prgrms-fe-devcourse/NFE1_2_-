@@ -7,22 +7,27 @@ import { PostDetail } from '@/typings/types'
 
 interface PostCreateProps {
   postData: PostDetail
-  postImage: File | null //수정필요
+  postImage: File | null
 }
 
-const createPost = async (newPost: FormData) => {
+const createPost = async (newPost: FormData):Promise<void> => {
   const token = '' //localStorage에서 가져오도록 추후 수정
-  const response = await axios.post(
-    'https://kdt.frontend.5th.programmers.co.kr:5001/posts/create',
-    newPost,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
+  try {
+    const response = await axios.post(
+      'https://kdt.frontend.5th.programmers.co.kr:5001/posts/create',
+      newPost,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
       },
-    },
-  )
-  return response.data
+    )
+    return response.data
+  } catch (error) {
+    console.error('포스트 생성 오류:', error)
+    throw error
+  }
 }
 
 const PostCreateButton = (props: PostCreateProps) => {
