@@ -11,7 +11,7 @@ const PostSection = ({ post }: { post: Post }) => {
 
   useEffect(() => {
     const { _id } = author
-    const checkIsAuthor = _id === '66f36c0dcdb3ce68a6a135fc'
+    const checkIsAuthor = _id === import.meta.env.VITE_USER_ID
     setIsAuthor(checkIsAuthor)
   }, [author])
 
