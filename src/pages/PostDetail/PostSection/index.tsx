@@ -10,6 +10,7 @@ const PostSection = ({ post }: { post: Post }) => {
   const { likes, _id, author } = post
 
   useEffect(() => {
+    // 유저가 포스트의 author인지 판단, 그 후 수정 버튼 및 삭제 버튼 표시
     const { _id } = author
     const checkIsAuthor = _id === import.meta.env.VITE_USER_ID
     setIsAuthor(checkIsAuthor)
