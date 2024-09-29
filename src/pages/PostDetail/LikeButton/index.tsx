@@ -17,11 +17,12 @@ const token = import.meta.env.VITE_TOKEN
 const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
   const [isLiked, setIsLiked] = useState<boolean | null>(null)
 
+  // 업데이트가 필요하기 떄문에 useMutation 사용
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
     mutationFn: () => getLikedData(isLiked, { userId, token, postId }),
     onSuccess: () => {
-      setIsLiked((prevState) => !prevState)
+      setIsLiked(!isLiked)
       queryClient.invalidateQueries({ queryKey: ['post', postId] })
       if (isLiked) {
         const requestData: RequestData = {
@@ -39,6 +40,7 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
     const checkUserLike = likes.some(({ user }) => user === userId)
     setIsLiked(checkUserLike)
   }, [likes])
+
   const handleSubmitLiked = () => {
     mutate()
   }
