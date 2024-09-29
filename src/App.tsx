@@ -1,14 +1,20 @@
 import PostDetail from '@pages/PostDetail/PostDetail'
-import { Routes, Route } from 'react-router-dom'
+import PageLoader from '@pages/Loading/PageLoader'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const App = () => {
   return (
-    <Routes>
-      <Route
-        path='/postdetail'
-        element={<PostDetail />}
-      />
-    </Routes>
+    <Router>
+      <PageLoader>
+          <Routes>
+          <Route
+            path='/postdetail'
+            element={<PostDetail />}
+          />
+        </Routes>
+      </PageLoader>
+    </Router>
+ 
   )
 }
 
