@@ -7,12 +7,11 @@ import { PostDetail } from '@/typings/types'
 
 interface PostCreateProps {
   postData: PostDetail
-  postImgUrl: string | null //수정필요
+  postImage: File | null //수정필요
 }
 
 const createPost = async (newPost: FormData) => {
-  const token =
-    '' //localStorage에서 가져오도록 추후 수정
+  const token = '' //localStorage에서 가져오도록 추후 수정
   const response = await axios.post(
     'https://kdt.frontend.5th.programmers.co.kr:5001/posts/create',
     newPost,
@@ -27,7 +26,7 @@ const createPost = async (newPost: FormData) => {
 }
 
 const PostCreateButton = (props: PostCreateProps) => {
-  const { postData, postImgUrl } = props
+  const { postData, postImage } = props
   const addPostMutation = useMutation({
     mutationFn: createPost,
     onSuccess: (result) => {
@@ -55,8 +54,8 @@ const PostCreateButton = (props: PostCreateProps) => {
 
     const newFormData = new FormData()
     newFormData.append('title', JSON.stringify(postData))
-    if (postImgUrl) {
-      newFormData.append('image', postImgUrl)
+    if (postImage) {
+      newFormData.append('image', postImage)
     }
     newFormData.append('channelId', '66f4aabccdb3ce68a6a139bf')
     addPostMutation.mutate(newFormData)

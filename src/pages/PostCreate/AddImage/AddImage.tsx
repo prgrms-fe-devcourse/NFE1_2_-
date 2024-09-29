@@ -3,45 +3,46 @@ import PostPageButton from '@/components/PostPageButton/PostPageButton'
 import './AddImage.css'
 
 interface AddImageProps {
-  postImgUrl: string | null
-  onChangeImgUrl: (postImgUrl: string | null) => void
+  postImage: File | null
+  onChangeImage: (postImage: File | null) => void
 }
 
 const AddImage = (props: AddImageProps) => {
-  const { postImgUrl, onChangeImgUrl } = props
+  const { postImage, onChangeImage } = props
   const [isUpload, setIsUpload] = useState<boolean>(false)
-  const fileInput = useRef<HTMLInputElement | null>(null)
+  const imageInputRef = useRef<HTMLInputElement | null>(null)
   const handleAddImage = () => {
-    fileInput.current?.click()
+    imageInputRef.current?.click()
   }
+
   const handleDeleteImage = () => {
-    onChangeImgUrl(null)
+    onChangeImage(null)
     setIsUpload(false)
-    if (fileInput.current) {
-      fileInput.current.value = ''
+    if (imageInputRef.current) {
+      imageInputRef.current.value = ''
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const imgFile = e.target.files?.[0]
+  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const imgFile = e.target.files?.[0] || null
     if (imgFile) {
-      onChangeImgUrl(imgFile.name)
+      onChangeImage(imgFile)
       setIsUpload(true)
     }
   }
   return (
     <div className='add-image'>
       <div className='add-image-container'>
-        <p className='add-image-name'>{postImgUrl}</p>
+        <p className='add-image-name'>{postImage?.name}</p>
         <PostPageButton
           onClick={isUpload ? handleDeleteImage : handleAddImage}
           title={isUpload ? '사진삭제' : '사진추가'}
         />
         <input
           type='file'
-          ref={fileInput}
+          ref={imageInputRef}
           accept='image/*'
-          onChange={handleChange}
+          onChange={handleChangeImage}
           style={{ display: 'none' }}
         />
       </div>

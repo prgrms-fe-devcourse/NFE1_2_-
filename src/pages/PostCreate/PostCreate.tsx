@@ -20,8 +20,7 @@ const PostCreate = () => {
       disagree: 0,
     },
   })
-
-  const [postImgUrl, setPostImgUrl] = useState<string | null>(null)
+  const [postImage, setPostImage] = useState<File | null>(null)
 
   const handlePostChange = useCallback(
     (key: keyof PostDetail) => (value: string) => {
@@ -60,8 +59,8 @@ const PostCreate = () => {
           onChangeContent={handlePostChange('body')}
         />
         <AddImage
-          postImgUrl={postImgUrl}
-          onChangeImgUrl={setPostImgUrl}
+          postImage={postImage}
+          onChangeImage={setPostImage}
         />
         <QuestionSelect
           question={postData.poll.title}
@@ -69,7 +68,7 @@ const PostCreate = () => {
         />
         <PostCreateButton
           postData={postData}
-          postImgUrl={postImgUrl}
+          postImage={postImage}
         />
       </div>
     </DetailPageLayout>
