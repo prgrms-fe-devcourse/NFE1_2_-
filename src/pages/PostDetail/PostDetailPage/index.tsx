@@ -4,27 +4,20 @@ import DetailPageLayout from '@layouts/DetailPageLayout/DetailPageLayout'
 import MessageBtn from '../MessageBtn'
 import PostSection from '../PostSection'
 import './index.css'
-import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import formatPostData from '@/utils/formatPostData'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { getPostData } from '@/utils/api'
 
-const getPostData = async () => {
-  const response = await axios.get(
-    'https://kdt.frontend.5th.programmers.co.kr:5001/posts/66f6d523e5593e2a995daf58',
-  )
-
-  if (!response.status) {
-    const error = new Error('request error')
-    console.error(error)
-  }
-
-  return response.data
-}
-
-const PostDetailPage = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['post'],
-    queryFn: getPostData,
+const PostDetailPage = ({
+  postId = '66f6d523e5593e2a995daf58', //추후 프롭으로 받아와서 처리 예정,
+}: {
+  postId: string
+}) => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['post', postId],
+    queryFn: () => getPostData(postId),
   })
 
   if (isLoading) {
@@ -32,19 +25,26 @@ const PostDetailPage = () => {
   }
 
   if (isError) {
-    return <div></div>
+    return <div>{error.message}</div>
   }
 
   if (data) {
     const post = formatPostData(data)
-
+    const { comments } = post
     return (
-      <DetailPageLayout pageName='post-detail'>
-        <PostSection post={post} />
-        <PostPoll />
-        <CommentSection />
-        <MessageBtn />
-      </DetailPageLayout>
+      <>
+        <ToastContainer
+          position='top-right'
+          autoClose={3000}
+          limit={1}
+        />
+        <DetailPageLayout pageName='post-detail'>
+          <PostSection post={post} />
+          <PostPoll />
+          <CommentSection comments={comments} />
+          <MessageBtn />
+        </DetailPageLayout>
+      </>
     )
   }
 }

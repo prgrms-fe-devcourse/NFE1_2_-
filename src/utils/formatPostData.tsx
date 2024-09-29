@@ -15,15 +15,21 @@ interface PostData {
 
 const formatPostData = (data: PostData) => {
   const { title, author } = data
-  const userData = JSON.parse(author.fullName)
-  let postDetail = JSON.parse(title)
-  let { poll } = postDetail
-  poll = {
-    ...poll,
-    agree: parseInt(poll.agree),
-    disagree: parseInt(poll.disagree),
+
+  let userData
+  if (typeof author.fullName === 'string') {
+    userData = JSON.parse(author.fullName)
+  } else {
+    userData = author.fullName
   }
-  postDetail = { ...postDetail, poll }
+
+  let postDetail
+  if (typeof title === 'string') {
+    postDetail = JSON.parse(title)
+  } else {
+    postDetail = title
+  }
+
   const post: Post = {
     ...data,
     title: postDetail,
