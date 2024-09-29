@@ -4,7 +4,7 @@ import './index.css'
 import { Like } from '@/typings/types'
 import { FC, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { getLikedData } from '@/utils/api'
+import { getLikedData, postNotification, RequestData } from '@/utils/api'
 
 interface LikeButtonProps {
   likes: Like[]
@@ -13,12 +13,6 @@ interface LikeButtonProps {
 
 const userId = import.meta.env.VITE_USER_ID
 const token = import.meta.env.VITE_TOKEN
-
-/**
- *
- * 현재는 env에 있는 토큰 값을 사용하지만 추후 로그인시 설계된 id를 가져와 사용예정
- * 추후 옵티미스틱 UI 및 디바운싱 처리 예정
- */
 
 const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
   const [isLiked, setIsLiked] = useState<boolean | null>(null)
@@ -29,6 +23,14 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
     onSuccess: () => {
       setIsLiked((prevState) => !prevState)
       queryClient.invalidateQueries({ queryKey: ['post', postId] })
+      if (isLiked) {
+        const requestData: RequestData = {
+          notificationType: 'LIKE',
+          postId,
+          userId,
+        }
+        postNotification(requestData, token)
+      }
     },
   })
 
@@ -37,7 +39,6 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
     const checkUserLike = likes.some(({ user }) => user === userId)
     setIsLiked(checkUserLike)
   }, [likes])
-
   const handleSubmitLiked = () => {
     mutate()
   }
