@@ -3,20 +3,30 @@ import { Poll } from '@/typings/types'
 const AfterPoll = ({ poll }: { poll: Poll }) => {
   const formatGraphData = (poll: Poll) => {
     const { agree, disagree } = poll
-    const agreeVoteLength = agree.length
-    const disagreeVoteLength = disagree.length
-    const totalVotes = agreeVoteLength + disagreeVoteLength
+    const totalVotes = agree.length + disagree.length
 
-    const agreePercentage =
-      totalVotes === 0 ? 0 : Math.floor((agreeVoteLength / totalVotes) * 100)
+    const calculatePercentage = (count: number) =>
+      totalVotes === 0 ? 0 : Math.floor((count / totalVotes) * 100)
 
-    const disagreePercentage =
-      totalVotes === 0 ? 0 : Math.floor((disagreeVoteLength / totalVotes) * 100)
-
-    return { agreePercentage, disagreePercentage }
+    return {
+      agreePercentage: calculatePercentage(agree.length),
+      disagreePercentage: calculatePercentage(disagree.length),
+    }
   }
 
   const { agreePercentage, disagreePercentage } = formatGraphData(poll)
+
+  const renderGraph = (percentage: number, className: string) => (
+    <div
+      className={`poll-graph ${className}`}
+      style={{
+        width: `${percentage}%`,
+        display: percentage === 0 ? 'none' : 'flex',
+      }}
+    >
+      {percentage > 0 && <p>{percentage} %</p>}
+    </div>
+  )
 
   return (
     <div className='poll-result-container'>
@@ -25,24 +35,8 @@ const AfterPoll = ({ poll }: { poll: Poll }) => {
         <p>반대</p>
       </div>
       <div className='poll-graph-container'>
-        <div
-          className='poll-grah agree'
-          style={{
-            width: `${agreePercentage}%`,
-            display: agreePercentage === 0 ? 'none' : '',
-          }}
-        >
-          <p>{agreePercentage} %</p>
-        </div>
-        <div
-          className='poll-grah disagree'
-          style={{
-            width: `${disagreePercentage}%`,
-            display: disagreePercentage === 0 ? 'none' : '',
-          }}
-        >
-          {disagreePercentage === 0 ? null : <p>{disagreePercentage} %</p>}
-        </div>
+        {renderGraph(agreePercentage, 'agree')}
+        {renderGraph(disagreePercentage, 'disagree')}
       </div>
     </div>
   )
