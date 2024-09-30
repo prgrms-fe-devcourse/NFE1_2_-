@@ -1,0 +1,10 @@
+#post-detail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+#post-detail > :nth-child(2) {
+  margin-top: -5rem;
+}
