@@ -1,9 +1,10 @@
 import axios from 'axios'
-import { Like, Poll, Post, User } from '@/typings/types'
+import { Like, Post, User } from '@/typings/types'
 import formatPostData from './formatPostData'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
 export const USER_ID = import.meta.env.VITE_USER_ID
+export const USER_TOKEN = import.meta.env.VITE_TOKEN
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
     throw new Error('서버 통신 오류')
@@ -176,7 +177,18 @@ export const postNotification = async (
   }
 }
 
-export const formatPostPollData = async (postId: string, pollData: Poll) => {
+export interface PollData {
+  user: string
+  voted: 'agree' | 'disagree'
+}
+
+export const formatPostPollData = async (
+  postId: string,
+  pollData: PollData,
+) => {
+  if (pollData === null) {
+    return undefined
+  }
   const postData = await getPostData(postId)
   const formatData: Post = formatPostData(postData)
   const {
@@ -186,7 +198,10 @@ export const formatPostPollData = async (postId: string, pollData: Poll) => {
   } = formatData
 
   const { poll } = title
-  const { agree, disagree } = pollData
+  // 기존 투표 데이터를 가져오고, 사용자 투표 정보를 추가
+  const { user, voted } = pollData
+  const agree = voted === 'agree' ? [user] : []
+  const disagree = voted === 'disagree' ? [user] : []
 
   // 현재 포스트 데이터의 poll 데이터와 사용자의 데이터를 합칩니다.
   const mergePoll = {
@@ -201,10 +216,12 @@ export const formatPostPollData = async (postId: string, pollData: Poll) => {
   return { postId, title: formatTitle, image, channelId: _id }
 }
 
-export const postFormData = async (postId: string, pollData: Poll) => {
+export const postFormData = async (postId: string, pollData: PollData) => {
   const postPollData = await formatPostPollData(postId, pollData)
+  if (!postPollData) {
+    return
+  }
   const postPollForm = new FormData()
-
   Object.entries(postPollData).forEach(([key, value]) => {
     postPollForm.append(key, value as string)
   })
@@ -212,17 +229,20 @@ export const postFormData = async (postId: string, pollData: Poll) => {
   return postPollForm
 }
 
-export const postPoll = async (
-  postId: string,
-  pollData: Poll,
-  token: string,
-) => {
-  const formData = await postFormData(postId, pollData)
-  const response = await axios.put(`${END_POINT}posts/update`, formData, {
-    headers: {
-      Authorization: `beare ${token}`,
-    },
-  })
+const ADMIN_TOKEN = import.meta.env.VITE_ADMIN_TOKEN
 
-  return response
+export const postPoll = async (postId: string, pollData: PollData) => {
+  const formData = await postFormData(postId, pollData)
+  try {
+    const response = await axios.put(`${END_POINT}posts/update`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `bearer ${ADMIN_TOKEN}`,
+      },
+    })
+
+    return response
+  } catch (error) {
+    throw handleError(error)
+  }
 }

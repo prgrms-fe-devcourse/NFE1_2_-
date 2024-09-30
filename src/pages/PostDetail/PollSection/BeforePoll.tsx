@@ -1,7 +1,7 @@
 import AgreeOptionImg from '@assets/imgs/agree.png'
 import DisAgreeOptionImg from '@assets/imgs/disagree.png'
-import { useMutation } from '@tanstack/react-query'
-import { USER_ID } from '@utils/api'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { PollData, postPoll, USER_ID } from '@utils/api'
 import { useCallback } from 'react'
 
 interface BeforePollProps {
@@ -10,17 +10,32 @@ interface BeforePollProps {
 }
 
 const BeforePoll = ({ postId, setIsVoted }: BeforePollProps) => {
-  console.log(postId, setIsVoted)
-  const { mutate } = useMutation({
-    onMutate: () => {},
-    onSuccess: () => {},
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: (pollData: PollData) => postPoll(postId, pollData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', postId] })
+      setIsVoted(true)
+    },
+    onError: (error) => {
+      console.error('투표 실패', error)
+    },
   })
+
   const handleSubmitPoll = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
-      console.log(event.currentTarget.getAttribute('aria-label'))
+      const voteSection = event.currentTarget.getAttribute('aria-label')
+      const pollData: PollData =
+        voteSection === 'agree'
+          ? { user: USER_ID, voted: 'agree' }
+          : { user: USER_ID, voted: 'disagree' }
+
+      // useMutation으로 투표 요청 실행
+      mutation.mutate(pollData)
     },
-    [],
+    [mutation],
   )
+
   return (
     <div className='poll-option-container'>
       <div className='poll-option'>

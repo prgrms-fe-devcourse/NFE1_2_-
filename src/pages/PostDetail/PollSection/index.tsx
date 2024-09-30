@@ -6,38 +6,35 @@ import { Post } from '@/typings/types'
 
 const PollSection = ({ post }: { post: Post }) => {
   const [isVoted, setIsVoted] = useState<boolean | null>(null)
+  console.log(post)
+  useEffect(() => {
+    // 유저가 작성자 또는 투표를 완료했는지 검증
+    const {
+      author,
+      title: { poll },
+    } = post
+    const { agree, disagree } = poll
+    const voterList = [...agree, ...disagree]
+    const checkIsAhuthor = import.meta.env.VITE_USER_ID === author._id
+    const checkIsVoter = voterList.some(
+      (voter) => voter === import.meta.env.VITE_USER_ID,
+    )
+    const checkValidUser = checkIsAhuthor || checkIsVoter
 
-  // useEffect(() => {
-  //   // 유저가 작성자 또는 투표를 완료했는지 검증
-  //   const {
-  //     author,
-  //     title: { poll },
-  //   } = post
-  //   const { agree, disagree } = poll
-  //   const voterList = [...agree, ...disagree]
-  //   const checkIsAhuthor = import.meta.env.VITE_USER_ID === author._id
-  //   const checkIsVoter = voterList.some(
-  //     ({ _id }) => _id === import.meta.env.VITE_USER_ID,
-  //   )
-  //   const checkValidUser = checkIsAhuthor || checkIsVoter
-
-  //   setIsVoted(checkValidUser)
-  // }, [post])
+    setIsVoted(checkValidUser)
+  }, [post])
 
   const {
     _id,
     title: { poll },
   } = post
-  const { title, agree, disagree } = poll
 
+  const { title } = poll
   return (
     <div className='poll-container'>
       <h3 className='poll-title'>{title}</h3>
       {isVoted ? (
-        <AfterPoll
-          agree={agree}
-          disagree={disagree}
-        />
+        <AfterPoll poll={poll} />
       ) : (
         <BeforePoll
           postId={_id}
