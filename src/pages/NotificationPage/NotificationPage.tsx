@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 
 const getNotification = async (): Promise<Notification[]> => {
   const token =
-    '' //localStorage에서 가져오도록 추후 수정
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ZjkwMWNjMzYyN2UzNTYzZTMyNzIyNCIsImVtYWlsIjoibGVlQGdtYWlsLmNvbSJ9LCJpYXQiOjE3Mjc1OTQ5NTZ9.2dbp6G3LSvdVMCUCDRscDfmPJTjrsQiPgONM7AmQ7eA' //localStorage에서 가져오도록 추후 수정
   try {
     const response = await axios.get<Notification[]>(
       'https://kdt.frontend.5th.programmers.co.kr:5001/notifications',
@@ -40,11 +40,16 @@ const NotificationPage = () => {
   }
 
   console.log(data)
-  const unreadNotifications = data?.filter(
-    (notification) => notification.seen === false
-  )
+  const unreadNotifications = data?.filter((notification) => !notification.seen)
 
   console.log(unreadNotifications)
+
+  const likeNotification = data?.filter((notification) => notification?.like !== undefined)
+  const commentNotification = data?.filter((notification) => notification?.comment !== undefined)
+
+  console.log('좋아요알림',likeNotification )
+  console.log('댓글알림',commentNotification )
+
   return (
     <DetailPageLayout
       pageName='notification'
