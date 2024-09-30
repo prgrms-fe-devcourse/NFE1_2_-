@@ -10,13 +10,14 @@
   font-weight: normal;
 }
 
-section {
+/* section {
   padding-inline: 1.5rem;
-}
+} */
 
 button {
   border: none;
   cursor: pointer;
+  background: none;
 }
 
 /* NotoSansKR Medium */
