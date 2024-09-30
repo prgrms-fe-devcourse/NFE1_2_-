@@ -1,6 +1,7 @@
 import ReplyIcon from '@assets/icons/details_reply.svg?react'
+import CommentCard from '../CommentCard'
 import './index.css'
-import CommentCard from '../CommentCard/indext'
+
 const ReplyCard = () => {
   return (
     <div className='reply-card'>

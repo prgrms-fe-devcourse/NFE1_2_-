@@ -1,11 +1,14 @@
 import MessageBtnIcon from '@assets/icons/details_comments_btn.svg?react'
 import './index.css'
-const MessageBtn = () => {
+const MessageBtn = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button className='message-btn'>
+    <button
+      className='message-btn'
+      onClick={onClick}
+    >
       <MessageBtnIcon
-        width={40}
-        height={40}
+        width={35}
+        height={35}
       />
     </button>
   )

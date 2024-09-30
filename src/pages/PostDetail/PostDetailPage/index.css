@@ -2,9 +2,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 3.5rem;
+
+  .top-navigator {
+    padding-block: 1rem;
+  }
 }
 
 #post-detail > :nth-child(2) {
-  margin-top: -5rem;
+  margin-top: -3.5rem;
 }

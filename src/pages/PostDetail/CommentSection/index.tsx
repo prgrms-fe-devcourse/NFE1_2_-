@@ -1,17 +1,24 @@
-import { Comment } from '@/typings/types'
-import CommentCard from '../CommentCard/indext'
-import ReplyCard from '../ReplyCard'
+import { Post } from '@/typings/types'
 import './index.css'
+import { useState } from 'react'
+import MessageBtn from '../MessageBtn'
+import MessageInput from '../MessageInput'
 
-const CommentSection = ({ comments }: { comments: Comment[] }) => {
+const CommentSection = ({ post }: { post: Post }) => {
+  const [inputState, setInputState] = useState(false)
+  const { comments } = post
+
+  const handleModalState = () => {
+    setInputState(!inputState)
+  }
   return (
-    <section className='comment-section'>
-      <p className='comment-total'>댓글 {comments.length}</p>
-      <CommentCard />
-      <ReplyCard />
-      <ReplyCard />
-      <CommentCard />
-    </section>
+    <>
+      <section className='comment-section'>
+        <p className='comment-total'>댓글 {comments.length}</p>
+        <MessageBtn onClick={handleModalState} />
+        {inputState && <MessageInput onClick={handleModalState} />}
+      </section>
+    </>
   )
 }
 
