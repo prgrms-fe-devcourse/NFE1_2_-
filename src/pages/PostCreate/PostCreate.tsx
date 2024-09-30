@@ -16,8 +16,8 @@ const PostCreate = () => {
     checkCount: 0,
     poll: {
       title: '',
-      agree: 0,
-      disagree: 0,
+      agree: [],
+      disagree: [],
     },
   })
   const [postImage, setPostImage] = useState<File | null>(null)
