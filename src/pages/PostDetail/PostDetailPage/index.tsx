@@ -42,7 +42,7 @@ const PostDetailPage = ({
         />
         <DetailPageLayout pageName='post-detail'>
           <PostSection post={post} />
-          <PostPoll />
+          <PostPoll post={post} />
           <CommentSection comments={comments} />
           <MessageBtn />
         </DetailPageLayout>

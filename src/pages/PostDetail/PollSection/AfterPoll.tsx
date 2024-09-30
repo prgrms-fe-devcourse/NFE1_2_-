@@ -1,4 +1,13 @@
-const AfterPoll = () => {
+import { User } from '@/typings/types'
+
+const AfterPoll = ({
+  agree,
+  disagree,
+}: {
+  agree: User[]
+  disagree: User[]
+}) => {
+  console.log(agree, disagree)
   return (
     <div className='poll-result-container'>
       <div className='poll-result-title'>

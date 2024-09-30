@@ -1,14 +1,31 @@
 import AgreeOptionImg from '@assets/imgs/agree.png'
 import DisAgreeOptionImg from '@assets/imgs/disagree.png'
+import { useMutation } from '@tanstack/react-query'
+import { USER_ID } from '@utils/api'
+import { useCallback } from 'react'
 
-const BeforePoll = ({ onClick }: { onClick: () => void }) => {
+interface BeforePollProps {
+  postId: string
+  setIsVoted: React.Dispatch<React.SetStateAction<boolean | null>>
+}
+
+const BeforePoll = ({ postId, setIsVoted }: BeforePollProps) => {
+  console.log(postId)
+  const { mutate } = useMutation({})
+  const handleSubmitPoll = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      console.log(event.currentTarget.getAttribute('aria-label'))
+    },
+    [],
+  )
   return (
     <div className='poll-option-container'>
       <div className='poll-option'>
         <p>찬성</p>
         <button
           className='poll-button'
-          onClick={onClick}
+          aria-label='agree'
+          onClick={(event) => handleSubmitPoll(event)}
         >
           <img
             src={AgreeOptionImg}
@@ -20,7 +37,8 @@ const BeforePoll = ({ onClick }: { onClick: () => void }) => {
         <p>반대</p>
         <button
           className='poll-button'
-          onClick={onClick}
+          aria-label='disagree'
+          onClick={(event) => handleSubmitPoll(event)}
         >
           <img
             src={DisAgreeOptionImg}

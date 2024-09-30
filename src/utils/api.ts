@@ -1,8 +1,10 @@
 import axios from 'axios'
-import { Like, Post, User } from '@/typings/types'
+import { Like, Poll, Post, PostDetail, User } from '@/typings/types'
+import formatPostData from './formatPostData'
+import { data } from '@remix-run/router/dist/utils'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
-
+export const USER_ID = import.meta.env.VITE_USER_ID
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
     throw new Error('서버 통신 오류')
@@ -173,4 +175,36 @@ export const postNotification = async (
   } catch (error) {
     throw handleError(error)
   }
+}
+
+export const formatPostPollData = async (postId: string, pollData: Poll) => {
+  const postData = await getPostData(postId)
+  const formatData: Post = formatPostData(postData)
+  const {
+    title,
+    image,
+    channel: { _id },
+  } = formatData
+  const { poll } = title
+
+  const { agree, disagree } = pollData
+  const formatPoll = {
+    title: poll.title,
+    agree: [...poll.agree, ...agree],
+    disagree: [...poll.disagree, ...disagree],
+  }
+  const formatTitle = JSON.stringify({ ...title, poll: formatPoll })
+
+  return { postId, title: formatTitle, image, channelId: _id }
+}
+
+export const postPoll = async (postId: string, pollData: Poll) => {
+  const postPollData = await formatPostPollData(postId, pollData)
+  const postPollForm = new FormData()
+
+  Object.entries(postPollData).forEach(([key, value]) => {
+    postPollForm.append(key, value)
+  })
+
+  return postPollData
 }
