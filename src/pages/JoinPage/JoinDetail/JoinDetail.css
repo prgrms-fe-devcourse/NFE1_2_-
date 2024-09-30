@@ -1,0 +1,61 @@
+.join-detail {
+    padding: 20px;
+  }
+  
+  .join-detail h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .join-detail h3 {
+    font-size: 1.0rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .gender-selector, .birth-date-selector, .mbti-selector {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #EEEEEE; 
+  }
+  
+  .gender-options {
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+  }
+  
+  .gender-options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .gender-options input[type="radio"] {
+    margin-left: 15px;
+  }
+  
+  .birth-date-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .birth-date-selector h3 {
+    align-self: flex-start;
+  }
+  
+  .birth-date-selector input {
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    align-self: center;
+  }
+  
+  .mbti-selector {
+    width: 100%;
+    border-bottom: none; 
+  }
