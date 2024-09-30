@@ -10,7 +10,7 @@ import { PostDetail } from '@/typings/types'
 
 const PostCreate = () => {
   const [postData, setPostData] = useState<PostDetail>({
-    type: '기타',
+    type: '카테고리',
     title: '',
     body: '',
     checkCount: 0,
