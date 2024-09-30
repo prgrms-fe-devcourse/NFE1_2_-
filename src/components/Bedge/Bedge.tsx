@@ -14,12 +14,12 @@ interface BedgeProps {
 
 const Bedge = ({ type, body }: BedgeProps) => {
   return (
-    <button
+    <div
       className='bedge'
       id={type}
     >
       {body}
-    </button>
+    </div>
   )
 }
 

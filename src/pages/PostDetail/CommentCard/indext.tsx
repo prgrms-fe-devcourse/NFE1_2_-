@@ -2,7 +2,7 @@ import Bedge from '@components/Bedge/Bedge'
 import DetailTimeIcon from '@assets/icons/details_time.svg?react'
 import DetailLikeIcon from '@assets/icons/heart_before_select.svg?react'
 import DetailMessage from '@assets/icons/details_comment.svg?react'
-import './CommentCard.css'
+import './index.css'
 
 const CommentCard = () => {
   return (

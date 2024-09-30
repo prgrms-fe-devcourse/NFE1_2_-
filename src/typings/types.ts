@@ -8,13 +8,13 @@ export interface User {
   isOnline: boolean
   posts: Post[]
   likes: Like[]
-  comments: string[]
+  comments: Comment[]
   followers: User[]
   following: Following[]
   notifications: Notification[]
   messages: Message[]
   _id: string
-  fullName: UserDetailData
+  fullName: string | UserDetailData
   email: string
   createdAt: string
   updatedAt: string
@@ -83,7 +83,7 @@ export interface Like {
 // Comment 모델
 export interface Comment {
   _id: string
-  comment: CommentDetail
+  comment: string | CommentDetail
   author: User
   post: string // 포스트 id
   createdAt: string
