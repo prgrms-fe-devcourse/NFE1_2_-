@@ -1,94 +1,95 @@
 .join-page-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    height: 100vh; /* 화면 전체를 채우도록 설정 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  height: 100vh; /* 화면 전체를 채우도록 설정 */
 }
 
 .logo {
-    margin-top: 100px;
-    margin-bottom: 50px;
+  margin-top: 100px;
+  margin-bottom: 50px;
 }
 
 .form-section {
-    width: 100%;
-    max-width: 300px;
-    flex-grow: 1;
+  width: 100%;
+  max-width: 300px;
+  flex-grow: 1;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
 }
 
 .input-wrapper {
-    /* margin-bottom: 20px; */
-    min-height: 80px; /* 에러 메시지가 표시될 공간 확보 */
+  min-height: 80px; /* 에러 메시지가 표시될 공간 확보 */
 }
 
 .label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 0.8rem;
-    color: #393939;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+  color: #393939;
+}
+
+.label input {
+  margin-right: 20px;
 }
 
 .input {
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid #7d7d7d;
-    font-size: 16px;
-    outline: none;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #7d7d7d;
+  font-size: 16px;
+  outline: none;
 }
-input::placeholder{
-    font-size: 12px;
+input::placeholder {
+  font-size: 12px;
 }
 
 .error {
-    color: red;
-    font-size: 0.7rem; 
-    margin-top: 5px; 
-   
+  color: red;
+  font-size: 0.7rem;
+  margin-top: 5px;
 }
 
 .details-button {
-    width: 100%;
-    padding: 10px 0;
-    background-color: #F2F2F2;
-    color: #7d7d7d;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  background-color: #f2f2f2;
+  color: #7d7d7d;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
 }
 
-
 .join-link {
-    display: block;
-    text-align: center;
-    color: #7d7d7d;
-    text-decoration: none;
-    font-size: 14px;
-    margin-top: auto;
+  display: block;
+  text-align: center;
+  color: #7d7d7d;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: auto;
 }
 
 .join-link span {
-    font-weight: 600;
-    color: #393939;
+  font-weight: 600;
+  color: #393939;
 }
 
 .submit-button {
-    width: 100%;
-    padding: 10px 0;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-    text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  text-align: center;
 }
