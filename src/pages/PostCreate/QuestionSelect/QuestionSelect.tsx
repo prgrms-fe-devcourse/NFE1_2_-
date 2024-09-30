@@ -35,7 +35,7 @@ const QuestionSelect = (props: QuestionProps) => {
       {isModalOpen && (
         <BottomModal
           onClick={() => setIsModalOpen(false)}
-          buttonText='닫기'
+          buttonText={question === '' ? '닫기' : '확인'}
         >
           <QuestionModal
             question={question}

@@ -26,12 +26,14 @@ const QuestionModal = (props: QuestionProps) => {
   }
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuestion: string = e.target.value
-    setIsQuestion(newQuestion.includes('?'))
-    if (newQuestion.includes('?')) {
+    const newQuestion: string = e.target.value.trim()
+    const regex = /.+\?$/
+    setIsQuestion(regex.test(newQuestion))
+    if (regex.test(newQuestion)) {
       onChangeQuestion(newQuestion)
     }
   }
+  
   const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
     const currentValue = (e.target as HTMLInputElement).value
     onChangeQuestion(currentValue)
@@ -61,18 +63,19 @@ const QuestionModal = (props: QuestionProps) => {
         ))}
       </div>
       <div className='question-list-input-container'>
-        <p
-          className={`question-list-input-title ${!isInputActive || isQuestion ? '' : 'question-false'}`}
-        >
-          질문 형태로 입력해주세요.
-        </p>
+        <p className={'question-list-input-title'}>질문 직접 입력하기</p>
         <input
           type='text'
-          placeholder='질문 직접 입력'
+          placeholder='예) 어떻게 할까요? '
           className={`question-list-input ${isInputActive ? 'active' : ''}`}
           onChange={handleQuestionChange}
           onClick={handleInputClick}
         />
+        <p
+          className={`question-list-error ${!isInputActive || isQuestion ? '' : 'question-false'}`}
+        >
+          질문 형태로 입력해주세요.
+        </p>
       </div>
     </div>
   )
