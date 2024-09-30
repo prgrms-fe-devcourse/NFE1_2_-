@@ -10,8 +10,11 @@ interface BeforePollProps {
 }
 
 const BeforePoll = ({ postId, setIsVoted }: BeforePollProps) => {
-  console.log(postId)
-  const { mutate } = useMutation({})
+  console.log(postId, setIsVoted)
+  const { mutate } = useMutation({
+    onMutate: () => {},
+    onSuccess: () => {},
+  })
   const handleSubmitPoll = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       console.log(event.currentTarget.getAttribute('aria-label'))

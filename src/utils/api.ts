@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { Like, Poll, Post, PostDetail, User } from '@/typings/types'
+import { Like, Poll, Post, User } from '@/typings/types'
 import formatPostData from './formatPostData'
-import { data } from '@remix-run/router/dist/utils'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
 export const USER_ID = import.meta.env.VITE_USER_ID
@@ -185,26 +184,45 @@ export const formatPostPollData = async (postId: string, pollData: Poll) => {
     image,
     channel: { _id },
   } = formatData
-  const { poll } = title
 
+  const { poll } = title
   const { agree, disagree } = pollData
-  const formatPoll = {
+
+  // 현재 포스트 데이터의 poll 데이터와 사용자의 데이터를 합칩니다.
+  const mergePoll = {
     title: poll.title,
     agree: [...poll.agree, ...agree],
     disagree: [...poll.disagree, ...disagree],
   }
-  const formatTitle = JSON.stringify({ ...title, poll: formatPoll })
+
+  // poll 데이터를 포함한 title 값을 포맷해줍니다.
+  const formatTitle = JSON.stringify({ ...title, poll: mergePoll })
 
   return { postId, title: formatTitle, image, channelId: _id }
 }
 
-export const postPoll = async (postId: string, pollData: Poll) => {
+export const postFormData = async (postId: string, pollData: Poll) => {
   const postPollData = await formatPostPollData(postId, pollData)
   const postPollForm = new FormData()
 
   Object.entries(postPollData).forEach(([key, value]) => {
-    postPollForm.append(key, value)
+    postPollForm.append(key, value as string)
   })
 
-  return postPollData
+  return postPollForm
+}
+
+export const postPoll = async (
+  postId: string,
+  pollData: Poll,
+  token: string,
+) => {
+  const formData = await postFormData(postId, pollData)
+  const response = await axios.put(`${END_POINT}posts/update`, formData, {
+    headers: {
+      Authorization: `beare ${token}`,
+    },
+  })
+
+  return response
 }
