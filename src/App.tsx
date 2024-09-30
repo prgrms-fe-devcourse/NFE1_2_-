@@ -20,10 +20,6 @@ const App = () => {
         element={<PostCreate />}
       />
       <Route
-        path='/create-post'
-        element={<PostCreate />}
-      />
-      <Route
         path='/notification'
         element={<NotificationPage />}
       />
