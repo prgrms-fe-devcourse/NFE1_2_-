@@ -1,0 +1,12 @@
+.post-create-button-container {
+  display: flex;
+  justify-content: center;
+
+  .post-create-button {
+    width: 80%;
+    height: 45px;
+    border-radius: 20px;
+    background-color: #393939;
+    color: #ffffff;
+  }
+}
