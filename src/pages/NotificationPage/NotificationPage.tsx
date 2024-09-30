@@ -5,7 +5,6 @@ import NotificationContainer from './NotificationContainer/NotificationContainer
 import { Notification } from '@/typings/types'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import formatTime from '@/utils/formatTime'
 import timeSeparation from '@/utils/timeSeparation'
 
 const getNotification = async (): Promise<Notification[]> => {
@@ -41,21 +40,18 @@ const NotificationPage = () => {
     return <div>Error: {error.message}</div>
   }
 
-  console.log(data)
-  const unreadNotifications: Notification[] | undefined = data?.filter(
-    (notification) => !notification.seen,
-  )
-
-  console.log(unreadNotifications)
-
-  const todayNotifications: Notification[] | undefined = []
-  const yesterdayNotifications: Notification[] | undefined = []
-  const weekNotifications: Notification[] | undefined = []
-  const pastNotifications: Notification[] | undefined = []
+  const unreadNotifications: Notification[] = []
+  const todayNotifications: Notification[] = []
+  const yesterdayNotifications: Notification[] = []
+  const weekNotifications: Notification[] = []
+  const pastNotifications: Notification[] = []
 
   data?.forEach((notification) => {
     const timeNotification = timeSeparation(notification.createdAt)
-    if (timeNotification === 'TODAY') {
+
+    if (!notification.seen) {
+      unreadNotifications?.push(notification)
+    } else if (timeNotification === 'TODAY') {
       todayNotifications?.push(notification)
     } else if (timeNotification === 'YESTERDAY') {
       yesterdayNotifications?.push(notification)
@@ -65,25 +61,6 @@ const NotificationPage = () => {
       pastNotifications?.push(notification)
     }
   })
-
-  console.log('오늘', todayNotifications)
-  console.log('어제', yesterdayNotifications)
-  console.log('7일', weekNotifications)
-  console.log('과거', pastNotifications)
-
-  // const likeNotification = data?.filter(
-  //   (notification) => notification?.like !== undefined,
-  // )
-  // const commentNotification = data?.filter(
-  //   (notification) => notification?.comment !== undefined,
-  // )
-
-  // console.log('좋아요알림', likeNotification)
-  // console.log('댓글알림', commentNotification)
-
-  // console.log(
-  //   likeNotification?.map((notification) => formatTime(notification.createdAt)),
-  // )
 
   return (
     <DetailPageLayout
@@ -96,25 +73,25 @@ const NotificationPage = () => {
           notifications={unreadNotifications}
         />
       )}
-      {todayNotifications.length > 1 && (
+      {todayNotifications.length > 0 && (
         <NotificationContainer
           period='오늘'
           notifications={todayNotifications}
         />
       )}
-      {yesterdayNotifications.length > 1 && (
+      {yesterdayNotifications.length > 0 && (
         <NotificationContainer
           period='어제'
           notifications={yesterdayNotifications}
         />
       )}
-      {weekNotifications.length > 1 && (
+      {weekNotifications.length > 0 && (
         <NotificationContainer
           period='최근 7일'
           notifications={weekNotifications}
         />
       )}
-      {pastNotifications.length > 1 && (
+      {pastNotifications.length > 0 && (
         <NotificationContainer
           period='이전 활동'
           notifications={pastNotifications}

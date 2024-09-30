@@ -1,11 +1,23 @@
 import './NotificationContainer.css'
 import NotificationItem from '../NotificationItem/NotificationItem'
-const NotificationContainer = ({period} : {period : string}) => {
+import { Notification } from '@/typings/types'
+
+interface NotificationProps {
+  period: string
+  notifications: Notification[]
+}
+
+const NotificationContainer = (props: NotificationProps) => {
+  const { period, notifications } = props
   return (
     <div className='notification-container'>
       <p className='period-name'>{period}</p>
-      <NotificationItem />
-      <NotificationItem />
+      {notifications.map((notification, index) => (
+        <NotificationItem
+          key={index}
+          notification={notification}
+        />
+      ))}
       <div className='container-line' />
     </div>
   )
