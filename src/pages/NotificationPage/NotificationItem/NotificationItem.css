@@ -1,15 +1,17 @@
 .notification-item-container {
   display: flex;
-  justify-content: center;
+  width: 90%;
   margin: 1rem;
 
   .notification-item {
     display: flex;
     justify-content: center;
+    width: 100%;
 
     .notification-text-container{
       display: flex;
       flex-direction: column;
+      width: 100%;
       margin-left: 1rem;
   
       .notification-text{
