@@ -10,6 +10,7 @@ interface QuestionProps {
 
 const QuestionSelect = (props: QuestionProps) => {
   const { question, onChangeQuestion } = props
+  const [inputActive, setInputActive] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   return (
     <div className='question-select'>
@@ -40,6 +41,8 @@ const QuestionSelect = (props: QuestionProps) => {
           <QuestionModal
             question={question}
             onChangeQuestion={onChangeQuestion}
+            inputActive={inputActive}
+            onChangeInputActive={setInputActive}
           />
         </BottomModal>
       )}
