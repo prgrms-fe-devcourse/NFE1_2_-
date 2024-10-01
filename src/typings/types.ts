@@ -50,7 +50,7 @@ export interface Poll {
 
 // Post의 타이틀에 들어있는 데이터 베이스
 export interface PostDetail {
-  type: '이별' | '짝사랑' | '썸' | '데이트' | '기타' | '카테고리' //게시글 타입
+  type: '이별' | '짝사랑' | '썸' | '데이트' | '기타' //게시글 타입
   title: string // 포스트 타이틀
   body: string // 포스트 글
   checkCount: number // 게시글 확인 인원수
