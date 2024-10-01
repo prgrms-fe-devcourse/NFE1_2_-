@@ -11,6 +11,15 @@
   transition: box-shadow 0.3s;
 }
 
+.body.truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  -webkit-line-clamp: 2; 
+}
+
 .post-card .title {
   font-family: 'NotoSansKR';
 
