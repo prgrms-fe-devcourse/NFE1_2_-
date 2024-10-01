@@ -6,7 +6,8 @@ import './index.css'
 import { Comment } from '@/typings/types'
 import formatTime from '@/utils/formatTime'
 import { useEffect, useState } from 'react'
-import { USER_ID } from '@/utils/api'
+import { deleteComment, USER_ID } from '@/utils/api'
+import useCustomMutation from '@/hooks/useCustomMutaition'
 
 interface CommentCardProps {
   comment: Comment
@@ -15,6 +16,7 @@ interface CommentCardProps {
 
 const CommentCard = ({
   comment,
+  postId,
   handleModalState,
   onupdateParentInfo,
 }: CommentCardProps) => {
@@ -26,6 +28,16 @@ const CommentCard = ({
     setIsAuthor(checkIsAuthor)
   }, [comment])
 
+  const mutationFn = () => {
+    const commentId = _id
+    return deleteComment(commentId)
+  }
+  const { mutate } = useCustomMutation({
+    mutationFn,
+    queryKey: ['post', postId],
+  })
+
+  // 코멘트 데이터들
   const { createdAt, _id } = comment
   const { gender, ageGroup, mbti } = comment.author.fullName
   const userComment = comment.comment.comment
@@ -35,6 +47,9 @@ const CommentCard = ({
     onupdateParentInfo(parentCommentId)
     handleModalState()
   }
+
+  const handleDeleteCommentBtn = () => mutate()
+
   return (
     <div className='comment-card'>
       <div className='comment-personal-detail-container'>
@@ -88,7 +103,7 @@ const CommentCard = ({
           </div>
         </div>
         <div className='comment-detail-right'>
-          {isAuthor && <button>삭제</button>}
+          {isAuthor && <button onClick={handleDeleteCommentBtn}>삭제</button>}
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ const CommentSection = ({ post }: { post: Post }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [parentCommentInfo, setParentCommentInfo] = useState('')
 
+  const { _id } = post
   const { comments } = post
 
   const handleModalState = () => {
@@ -23,10 +24,12 @@ const CommentSection = ({ post }: { post: Post }) => {
     <>
       <section className='comment-section'>
         <p className='comment-total'>댓글 {comments.length}</p>
+        {!comments.length && <p>댓글을 남겨주세요.</p>}
         {comments.map((comment) => (
           <CommentCard
             key={comment._id}
             comment={comment}
+            postId={_id}
             handleModalState={handleModalState}
             onupdateParentInfo={handleUpdateParentInfo}
           />
