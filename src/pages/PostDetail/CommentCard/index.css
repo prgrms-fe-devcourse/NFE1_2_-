@@ -34,7 +34,10 @@
   gap: 0.8rem;
 
   span {
-    width: 3rem;
+    width: 3.4rem;
+  }
+  button {
+    color: #7d7d7d;
   }
 }
 
