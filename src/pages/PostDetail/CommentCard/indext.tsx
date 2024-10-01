@@ -4,7 +4,8 @@ import DetailLikeIcon from '@assets/icons/heart_before_select.svg?react'
 import DetailMessage from '@assets/icons/details_comment.svg?react'
 import './index.css'
 
-const CommentCard = () => {
+const CommentCard = ({ comment }) => {
+  console.log(comment)
   return (
     <div className='comment-card'>
       <div className='comment-personal-detail-container'>
