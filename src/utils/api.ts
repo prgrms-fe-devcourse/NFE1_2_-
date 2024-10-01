@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { Like, Post, User } from '@/typings/types'
+import { Like, Message, Post, User } from '@/typings/types'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
+const TOKEN = import.meta.env.VITE_TOKEN
 
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
@@ -10,6 +11,12 @@ const handleError = (error: unknown): never => {
     console.error(error)
     throw new Error('예기치 못한 오류')
   }
+}
+
+const RequestHeader = {
+  headers: {
+    Authorization: `bearer ${TOKEN}`,
+  },
 }
 
 export const getPostData = async (postId: string): Promise<Post> => {
@@ -38,11 +45,8 @@ export const getUserLikedData = async (
   return likes.find((like) => like.post === postId)?._id
 }
 
-export const cancelLiked = async (
-  likeId: string | undefined,
-  token: string,
-) => {
-  if (!likeId || !token) {
+export const cancelLiked = async (likeId: string | undefined) => {
+  if (!likeId) {
     return
   }
 
@@ -50,9 +54,6 @@ export const cancelLiked = async (
     const response = await axios.delete(`${END_POINT}likes/delete`, {
       data: {
         id: likeId,
-      },
-      headers: {
-        Authorization: `bearer ${token}`,
       },
     })
 
@@ -62,8 +63,8 @@ export const cancelLiked = async (
   }
 }
 
-export const postLiked = async (postId: string, token: string) => {
-  if (!postId || !token) {
+export const postLiked = async (postId: string) => {
+  if (!postId) {
     return
   }
 
@@ -71,11 +72,7 @@ export const postLiked = async (postId: string, token: string) => {
     const response = await axios.post(
       `${END_POINT}likes/create`,
       { postId },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+      RequestHeader,
     )
     return response.data
   } catch (error) {
@@ -85,34 +82,31 @@ export const postLiked = async (postId: string, token: string) => {
 interface LikeRequestData {
   userId?: string
   postId: string
-  token: string
 }
 
 export const getLikedData = async (
   isLiked: boolean | null,
   likeRequestData: LikeRequestData,
 ) => {
-  const { token, userId, postId } = likeRequestData
+  const { userId, postId } = likeRequestData
 
   if (isLiked) {
     if (userId && postId) {
       const likedId = await getUserLikedData(userId, postId)
-      await cancelLiked(likedId, token)
+      await cancelLiked(likedId)
     }
   } else {
-    await postLiked(postId, token)
+    await postLiked(postId)
   }
 }
 
-export const deletePost = async (postId: string, token: string) => {
+export const deletePost = async (postId: string) => {
   try {
     const response = await axios.delete(`${END_POINT}posts/delete`, {
       data: {
         id: postId,
       },
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
+      ...RequestHeader,
     })
     return response.data
   } catch (error) {
@@ -154,22 +148,28 @@ export const notificationData = async (requestData: RequestData) => {
   }
 }
 
-export const postNotification = async (
-  requestData: RequestData,
-  token: string,
-) => {
+export const postNotification = async (requestData: RequestData) => {
   try {
     const response = await axios.post(
       `${END_POINT}notifications/create`,
       await notificationData(requestData),
-      {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      },
+      RequestHeader,
     )
 
     return response.data
+  } catch (error) {
+    throw handleError(error)
+  }
+}
+
+export const postMessage = (data: Message) => {
+  try {
+    const response = axios.post(
+      `${END_POINT}comments/create`,
+      data,
+      RequestHeader,
+    )
+    return response
   } catch (error) {
     throw handleError(error)
   }
