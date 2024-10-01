@@ -3,9 +3,27 @@ import DetailTimeIcon from '@assets/icons/details_time.svg?react'
 import DetailLikeIcon from '@assets/icons/heart_before_select.svg?react'
 import DetailMessage from '@assets/icons/details_comment.svg?react'
 import './index.css'
+import { Comment } from '@/typings/types'
+import formatTime from '@/utils/formatTime'
+import { useEffect, useState } from 'react'
+import { USER_ID } from '@/utils/api'
 
-const CommentCard = ({ comment }) => {
-  console.log(comment)
+const CommentCard = ({ comment }: { comment: Comment }) => {
+  const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const { author } = comment
+    const checkIsAuthor = author._id === USER_ID
+    setIsAuthor(checkIsAuthor)
+  }, [comment])
+
+  const { createdAt, _id } = comment
+  const { gender, ageGroup, mbti } = comment.author.fullName
+  const userComment = comment.comment.comment
+
+  const handleRelpyBtn = (event) => {
+    const parentCommentId = event.currentTarget.dataset.id
+  }
   return (
     <div className='comment-card'>
       <div className='comment-personal-detail-container'>
@@ -15,17 +33,17 @@ const CommentCard = ({ comment }) => {
         />
         <Bedge
           type='mbti'
-          body='ISFP'
+          body={mbti}
         />
         <Bedge
           type='agree'
           body='찬성'
         />
-        <p className='comment-user-detail'>여/20대</p>
+        <p className='comment-user-detail'>
+          {gender}/{ageGroup}대
+        </p>
       </div>
-      <p className='comment'>
-        test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123test123
-      </p>
+      <p className='comment'>{userComment}</p>
       <div className='comment-detail-container'>
         <div className='comment-detail-left'>
           <div className='comment-detail'>
@@ -33,7 +51,7 @@ const CommentCard = ({ comment }) => {
               width={16}
               height={16}
             />
-            <span>1 시간</span>
+            <span>{formatTime(createdAt)}</span>
           </div>
           <div className='comment-detail'>
             <DetailLikeIcon
@@ -48,12 +66,18 @@ const CommentCard = ({ comment }) => {
               width={16}
               height={16}
             />
-            <span>대댓글</span>
+            <span>
+              <button
+                data-id={_id}
+                onClick={handleRelpyBtn}
+              >
+                대댓글
+              </button>
+            </span>
           </div>
         </div>
         <div className='comment-detail-right'>
-          <button>수정</button>
-          <button>삭제</button>
+          {isAuthor && <button>삭제</button>}
         </div>
       </div>
     </div>
