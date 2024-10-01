@@ -1,4 +1,4 @@
-import InfoSection from '../Component/InfoSection'
+import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
 
 const ProfileSection = () => {

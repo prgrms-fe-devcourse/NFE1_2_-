@@ -1,4 +1,4 @@
-import '../MyPage.css'
+import './InfoSection.css'
 
 interface SectionProps {
   title: string
