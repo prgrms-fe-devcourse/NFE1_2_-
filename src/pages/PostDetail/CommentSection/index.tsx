@@ -1,17 +1,31 @@
-import { Comment } from '@/typings/types'
-import CommentCard from '../CommentCard/indext'
-import ReplyCard from '../ReplyCard'
+import { Post } from '@/typings/types'
 import './index.css'
+import { useState } from 'react'
+import CommentBtn from '../CommentBtn'
+import CommentInput from '../CommentInput'
 
-const CommentSection = ({ comments }: { comments: Comment[] }) => {
+const CommentSection = ({ post }: { post: Post }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { comments } = post
+  console.log(comments)
+  const handleModalState = () => {
+    setIsModalOpen((prevState) => !prevState)
+  }
+
   return (
-    <section className='comment-section'>
-      <p className='comment-total'>댓글 {comments.length}</p>
-      <CommentCard />
-      <ReplyCard />
-      <ReplyCard />
-      <CommentCard />
-    </section>
+    <>
+      <section className='comment-section'>
+        <p className='comment-total'>댓글 {comments.length}</p>
+        {}
+        <CommentBtn onClick={handleModalState} />
+        {isModalOpen && (
+          <CommentInput
+            onClick={handleModalState}
+            post={post}
+          />
+        )}
+      </section>
+    </>
   )
 }
 
