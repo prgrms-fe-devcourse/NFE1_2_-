@@ -8,7 +8,16 @@ import formatTime from '@/utils/formatTime'
 import { useEffect, useState } from 'react'
 import { USER_ID } from '@/utils/api'
 
-const CommentCard = ({ comment }: { comment: Comment }) => {
+interface CommentCardProps {
+  comment: Comment
+  handleModalState: () => void
+}
+
+const CommentCard = ({
+  comment,
+  handleModalState,
+  onupdateParentInfo,
+}: CommentCardProps) => {
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
 
   useEffect(() => {
@@ -23,6 +32,8 @@ const CommentCard = ({ comment }: { comment: Comment }) => {
 
   const handleRelpyBtn = (event) => {
     const parentCommentId = event.currentTarget.dataset.id
+    onupdateParentInfo(parentCommentId)
+    handleModalState()
   }
   return (
     <div className='comment-card'>

@@ -7,9 +7,16 @@ import CommentInput from '../CommentInput'
 
 const CommentSection = ({ post }: { post: Post }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [parentCommentInfo, setParentCommentInfo] = useState('')
+
   const { comments } = post
+
   const handleModalState = () => {
     setIsModalOpen((prevState) => !prevState)
+  }
+
+  const handleUpdateParentInfo = (parentId: string) => {
+    setParentCommentInfo(parentId)
   }
 
   return (
@@ -20,13 +27,17 @@ const CommentSection = ({ post }: { post: Post }) => {
           <CommentCard
             key={comment._id}
             comment={comment}
+            handleModalState={handleModalState}
+            onupdateParentInfo={handleUpdateParentInfo}
           />
         ))}
         <CommentBtn onClick={handleModalState} />
         {isModalOpen && (
           <CommentInput
-            onClick={handleModalState}
             post={post}
+            onClick={handleModalState}
+            parentInfo={parentCommentInfo}
+            setParentCommentInfo={setParentCommentInfo}
           />
         )}
       </section>
