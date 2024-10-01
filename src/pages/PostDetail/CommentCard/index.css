@@ -32,6 +32,10 @@
 .comment-detail-left {
   display: flex;
   gap: 0.8rem;
+
+  span {
+    width: 3rem;
+  }
 }
 
 .comment-detail {
