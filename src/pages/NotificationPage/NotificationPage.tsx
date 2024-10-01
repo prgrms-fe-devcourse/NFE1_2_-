@@ -39,7 +39,7 @@ const NotificationPage = () => {
   if (error) {
     return <div>Error: {error.message}</div>
   }
-
+  console.log(data)
   const unreadNotifications: Notification[] = []
   const todayNotifications: Notification[] = []
   const yesterdayNotifications: Notification[] = []
@@ -48,7 +48,6 @@ const NotificationPage = () => {
 
   data?.forEach((notification) => {
     const timeNotification = timeSeparation(notification.createdAt)
-
     if (!notification.seen) {
       unreadNotifications?.push(notification)
     } else if (timeNotification === 'TODAY') {
