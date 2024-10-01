@@ -2,7 +2,6 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './PostCreateButton.css'
-import { useMutation } from '@tanstack/react-query'
 import { PostDetail } from '@/typings/types'
 import { useNavigate } from 'react-router-dom'
 
@@ -11,7 +10,7 @@ interface PostCreateProps {
   postImage: File | null
 }
 
-const createPost = async (newPost: FormData):Promise<void> => {
+const createPost = async (newPost: FormData) => {
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ZjkwMWNjMzYyN2UzNTYzZTMyNzIyNCIsImVtYWlsIjoibGVlQGdtYWlsLmNvbSJ9LCJpYXQiOjE3Mjc1OTQ5NTZ9.2dbp6G3LSvdVMCUCDRscDfmPJTjrsQiPgONM7AmQ7eA' //localStorage에서 가져오도록 추후 수정
   try {
     const response = await axios.post(
@@ -34,18 +33,8 @@ const createPost = async (newPost: FormData):Promise<void> => {
 const PostCreateButton = (props: PostCreateProps) => {
   const { postData, postImage } = props
   const navigate = useNavigate()
-  const addPostMutation = useMutation({
-    mutationFn: createPost,
-    onSuccess: (result) => {
-      console.log('Post created successfully:', result)
-    },
-    onError: (error) => {
-      console.error('Error creating post:', error)
-    },
-  })
-
   const handlePostCreate = () => {
-    if (!postData.type) {
+    if (postData.type === '카테고리') {
       toast.error('카테고리를 입력하세요')
       return
     } else if (!postData.title.trim()) {
@@ -65,7 +54,7 @@ const PostCreateButton = (props: PostCreateProps) => {
       newFormData.append('image', postImage)
     }
     newFormData.append('channelId', '66f4aabccdb3ce68a6a139bf')
-    addPostMutation.mutate(newFormData)
+    createPost(newFormData)
     navigate('/')
   }
 
