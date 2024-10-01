@@ -1,30 +1,21 @@
 import PostCard from '@/components/PostComponent/PostComponent'
 import Interaction from '../Interaction/Interaction'
+import { Post } from '@/typings/types'
 
-const PreviewPost = () => {
+//흠 polls 타입부분 수정필요함 일단 30 넣음
+
+const PreviewPost = ({ post }: { post: Post }) => {
   return (
     <section className='post-section'>
-      {/*준희님 목데이터 가져옴*/}
       <PostCard
-        post={{
-          likes: [],
-          comments: [],
-          _id: '123',
-          title: {
-            type: '이별',
-            title: '헤어질까요',
-            body: '진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?진짜 헤어질까요?',
-            poll: { agree: 0, disagree: 0, title: '진짜 헤어질까요?' },
-            checkCount: 0,
-          },
-          author: {
-            fullName: { ageGroup: '20', gender: '남', mbti: 'INTP' },
-          },
-          createdAt: '123123123',
-        }}
+        post={post}
         truncate={true}
       />
-      <Interaction />
+      <Interaction
+        likes={post.likes.length}
+        comments={post.comments.length}
+        polls={30}
+      />
     </section>
   )
 }

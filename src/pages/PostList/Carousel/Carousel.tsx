@@ -5,15 +5,19 @@ import Notification from '@/assets/icons/list_notification.svg?react'
 import './Carousel.css'
 
 const images = [
-  { src: 'src/assets/imgs/전체.png', alt: '전체' },
-  { src: 'src/assets/imgs/이별.jpg', alt: '이별' },
-  { src: 'src/assets/imgs/짝사랑.jpg', alt: '짝사랑' },
-  { src: 'src/assets/imgs/썸.png', alt: '썸' },
-  { src: 'src/assets/imgs/데이트.jpg', alt: '데이트' },
-  { src: 'src/assets/imgs/기타.jpg', alt: '기타' },
+  { src: 'src/assets/imgs/전체.png', alt: '전체', category: '전체' },
+  { src: 'src/assets/imgs/이별.jpg', alt: '이별', category: '이별' },
+  { src: 'src/assets/imgs/짝사랑.jpg', alt: '짝사랑', category: '짝사랑' },
+  { src: 'src/assets/imgs/썸.png', alt: '썸', category: '썸' },
+  { src: 'src/assets/imgs/데이트.jpg', alt: '데이트', category: '데이트' },
+  { src: 'src/assets/imgs/기타.jpg', alt: '기타', category: '기타' },
 ]
 
-const Carousel = () => {
+const Carousel = ({
+  setSelectedCategory,
+}: {
+  setSelectedCategory: (category: string | null) => void
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
@@ -21,7 +25,7 @@ const Carousel = () => {
       setCurrentIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1,
       )
-    }, 3000) // 3초마다 슬라이드 변경
+    }, 3000)
 
     return () => clearInterval(interval)
   }, [])
@@ -36,6 +40,15 @@ const Carousel = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1,
     )
+  }
+
+  //카테고리 클릭하면 해당 글 목록 보여줌, 전체 선택하면 카테고리 선택 X
+  const handleImageClick = (category: string) => {
+    if (category === '전체') {
+      setSelectedCategory(null)
+    } else {
+      setSelectedCategory(category)
+    }
   }
 
   return (
@@ -53,9 +66,10 @@ const Carousel = () => {
           style={{ transform: `translateX(-${currentIndex * 250}px)` }}
         >
           {images.map((image, index) => (
-            <div
+            <button
               className={`image-container ${currentIndex === index ? 'active' : ''}`}
               key={index}
+              onClick={() => handleImageClick(image.category)}
             >
               <img
                 className='img'
@@ -65,7 +79,7 @@ const Carousel = () => {
                 height={80}
               />
               <div className='text-overlay'>{image.alt}</div>
-            </div>
+            </button>
           ))}
         </div>
         <NextButton

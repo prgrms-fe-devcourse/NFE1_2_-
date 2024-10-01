@@ -3,7 +3,15 @@ import ListVote from '@assets/icons/list_vote.svg?react'
 import HeartBefore from '@assets/icons/heart_before_select.svg?react'
 import './Interaction.css'
 
-const Interaction = () => {
+const Interaction = ({
+  likes,
+  comments,
+  polls,
+}: {
+  likes: number
+  comments: number
+  polls: number
+}) => {
   return (
     <div>
       <div className='interaction-icon'>
@@ -12,21 +20,21 @@ const Interaction = () => {
             width={20}
             height={20}
           ></ListVote>
-          13
+          {polls}
         </div>
         <div className='icon-value'>
           <ListComment
             width={20}
             height={20}
           ></ListComment>
-          34
+          {comments}
         </div>
         <div className='icon-value'>
           <HeartBefore
             width={24}
             height={24}
           ></HeartBefore>
-          2
+          {likes}
         </div>
       </div>
     </div>
