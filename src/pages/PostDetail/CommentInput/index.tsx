@@ -1,0 +1,78 @@
+import SendMessageIcon from '@assets/icons/details_send.svg?react'
+import BottomModal from '@components/BottomModal/BottomModal'
+import './index.css'
+import { ChangeEvent, useState } from 'react'
+import { Post } from '@/typings/types'
+import { postComment, UserComment } from '@/utils/api'
+import useCustomMutation from '@/hooks/useCustomMutaition'
+
+interface CommentInputProps {
+  onClick: () => void
+  post: Post
+}
+const CommentInput = ({ onClick, post }: CommentInputProps) => {
+  const [inputState, setInputState] = useState('')
+  const { _id } = post
+
+  const mutationFn = (userComment: UserComment) => postComment(userComment)
+  const onSuccessCallback = () => {
+    setInputState('')
+    onClick()
+  }
+
+  const { mutate, isPending } = useCustomMutation({
+    queryKey: ['post', _id],
+    mutationFn,
+    onSuccessCallback,
+  })
+
+  const handleMessageInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const userComment = event.currentTarget.value.trim()
+    setInputState(userComment)
+  }
+
+  const formatUserComment = () => {
+    const { _id } = post
+    const newComment = JSON.stringify({
+      comment: inputState,
+      like: 0,
+    })
+    return { postId: _id, comment: newComment }
+  }
+
+  const handleSubmitMessage = () => {
+    const userComment = formatUserComment()
+    mutate(userComment)
+  }
+
+  return (
+    <BottomModal
+      buttonText={'닫기'}
+      onClick={onClick}
+    >
+      <div className='message-input-container'>
+        {!isPending && (
+          <>
+            <textarea
+              id=''
+              name='message'
+              placeholder='댓글을 입력해주세요.'
+              onChange={(event) => handleMessageInput(event)}
+            />
+            <button
+              className='send-button'
+              onClick={handleSubmitMessage}
+            >
+              <SendMessageIcon
+                width={20}
+                height={20}
+              />
+            </button>
+          </>
+        )}
+      </div>
+    </BottomModal>
+  )
+}
+
+export default CommentInput

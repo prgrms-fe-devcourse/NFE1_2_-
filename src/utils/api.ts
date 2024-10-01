@@ -5,6 +5,7 @@ import formatPostData from './formatPostData'
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
 export const USER_ID = import.meta.env.VITE_USER_ID
 export const USER_TOKEN = import.meta.env.VITE_TOKEN
+
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
     throw new Error('서버 통신 오류')
@@ -12,6 +13,12 @@ const handleError = (error: unknown): never => {
     console.error(error)
     throw new Error('예기치 못한 오류')
   }
+}
+
+const RequestHeader = {
+  headers: {
+    Authorization: `bearer ${USER_TOKEN}`,
+  },
 }
 
 export const getPostData = async (postId: string): Promise<Post> => {
@@ -40,11 +47,8 @@ export const getUserLikedData = async (
   return likes.find((like) => like.post === postId)?._id
 }
 
-export const cancelLiked = async (
-  likeId: string | undefined,
-  token: string,
-) => {
-  if (!likeId || !token) {
+export const cancelLiked = async (likeId: string | undefined) => {
+  if (!likeId) {
     return
   }
 
@@ -53,9 +57,7 @@ export const cancelLiked = async (
       data: {
         id: likeId,
       },
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
+      ...RequestHeader,
     })
 
     return response.data
@@ -64,8 +66,8 @@ export const cancelLiked = async (
   }
 }
 
-export const postLiked = async (postId: string, token: string) => {
-  if (!postId || !token) {
+export const postLiked = async (postId: string) => {
+  if (!postId) {
     return
   }
 
@@ -73,11 +75,7 @@ export const postLiked = async (postId: string, token: string) => {
     const response = await axios.post(
       `${END_POINT}likes/create`,
       { postId },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+      RequestHeader,
     )
     return response.data
   } catch (error) {
@@ -87,34 +85,31 @@ export const postLiked = async (postId: string, token: string) => {
 interface LikeRequestData {
   userId?: string
   postId: string
-  token: string
 }
 
 export const getLikedData = async (
   isLiked: boolean | null,
   likeRequestData: LikeRequestData,
 ) => {
-  const { token, userId, postId } = likeRequestData
+  const { userId, postId } = likeRequestData
 
   if (isLiked) {
     if (userId && postId) {
       const likedId = await getUserLikedData(userId, postId)
-      await cancelLiked(likedId, token)
+      await cancelLiked(likedId)
     }
   } else {
-    await postLiked(postId, token)
+    await postLiked(postId)
   }
 }
 
-export const deletePost = async (postId: string, token: string) => {
+export const deletePost = async (postId: string) => {
   try {
     const response = await axios.delete(`${END_POINT}posts/delete`, {
       data: {
         id: postId,
       },
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
+      ...RequestHeader,
     })
     return response.data
   } catch (error) {
@@ -156,19 +151,12 @@ export const notificationData = async (requestData: RequestData) => {
   }
 }
 
-export const postNotification = async (
-  requestData: RequestData,
-  token: string,
-) => {
+export const postNotification = async (requestData: RequestData) => {
   try {
     const response = await axios.post(
       `${END_POINT}notifications/create`,
       await notificationData(requestData),
-      {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      },
+      RequestHeader,
     )
 
     return response.data
@@ -176,7 +164,6 @@ export const postNotification = async (
     throw handleError(error)
   }
 }
-
 export interface PollData {
   user: string
   voted: 'agree' | 'disagree'
@@ -242,6 +229,25 @@ export const postPoll = async (postId: string, pollData: PollData) => {
     })
 
     return response
+  } catch (error) {
+    throw handleError(error)
+  }
+}
+
+export interface UserComment {
+  comment: string
+  postId: string
+}
+
+export const postComment = async (userComment: UserComment) => {
+  try {
+    const response = await axios.post(
+      `${END_POINT}comments/create`,
+      userComment,
+      RequestHeader,
+    )
+
+    return response.data
   } catch (error) {
     throw handleError(error)
   }

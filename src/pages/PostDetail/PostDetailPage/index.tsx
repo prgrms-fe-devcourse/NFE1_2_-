@@ -1,7 +1,6 @@
 import PostPoll from '@pages/PostDetail/PollSection'
 import CommentSection from '@pages/PostDetail/CommentSection'
 import DetailPageLayout from '@layouts/DetailPageLayout/DetailPageLayout'
-import MessageBtn from '../MessageBtn'
 import PostSection from '../PostSection'
 import './index.css'
 import { useQuery } from '@tanstack/react-query'
@@ -30,8 +29,7 @@ const PostDetailPage = ({
 
   if (data) {
     const post = formatPostData(data)
-    const { comments } = post
-
+    console.log(post)
     return (
       <>
         {/* 토스티파이 사용을 위한 영역 지정 */}
@@ -43,8 +41,7 @@ const PostDetailPage = ({
         <DetailPageLayout pageName='post-detail'>
           <PostSection post={post} />
           <PostPoll post={post} />
-          <CommentSection comments={comments} />
-          <MessageBtn />
+          <CommentSection post={post} />
         </DetailPageLayout>
       </>
     )

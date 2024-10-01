@@ -67,7 +67,7 @@ const NotificationPage = () => {
       pageName='notification'
       pageText='알림'
     >
-      {unreadNotifications && unreadNotifications.length > 1 && (
+      {unreadNotifications && unreadNotifications.length > 0 && (
         <NotificationContainer
           period='읽지 않음'
           notifications={unreadNotifications}
