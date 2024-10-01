@@ -82,6 +82,7 @@
     .question-false {
       display: block;
       color: #fd3747;
+      font-weight: bold;
     }
   }
 }
