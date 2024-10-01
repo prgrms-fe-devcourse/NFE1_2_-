@@ -9,8 +9,8 @@ const CommentSection = ({ post }: { post: Post }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [parentCommentInfo, setParentCommentInfo] = useState('')
 
-  const { _id } = post
-  const { comments } = post
+  const { _id, comments } = post
+  const pollData = post.title.poll
 
   const handleModalState = () => {
     setIsModalOpen((prevState) => !prevState)
@@ -30,6 +30,7 @@ const CommentSection = ({ post }: { post: Post }) => {
             key={comment._id}
             comment={comment}
             postId={_id}
+            pollData={pollData}
             handleModalState={handleModalState}
             onupdateParentInfo={handleUpdateParentInfo}
           />

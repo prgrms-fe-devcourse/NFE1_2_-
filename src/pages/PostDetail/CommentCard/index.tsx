@@ -1,7 +1,7 @@
 import Bedge from '@components/Bedge/Bedge'
 import DetailTimeIcon from '@assets/icons/details_time.svg?react'
 import DetailLikeIcon from '@assets/icons/heart_before_select.svg?react'
-import DetailMessage from '@assets/icons/details_comment.svg?react'
+import DetailMessageIcon from '@assets/icons/details_comment.svg?react'
 import './index.css'
 import { Comment } from '@/typings/types'
 import formatTime from '@/utils/formatTime'
@@ -11,7 +11,13 @@ import useCustomMutation from '@/hooks/useCustomMutaition'
 
 interface CommentCardProps {
   comment: Comment
+  postId: string
   handleModalState: () => void
+  onupdateParentInfo: (id: string) => void
+  pollData: {
+    agree: string[]
+    disagree: string[]
+  }
 }
 
 const CommentCard = ({
@@ -19,36 +25,61 @@ const CommentCard = ({
   postId,
   handleModalState,
   onupdateParentInfo,
+  pollData,
 }: CommentCardProps) => {
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
 
   useEffect(() => {
-    const { author } = comment
-    const checkIsAuthor = author._id === USER_ID
+    const checkIsAuthor = comment.author._id === USER_ID
     setIsAuthor(checkIsAuthor)
-  }, [comment])
+  }, [comment.author._id])
 
-  const mutationFn = () => {
-    const commentId = _id
-    return deleteComment(commentId)
-  }
   const { mutate } = useCustomMutation({
-    mutationFn,
+    mutationFn: () => deleteComment(comment._id),
     queryKey: ['post', postId],
   })
 
-  // 코멘트 데이터들
-  const { createdAt, _id } = comment
-  const { gender, ageGroup, mbti } = comment.author.fullName
+  const { createdAt, author } = comment
+  const { gender, ageGroup, mbti } = author.fullName
   const userComment = comment.comment.comment
+  const commentAuthorId = author._id
 
-  const handleRelpyBtn = (event) => {
+  // 유저가 찬성에 투표했는지 식별
+  const isVotedAgree = pollData.agree.includes(commentAuthorId)
+  // 유저가 밴대에 투표했는지 식별
+  const isVotedDisagree = pollData.disagree.includes(commentAuthorId)
+
+  // 벳지 컴포넌트의 라벨 값
+  const getVotedSideLabel = () => {
+    if (isVotedAgree) {
+      return '찬성'
+    }
+    if (isVotedDisagree) {
+      return '반대'
+    }
+    return '작성자'
+  }
+
+  // 벳지 컴포넌트의 라벨 type 값
+  const getVotedSideType = () => {
+    if (isVotedAgree) {
+      return 'agree'
+    }
+    if (isVotedDisagree) {
+      return 'disagree'
+    }
+    return 'author'
+  }
+
+  const handleReplyBtnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const parentCommentId = event.currentTarget.dataset.id
-    onupdateParentInfo(parentCommentId)
+    if (parentCommentId) {
+      onupdateParentInfo(parentCommentId)
+    }
     handleModalState()
   }
 
-  const handleDeleteCommentBtn = () => mutate()
+  const handleDeleteComment = () => mutate()
 
   return (
     <div className='comment-card'>
@@ -62,8 +93,8 @@ const CommentCard = ({
           body={mbti}
         />
         <Bedge
-          type='agree'
-          body='찬성'
+          type={getVotedSideType()}
+          body={getVotedSideLabel()}
         />
         <p className='comment-user-detail'>
           {gender}/{ageGroup}대
@@ -88,25 +119,24 @@ const CommentCard = ({
             <span>좋아요</span>
           </div>
           <div className='comment-detail'>
-            <DetailMessage
+            <DetailMessageIcon
               width={16}
               height={16}
             />
-            <span>
-              <button
-                data-id={_id}
-                onClick={handleRelpyBtn}
-              >
-                대댓글
-              </button>
-            </span>
+            <button
+              data-id={comment._id}
+              onClick={handleReplyBtnClick}
+            >
+              대댓글
+            </button>
           </div>
         </div>
         <div className='comment-detail-right'>
-          {isAuthor && <button onClick={handleDeleteCommentBtn}>삭제</button>}
+          {isAuthor && <button onClick={handleDeleteComment}>삭제</button>}
         </div>
       </div>
     </div>
   )
 }
+
 export default CommentCard
