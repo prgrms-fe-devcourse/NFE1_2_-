@@ -43,9 +43,9 @@ export interface Channel {
 
 // 투표 탬플릿
 export interface Poll {
-  title: string //투표 타이틀
-  agree: number //투표 찬성 수
-  disagree: number //투표 반대 수
+  title: string // 투표 타이틀
+  agree: string[] // 찬성 배열
+  disagree: string[] // 반대 배열
 }
 
 // Post의 타이틀에 들어있는 데이터 베이스

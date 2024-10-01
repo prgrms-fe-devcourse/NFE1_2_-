@@ -24,14 +24,6 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
     onSuccess: () => {
       setIsLiked(!isLiked)
       queryClient.invalidateQueries({ queryKey: ['post', postId] })
-      if (isLiked) {
-        const requestData: RequestData = {
-          notificationType: 'LIKE',
-          postId,
-          userId,
-        }
-        postNotification(requestData, token)
-      }
     },
   })
 
@@ -43,6 +35,14 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
 
   const handleSubmitLiked = () => {
     mutate()
+    if (isLiked) {
+      const requestData: RequestData = {
+        notificationType: 'LIKE',
+        postId,
+        userId,
+      }
+      postNotification(requestData, token)
+    }
   }
 
   return (

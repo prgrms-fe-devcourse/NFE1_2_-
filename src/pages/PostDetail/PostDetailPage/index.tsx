@@ -39,7 +39,7 @@ const PostDetailPage = ({
         />
         <DetailPageLayout pageName='post-detail'>
           <PostSection post={post} />
-          <PostPoll />
+          <PostPoll post={post} />
           <CommentSection post={post} />
         </DetailPageLayout>
       </>
