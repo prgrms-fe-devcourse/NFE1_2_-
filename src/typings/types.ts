@@ -103,6 +103,7 @@ export interface Notification {
   _id: string
   author: User
   user: User | string
+  like?: string | null
   post?: string | null // 포스트 id (nullable)
   follow?: string // 팔로우 id (선택적)
   comment?: Comment // 선택적
