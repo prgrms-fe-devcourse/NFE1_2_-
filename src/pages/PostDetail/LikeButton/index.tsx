@@ -3,8 +3,8 @@ import SelectedLikeIcon from '@assets/icons/heart_after_select.svg?react'
 import './index.css'
 import { Like } from '@/typings/types'
 import { FC, useEffect, useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { getLikedData, postNotification, RequestData } from '@/utils/api'
+import useCustomMutation from '@/hooks/useCustomMutaition'
 
 interface LikeButtonProps {
   likes: Like[]
@@ -12,19 +12,18 @@ interface LikeButtonProps {
 }
 
 const userId = import.meta.env.VITE_USER_ID
-const token = import.meta.env.VITE_TOKEN
 
 const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
   const [isLiked, setIsLiked] = useState<boolean | null>(null)
 
-  // 업데이트가 필요하기 떄문에 useMutation 사용
-  const queryClient = useQueryClient()
-  const { mutate } = useMutation({
-    mutationFn: () => getLikedData(isLiked, { userId, token, postId }),
-    onSuccess: () => {
-      setIsLiked(!isLiked)
-      queryClient.invalidateQueries({ queryKey: ['post', postId] })
-    },
+  const mutationFn = (currentLikedState: boolean | null) =>
+    getLikedData(currentLikedState, { userId, postId })
+  const onSuccessCallback = () => setIsLiked((prevState) => !prevState)
+
+  const { mutate } = useCustomMutation({
+    queryKey: ['post', postId],
+    mutationFn,
+    onSuccessCallback,
   })
 
   useEffect(() => {
@@ -34,14 +33,14 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
   }, [likes])
 
   const handleSubmitLiked = () => {
-    mutate()
+    mutate(isLiked)
     if (isLiked) {
       const requestData: RequestData = {
         notificationType: 'LIKE',
         postId,
         userId,
       }
-      postNotification(requestData, token)
+      postNotification(requestData)
     }
   }
 

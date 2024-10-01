@@ -1,8 +1,10 @@
 import axios from 'axios'
-import { Like, Message, Post, User } from '@/typings/types'
+import { Like, Post, User } from '@/typings/types'
+import formatPostData from './formatPostData'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
-const TOKEN = import.meta.env.VITE_TOKEN
+export const USER_ID = import.meta.env.VITE_USER_ID
+export const USER_TOKEN = import.meta.env.VITE_TOKEN
 
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
@@ -15,7 +17,7 @@ const handleError = (error: unknown): never => {
 
 const RequestHeader = {
   headers: {
-    Authorization: `bearer ${TOKEN}`,
+    Authorization: `bearer ${USER_TOKEN}`,
   },
 }
 
@@ -55,6 +57,7 @@ export const cancelLiked = async (likeId: string | undefined) => {
       data: {
         id: likeId,
       },
+      ...RequestHeader,
     })
 
     return response.data
@@ -161,15 +164,90 @@ export const postNotification = async (requestData: RequestData) => {
     throw handleError(error)
   }
 }
+export interface PollData {
+  user: string
+  voted: 'agree' | 'disagree'
+}
 
-export const postMessage = (data: Message) => {
+export const formatPostPollData = async (
+  postId: string,
+  pollData: PollData,
+) => {
+  if (pollData === null) {
+    return undefined
+  }
+  const postData = await getPostData(postId)
+  const formatData: Post = formatPostData(postData)
+  const {
+    title,
+    image,
+    channel: { _id },
+  } = formatData
+
+  const { poll } = title
+  // 기존 투표 데이터를 가져오고, 사용자 투표 정보를 추가
+  const { user, voted } = pollData
+  const agree = voted === 'agree' ? [user] : []
+  const disagree = voted === 'disagree' ? [user] : []
+
+  // 현재 포스트 데이터의 poll 데이터와 사용자의 데이터를 합칩니다.
+  const mergePoll = {
+    title: poll.title,
+    agree: [...poll.agree, ...agree],
+    disagree: [...poll.disagree, ...disagree],
+  }
+
+  // poll 데이터를 포함한 title 값을 포맷해줍니다.
+  const formatTitle = JSON.stringify({ ...title, poll: mergePoll })
+
+  return { postId, title: formatTitle, image, channelId: _id }
+}
+
+export const postFormData = async (postId: string, pollData: PollData) => {
+  const postPollData = await formatPostPollData(postId, pollData)
+  if (!postPollData) {
+    return
+  }
+  const postPollForm = new FormData()
+  Object.entries(postPollData).forEach(([key, value]) => {
+    postPollForm.append(key, value as string)
+  })
+
+  return postPollForm
+}
+
+const ADMIN_TOKEN = import.meta.env.VITE_ADMIN_TOKEN
+
+export const postPoll = async (postId: string, pollData: PollData) => {
+  const formData = await postFormData(postId, pollData)
   try {
-    const response = axios.post(
+    const response = await axios.put(`${END_POINT}posts/update`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `bearer ${ADMIN_TOKEN}`,
+      },
+    })
+
+    return response
+  } catch (error) {
+    throw handleError(error)
+  }
+}
+
+export interface UserComment {
+  comment: string
+  postId: string
+}
+
+export const postComment = async (userComment: UserComment) => {
+  try {
+    const response = await axios.post(
       `${END_POINT}comments/create`,
-      data,
+      userComment,
       RequestHeader,
     )
-    return response
+
+    return response.data
   } catch (error) {
     throw handleError(error)
   }
