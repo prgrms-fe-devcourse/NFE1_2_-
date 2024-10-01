@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import './PostCreateButton.css'
 import { useMutation } from '@tanstack/react-query'
 import { PostDetail } from '@/typings/types'
+import { useNavigate } from 'react-router-dom'
 
 interface PostCreateProps {
   postData: PostDetail
@@ -11,7 +12,7 @@ interface PostCreateProps {
 }
 
 const createPost = async (newPost: FormData):Promise<void> => {
-  const token = '' //localStorage에서 가져오도록 추후 수정
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ZjkwMWNjMzYyN2UzNTYzZTMyNzIyNCIsImVtYWlsIjoibGVlQGdtYWlsLmNvbSJ9LCJpYXQiOjE3Mjc1OTQ5NTZ9.2dbp6G3LSvdVMCUCDRscDfmPJTjrsQiPgONM7AmQ7eA' //localStorage에서 가져오도록 추후 수정
   try {
     const response = await axios.post(
       'https://kdt.frontend.5th.programmers.co.kr:5001/posts/create',
@@ -32,6 +33,7 @@ const createPost = async (newPost: FormData):Promise<void> => {
 
 const PostCreateButton = (props: PostCreateProps) => {
   const { postData, postImage } = props
+  const navigate = useNavigate()
   const addPostMutation = useMutation({
     mutationFn: createPost,
     onSuccess: (result) => {
@@ -64,6 +66,7 @@ const PostCreateButton = (props: PostCreateProps) => {
     }
     newFormData.append('channelId', '66f4aabccdb3ce68a6a139bf')
     addPostMutation.mutate(newFormData)
+    navigate('/')
   }
 
   return (
