@@ -10,11 +10,30 @@ const PostCard = ({
   post: Post
   truncate?: boolean
 }) => {
-  const title = JSON.parse(post.title)
-  const fullName = JSON.parse(post.author.fullName)
+  let title
+  let fullName
+
+  try {
+    title = JSON.parse(post.title)
+  } catch (error) {
+    console.error('title 파싱 오류:', error)
+    title = { title: '제목 없음', body: '', type: '', checkCount: 0 } // 기본값 설정
+  }
+
+  try {
+    fullName = JSON.parse(post.author.fullName)
+  } catch (error) {
+    console.error('fullName 파싱 오류:', error)
+    fullName = {
+      mbti: '알 수 없음',
+      gender: '알 수 없음',
+      ageGroup: '알 수 없음',
+    } // 기본값 설정
+  }
+
   return (
     <div className='post-card'>
-      <div className='title'>{title.title}</div>
+      <div className='title'>{title.title || '제목 없음'}</div>
       <div className='category'>
         <div className='category_left'>
           <Bedge
@@ -41,7 +60,7 @@ const PostCard = ({
       {post.image && (
         <img
           src={post.image}
-          alt={post.title.title}
+          alt={title.title}
         />
       )}
       <p className={`body ${truncate ? 'truncate' : ''}`}>{title.body}</p>
