@@ -4,10 +4,14 @@ import PostCreate from './pages/PostCreate/PostCreate'
 import { Routes, Route } from 'react-router-dom'
 import NotificationPage from './pages/NotificationPage/NotificationPage'
 import PostList from './pages/PostList/List'
+import JoinCompletePage from './pages/JoinCompletePage/JoinCompletePage'
 
 const App = () => {
   return (
     <Routes>
+      <Route 
+        path="/joincomplete" 
+        element={<JoinCompletePage />} />
       <Route
         path='/postdetail'
         element={<PostDetailPage />}
