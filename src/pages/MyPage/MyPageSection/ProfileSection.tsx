@@ -1,7 +1,14 @@
 import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
 
-const ProfileSection = () => {
+interface SectionProps {
+  isModalOpen: boolean
+  onChangeOpenModal: () => void
+  onChangeCloseModal: () => void
+}
+
+const ProfileSection = (props: SectionProps) => {
+  const { isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
   return (
     <InfoSection title='프로필'>
       <p className='info-item'>
