@@ -5,7 +5,7 @@ import NotificationContainer from './NotificationContainer/NotificationContainer
 import { Notification } from '@/typings/types'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-// import timeSeparation from '@/utils/timeSeparation'
+import timeSeparation from '@/utils/timeSeparation'
 
 const getNotification = async (): Promise<Notification[]> => {
   const token =
