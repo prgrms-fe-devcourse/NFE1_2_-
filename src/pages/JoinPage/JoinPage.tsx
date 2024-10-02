@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import './JoinPage.css'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import Logo from '@assets/imgs/logo.png'
 import JoinDetail from './JoinDetail/JoinDetail'
+import Container from '@components/Conatiner/Container'
 
 const JoinPage: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -18,6 +20,8 @@ const JoinPage: React.FC = () => {
     birthDate: string
     mbti: string
   } | null>(null)
+  const [detailInfoError, setDetailInfoError] = useState(false)
+  const [usernameError, setUsernameError] = useState('')
   const navigate = useNavigate()
 
   // 아이디 유효성 검사 (4~10자의 영문 및 숫자)
@@ -32,11 +36,24 @@ const JoinPage: React.FC = () => {
     return passwordRegex.test(password)
   }
 
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUsernameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setUsername(value)
     setIsValidUsername(validateUsername(value))
     setShowErrorMessages(true)
+
+    if (validateUsername(value)) {
+      try {
+        const response = await axios.get(`https://kdt.frontend.5th.programmers.co.kr:5001/check-username?username=${value}`)
+        if (response.data.exists) {
+          setUsernameError('이미 존재하는 아이디입니다')
+        } else {
+          setUsernameError('')
+        }
+      } catch (error) {
+        console.error('Error checking username:', error)
+      }
+    }
   }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,18 +88,20 @@ const JoinPage: React.FC = () => {
   ) => {
     setDetailInfo({ gender, birthDate, mbti })
     setShowDetailModal(false)
+    setDetailInfoError(false)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setShowErrorMessages(true)
+    setDetailInfoError(!detailInfo)
+
     if (
-      password !== confirmPassword ||
       !isValidPassword ||
       !isValidUsername ||
+      password !== confirmPassword ||
       !detailInfo
     ) {
-      setPasswordsMatch(false)
       return
     }
 
@@ -95,28 +114,20 @@ const JoinPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         'https://kdt.frontend.5th.programmers.co.kr:5001/signup',
         {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: username,
-            fullName: JSON.stringify(fullNameObject),
-            password,
-          }),
-        },
+          email: username,
+          fullName: JSON.stringify(fullNameObject),
+          password,
+        }
       )
 
-      if (response.ok) {
-        alert('완료되었습니다')
-        navigate('/joincomplete')
+      if (response.status === 200) {
+        navigate('/joincomplete', { state: { username } })
       } else {
-        const errorData = await response.json()
         alert(
-          `회원가입 실패: ${errorData.message || '알 수 없는 오류가 발생했습니다.'}`,
+          `회원가입 실패: ${response.data.message || '알 수 없는 오류가 발생했습니다.'}`
         )
       }
     } catch (error) {
@@ -126,20 +137,21 @@ const JoinPage: React.FC = () => {
   }
 
   return (
-    <div className='join-page-wrapper'>
-      <header>
-        <img
-          src={Logo}
-          className='logo'
-          alt='Logo'
-        />
-      </header>
-      <section className='form-section'>
-        <form
-          className='form'
-          onSubmit={handleSubmit}
-        >
-          <div className='input-wrapper'>
+    <Container pageName="join">
+      <div className='join-page-wrapper'>
+        <header>
+          <img
+            src={Logo}
+            className='logo'
+            alt='Logo'
+          />
+        </header>
+        <section className='form-section'>
+          <form
+            className='form'
+            onSubmit={handleSubmit}
+          >
+            <div className='input-wrapper'>
             <label
               htmlFor='username'
               className='label'
@@ -159,6 +171,9 @@ const JoinPage: React.FC = () => {
               <span className='error'>
                 아이디는 4~10자의 영문 및 숫자여야 합니다.
               </span>
+            )}
+            {showErrorMessages && usernameError && (
+              <span className='error'>{usernameError}</span>
             )}
           </div>
 
@@ -208,13 +223,18 @@ const JoinPage: React.FC = () => {
               )}
           </div>
 
-          <button
-            type='button'
-            className='details-button'
-            onClick={() => setShowDetailModal(true)}
-          >
-            상세정보 선택
-          </button>
+          <div className='input-wrapper'>
+            <button
+              type='button'
+              className='details-button'
+              onClick={() => setShowDetailModal(true)}
+            >
+              상세정보 선택
+            </button>
+            {showErrorMessages && detailInfoError && (
+              <span className='error'>상세정보를 입력해주세요.</span>
+            )}
+          </div>
 
           <Link
             to='/loginpage'
@@ -228,16 +248,17 @@ const JoinPage: React.FC = () => {
           >
             회원가입
           </button>
-        </form>
-      </section>
+          </form>
+        </section>
 
-      {showDetailModal && (
-        <JoinDetail
-          onSubmit={handleDetailSubmit}
-          onClose={() => setShowDetailModal(false)}
-        />
-      )}
-    </div>
+        {showDetailModal && (
+          <JoinDetail
+            onSubmit={handleDetailSubmit}
+            onClose={() => setShowDetailModal(false)}
+          />
+        )}
+      </div>
+    </Container>
   )
 }
 
