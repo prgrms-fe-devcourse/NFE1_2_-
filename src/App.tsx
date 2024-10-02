@@ -4,10 +4,15 @@ import PostCreate from './pages/PostCreate/PostCreate'
 import { Routes, Route } from 'react-router-dom'
 import NotificationPage from './pages/NotificationPage/NotificationPage'
 import PostList from './pages/PostList/List'
+import JoinPage from './pages/JoinPage/JoinPage'
 
 const App = () => {
   return (
     <Routes>
+       <Route
+        path='/join'
+        element={<JoinPage />}
+      />
       <Route
         path='/postdetail'
         element={<PostDetailPage />}
