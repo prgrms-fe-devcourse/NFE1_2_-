@@ -2,15 +2,17 @@ import { useState } from 'react'
 import ModalComponent from '../Component/ModalComponent/ModalComponent'
 import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
+import { User } from '@/typings/types'
 
 interface SectionProps {
+  userData : User
   isModalOpen: boolean
   onChangeOpenModal: () => void
   onChangeCloseModal: () => void
 }
 
 const OtherSection = (props: SectionProps) => {
-  const { isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
+  const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
   const [deletePassword, setDeletePassword] = useState('')
 
   const handleCloseModal = () => {
