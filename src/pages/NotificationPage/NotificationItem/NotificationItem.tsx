@@ -55,17 +55,17 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
     if (notification.like !== undefined) {
       return {
         notificationIcon: <Like />,
-        notificationText: `"${postTitle}" 게시글에 좋아요가 달렸어요.`,
+        notificationText: `[${postTitle}] 게시글에 좋아요가 달렸어요.`,
       }
     } else if (notification.comment !== undefined) {
       return {
         notificationIcon: <Comment />,
-        notificationText: `"${postTitle}"에 댓글이 달렸어요.`,
+        notificationText: `[${postTitle}] 게시글에 댓글이 달렸어요.`,
       }
     }
     return {
       notificationIcon: <Popular />,
-      notificationText: `축하합니다! 회원님의 게시글 "${postTitle}"이 인기글에 선정되었어요!`,
+      notificationText: `축하합니다! 회원님의 게시글 [${postTitle}]이 인기글에 선정되었어요!`,
     }
   }, [notification, postTitle])
 
