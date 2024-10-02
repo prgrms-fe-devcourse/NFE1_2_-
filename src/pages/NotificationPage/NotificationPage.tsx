@@ -30,6 +30,7 @@ const NotificationPage = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['notifications'],
     queryFn: getNotification,
+    // refetchInterval : 1000 //새로고침
   })
 
   if (isLoading) {
