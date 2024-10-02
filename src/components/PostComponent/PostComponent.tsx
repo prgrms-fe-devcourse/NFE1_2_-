@@ -3,7 +3,13 @@ import ViewsIcon from '@/assets/icons/views.svg?react'
 import { Post } from '@/typings/types'
 import Bedge from '../Bedge/Bedge'
 
-const PostCard = ({ post }: { post: Post }) => {
+const PostCard = ({
+  post,
+  truncate = false,
+}: {
+  post: Post
+  truncate?: boolean
+}) => {
   return (
     <div className='post-card'>
       <div className='title'>{post.title.title}</div>
@@ -16,7 +22,7 @@ const PostCard = ({ post }: { post: Post }) => {
           <Bedge
             type='mbti'
             body={post.author.fullName.mbti}
-          />{' '}
+          />
           {post.author.fullName.gender}/{post.author.fullName.ageGroup}
         </div>
         <div className='category_right'>
@@ -36,7 +42,7 @@ const PostCard = ({ post }: { post: Post }) => {
           alt={post.title.title}
         />
       )}
-      <p className='body'>{post.title.body}</p>
+      <p className={`body ${truncate ? 'truncate' : ''}`}>{post.title.body}</p>
     </div>
   )
 }
