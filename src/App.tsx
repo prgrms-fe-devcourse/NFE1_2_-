@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom'
 import NotificationPage from './pages/NotificationPage/NotificationPage'
 import PostList from './pages/PostList/List'
 import JoinPage from './pages/JoinPage/JoinPage'
+import JoinCompletePage from './pages/JoinCompletePage/JoinCompletePage'
 
 const App = () => {
   return (
@@ -13,6 +14,9 @@ const App = () => {
         path='/join'
         element={<JoinPage />}
       />
+      <Route 
+        path="/joincomplete" 
+        element={<JoinCompletePage />} />
       <Route
         path='/postdetail'
         element={<PostDetailPage />}
