@@ -74,7 +74,6 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
 
   const handleNotification = () => {
     putNotification()
-    
   }
   return (
     <div className='notification-item-container'>
