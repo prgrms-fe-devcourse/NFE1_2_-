@@ -19,6 +19,7 @@ const OtherSection = (props: SectionProps) => {
   }
 
   return (
+    <>
     <InfoSection title='기타'>
       <button
         className='info-item'
@@ -26,23 +27,25 @@ const OtherSection = (props: SectionProps) => {
       >
         회원탈퇴
       </button>
-      {isModalOpen && (
-        <ModalComponent
-          onClose={handleCloseModal}
-          buttonText={deletePassword ? '확인' : '닫기'}
-          instruction='탈퇴 하시겠습니까?'
-        >
-          <p className='modal-label'>비밀번호 확인</p>
-          <input
-            type='password'
-            className='modal-input'
-            value={deletePassword}
-            onChange={(e) => setDeletePassword(e.target.value)}
-          />
-        </ModalComponent>
-      )}
+      
       <p className='info-item'>로그아웃</p>
     </InfoSection>
+    {isModalOpen && (
+      <ModalComponent
+        onClose={handleCloseModal}
+        buttonText={deletePassword ? '확인' : '닫기'}
+        instruction='탈퇴 하시겠습니까?'
+      >
+        <p className='modal-label'>비밀번호 확인</p>
+        <input
+          type='password'
+          className='modal-input'
+          value={deletePassword}
+          onChange={(e) => setDeletePassword(e.target.value)}
+        />
+      </ModalComponent>
+    )}
+    </>
   )
 }
 
