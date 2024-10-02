@@ -61,6 +61,8 @@
   display: flex;
   padding-inline: 0.5rem;
   margin-top: 2rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
   align-items: center;
   height: 2.5rem;
 }
