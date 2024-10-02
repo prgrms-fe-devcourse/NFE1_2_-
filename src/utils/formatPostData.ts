@@ -6,7 +6,7 @@ import {
 } from '@/typings/types'
 
 type FormatData = string | PostDetail | UserDetailData | CommentDetail
-const parseIfString = (value: FormatData) =>
+export const parseIfString = (value: FormatData) =>
   typeof value === 'string' ? JSON.parse(value) : value
 
 const formatPostData = (data: Post): Post => {

@@ -5,7 +5,7 @@ import NotificationContainer from './NotificationContainer/NotificationContainer
 import { Notification } from '@/typings/types'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-// import timeSeparation from '@/utils/timeSeparation'
+import timeSeparation from '@/utils/timeSeparation'
 
 const getNotification = async (): Promise<Notification[]> => {
   const token =
@@ -30,6 +30,7 @@ const NotificationPage = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['notifications'],
     queryFn: getNotification,
+    // refetchInterval : 1000 //새로고침
   })
 
   if (isLoading) {
@@ -39,7 +40,7 @@ const NotificationPage = () => {
   if (error) {
     return <div>Error: {error.message}</div>
   }
-
+  console.log(data)
   const unreadNotifications: Notification[] = []
   const todayNotifications: Notification[] = []
   const yesterdayNotifications: Notification[] = []
@@ -48,7 +49,6 @@ const NotificationPage = () => {
 
   data?.forEach((notification) => {
     const timeNotification = timeSeparation(notification.createdAt)
-
     if (!notification.seen) {
       unreadNotifications?.push(notification)
     } else if (timeNotification === 'TODAY') {
