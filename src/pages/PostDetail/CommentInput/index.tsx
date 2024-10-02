@@ -3,7 +3,12 @@ import BottomModal from '@components/BottomModal/BottomModal'
 import './index.css'
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import { Post } from '@/typings/types'
-import { postComment, UserComment } from '@/utils/api'
+import {
+  postComment,
+  postNotification,
+  USER_ID,
+  UserComment,
+} from '@/utils/api'
 import useCustomMutation from '@/hooks/useCustomMutaition'
 
 interface CommentInputProps {
@@ -20,12 +25,21 @@ const CommentInput = ({
   setParentCommentInfo,
 }: CommentInputProps) => {
   const [userComment, setUserComment] = useState('')
-  const { _id } = post
 
+  const { _id } = post
+  const postId = _id
   const mutationFn = (userComment: UserComment) => postComment(userComment)
-  const onSuccessCallback = () => {
+  const onSuccessCallback = (responsData: { _id: string }) => {
     setUserComment('')
     onClick()
+    const { _id } = responsData
+    const messageNotification = {
+      notificationType: 'COMMENT',
+      notificationTypeId: _id,
+      userId: USER_ID,
+      postId: postId,
+    }
+    postNotification(messageNotification)
   }
 
   const { mutate, isPending } = useCustomMutation({
