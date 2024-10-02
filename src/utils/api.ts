@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Like, Post, User } from '@/typings/types'
+import { FormattedPost, Like, Post, User } from '@/typings/types'
 import formatPostData from './formatPostData'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
@@ -178,7 +178,7 @@ export const formatPostPollData = async (
     return undefined
   }
   const postData = await getPostData(postId)
-  const formatData: Post = formatPostData(postData)
+  const formatData: FormattedPost = formatPostData(postData)
   const {
     title,
     image,
