@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .interaction-icon{
   display: flex;
   width: 500px;
@@ -15,4 +16,23 @@
   align-items: center;
   gap:0.4rem;
   font-size: 1rem;
+=======
+.interaction-icon{
+  display: flex;
+  width: 500px;
+  margin-top: -1.2rem;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center; 
+}
+
+.icon-value{
+  display: flex;
+  margin-bottom: 1rem;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap:0.4rem;
+  font-size: 1rem;
+>>>>>>> develop
 }

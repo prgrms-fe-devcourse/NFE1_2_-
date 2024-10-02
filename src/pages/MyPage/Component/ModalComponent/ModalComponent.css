@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .modal-section{
   display: flex;
   width: 100%;
@@ -42,3 +43,49 @@
     margin-left: 35px;
   }
 }
+=======
+.modal-section{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+
+  .modal-instruction{
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .modal-label{
+  font-size:0.9rem;
+  }
+
+  .modal-check{
+    font-size: 0.5rem;
+    color:#FD3747;
+    font-weight: bold;
+  }
+
+  .modal-input {
+    width: 430px;
+    height: 40px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    background-color: #ededed;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .search-button{
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+  }
+  
+  .modal-input.active{
+    margin-left: 35px;
+  }
+}
+>>>>>>> develop

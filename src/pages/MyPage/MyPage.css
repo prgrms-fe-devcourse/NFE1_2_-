@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .user-info{
   display: flex;
   height: 5rem;
@@ -9,4 +10,17 @@
     font-size: 1.6rem;
     font-weight: bold;
   }
+=======
+.user-info{
+  display: flex;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #eeeeee;
+
+  .info-title{
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+>>>>>>> develop
 }

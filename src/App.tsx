@@ -34,6 +34,25 @@ const App = () => {
       <Route 
         path="*" 
         element={<Navigate to={isFirstVisit ? "/splash" : "/"} replace />} 
+     <Route
+        path='/postdetail'
+        element={<PostDetailPage />}
+      />
+      <Route
+        path='/my'
+        element={<MyPage />}
+      />
+      <Route
+        path='/create-post'
+        element={<PostCreate />}
+      />
+      <Route
+        path='/notification'
+        element={<NotificationPage />}
+      />
+      <Route
+        path='/'
+        element={<PostList />}
       />
     </Routes>
   )
