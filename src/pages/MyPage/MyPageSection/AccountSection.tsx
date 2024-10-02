@@ -23,16 +23,18 @@ const AccountSection = (props: SectionProps) => {
   }
 
   return (
-    <InfoSection title='계정'>
-      <p className='info-item'>
-        아이디<span className='value'>djfkd</span>
-      </p>
-      <button
-        className='info-item'
-        onClick={onChangeOpenModal}
-      >
-        비밀번호 변경
-      </button>
+    <>
+      <InfoSection title='계정'>
+        <p className='info-item'>
+          아이디<span className='value'>djfkd</span>
+        </p>
+        <button
+          className='info-item'
+          onClick={onChangeOpenModal}
+        >
+          비밀번호 변경
+        </button>
+      </InfoSection>
       {isModalOpen && (
         <ModalComponent
           onClose={handleCloseModal}
@@ -64,7 +66,7 @@ const AccountSection = (props: SectionProps) => {
           />
         </ModalComponent>
       )}
-    </InfoSection>
+    </>
   )
 }
 

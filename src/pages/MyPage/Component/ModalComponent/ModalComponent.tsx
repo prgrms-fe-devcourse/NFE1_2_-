@@ -18,7 +18,6 @@ const ModalComponent = ({
   children,
 }: ModalProps) => {
   return (
-    <>
       <BottomModal
         onClick={onClose}
         buttonText={buttonText}
@@ -29,7 +28,6 @@ const ModalComponent = ({
           <div className='modal-inner-section'>{children}</div>
         </div>
       </BottomModal>
-    </>
   )
 }
 
