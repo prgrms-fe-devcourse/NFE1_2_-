@@ -1,0 +1,26 @@
+.notification-item-container {
+  display: flex;
+  width: 90%;
+  margin: 1rem;
+
+  .notification-item {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .notification-text-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-left: 1rem;
+
+      .notification-text {
+        font-size: 16px;
+      }
+
+      .notification-time {
+        font-size: 12px;
+      }
+    }
+  }
+}

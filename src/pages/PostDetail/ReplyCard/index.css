@@ -1,0 +1,12 @@
+.reply-card {
+  display: flex;
+  justify-content: space-between;
+  .comment-card {
+    width: 94%;
+    padding-inline: 1rem;
+    margin-bottom: 1rem;
+    background: #f2f2f2;
+    border: none;
+    border-radius: 1rem;
+  }
+}
