@@ -70,7 +70,11 @@ const AccountSection = (props: SectionProps) => {
           />
         </ModalComponent>
       )}
+<<<<<<< HEAD
     </>
+=======
+    </InfoSection>
+>>>>>>> 1df5cfe (🚀 Feat : 하단 모달창 중복 안되도록 수정)
   )
 }
 
