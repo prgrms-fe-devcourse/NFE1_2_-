@@ -5,6 +5,7 @@ import axios from 'axios'
 import Logo from '@assets/imgs/logo.png'
 import JoinDetail from './JoinDetail/JoinDetail'
 import Container from '@components/Conatiner/Container'
+import { useAuthStore } from '@store/authStore'
 
 const JoinPage: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -23,6 +24,7 @@ const JoinPage: React.FC = () => {
   const [detailInfoError, setDetailInfoError] = useState(false)
   const [usernameError, setUsernameError] = useState('')
   const navigate = useNavigate()
+  const login = useAuthStore((state) => state.login)
 
   const validateUsername = (username: string) => {
     const usernameRegex = /^[a-zA-Z0-9]{4,10}$/
@@ -122,6 +124,8 @@ const JoinPage: React.FC = () => {
       )
 
       if (response.status === 200) {
+        login() // 로그인 상태를 true로 변경
+        console.log('Login status:', useAuthStore.getState().isLoggedIn) // 콘솔에 로그인 상태 출력
         navigate('/joincomplete', { state: { username } })
       } else {
         alert(
