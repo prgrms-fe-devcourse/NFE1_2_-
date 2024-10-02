@@ -1,26 +1,32 @@
+import { User } from '@/typings/types'
 import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
+import { parseIfString } from '@/utils/formatPostData'
 
 interface SectionProps {
+  userData : User
   isModalOpen: boolean
   onChangeOpenModal: () => void
   onChangeCloseModal: () => void
 }
 
 const ProfileSection = (props: SectionProps) => {
-  const { isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
+  const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
+  const {gender , ageGroup, mbti} = parseIfString(userData.fullName)
+
   return (
     <InfoSection title='프로필'>
       <p className='info-item'>
-        MBTI<span className='value'>istp</span>
+        MBTI<span className='value'>{mbti}</span>
       </p>
       <p className='info-item'>
-        성별<span className='value'>여</span>
+        성별<span className='value'>{gender}</span>
       </p>
       <p className='info-item'>
-        나이<span className='value'>20대</span>
+        나이<span className='value'>{ageGroup}대</span>
       </p>
       <div className='info-edit'>프로필 수정</div>
+      
     </InfoSection>
   )
 }

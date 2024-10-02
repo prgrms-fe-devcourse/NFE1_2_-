@@ -2,15 +2,19 @@ import { useState } from 'react'
 import ModalComponent from '../Component/ModalComponent/ModalComponent'
 import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
+import { User } from '@/typings/types'
+import { updateUserPassword } from '@/utils/api'
 
 interface SectionProps {
+  userData: User
   isModalOpen: boolean
   onChangeOpenModal: () => void
   onChangeCloseModal: () => void
 }
-
 const AccountSection = (props: SectionProps) => {
-  const { isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
+  const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
+  const { email } = userData
+
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -26,11 +30,11 @@ const AccountSection = (props: SectionProps) => {
     <>
       <InfoSection title='계정'>
         <p className='info-item'>
-          아이디<span className='value'>djfkd</span>
+          아이디<span className='value'>{email}</span>
         </p>
         <button
           className='info-item'
-          onClick={onChangeOpenModal}
+          onClick={() => onChangeOpenModal()}
         >
           비밀번호 변경
         </button>
