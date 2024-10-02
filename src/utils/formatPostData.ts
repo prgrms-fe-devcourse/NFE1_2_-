@@ -1,5 +1,6 @@
 import {
   CommentDetail,
+  FormattedPost,
   Post,
   PostDetail,
   UserDetailData,
@@ -9,7 +10,7 @@ type FormatData = string | PostDetail | UserDetailData | CommentDetail
 const parseIfString = (value: FormatData) =>
   typeof value === 'string' ? JSON.parse(value) : value
 
-const formatPostData = (data: Post): Post => {
+const formatPostData = (data: Post): FormattedPost => {
   const { title, author, comments } = data
 
   const userData = parseIfString(author.fullName)

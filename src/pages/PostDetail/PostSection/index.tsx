@@ -1,11 +1,11 @@
 import PostComponent from '@components/PostComponent/PostComponent'
 import LikeButton from '../LikeButton'
 import './index.css'
-import { Post } from '@/typings/types'
+import { FormattedPost } from '@/typings/types'
 import { useEffect, useState } from 'react'
 import EditPostContainer from '../EditPostContainer'
 
-const PostSection = ({ post }: { post: Post }) => {
+const PostSection = ({ post }: { post: FormattedPost }) => {
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
   const { likes, _id, author } = post
 

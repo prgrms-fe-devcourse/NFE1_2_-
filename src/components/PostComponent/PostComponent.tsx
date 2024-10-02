@@ -1,13 +1,14 @@
 import './PostComponent.css'
 import ViewsIcon from '@/assets/icons/views.svg?react'
-import { Post } from '@/typings/types'
+import { FormattedPost } from '@/typings/types'
 import Bedge from '../Bedge/Bedge'
+import formatTime from '@/utils/formatTime'
 
 const PostCard = ({
   post,
   truncate = false,
 }: {
-  post: Post
+  post: FormattedPost
   truncate?: boolean
 }) => {
   return (
@@ -26,7 +27,7 @@ const PostCard = ({
           {post.author.fullName.gender}/{post.author.fullName.ageGroup}
         </div>
         <div className='category_right'>
-          {new Date(post.createdAt).toLocaleDateString()}
+          {formatTime(post.createdAt)}
           <div className='right_icon'>
             <ViewsIcon
               width={24}

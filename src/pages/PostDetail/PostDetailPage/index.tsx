@@ -29,7 +29,6 @@ const PostDetailPage = ({
 
   if (data) {
     const post = formatPostData(data)
-    console.log(post)
     return (
       <>
         {/* 토스티파이 사용을 위한 영역 지정 */}
