@@ -4,10 +4,15 @@ import PostCreate from './pages/PostCreate/PostCreate'
 import { Routes, Route } from 'react-router-dom'
 import NotificationPage from './pages/NotificationPage/NotificationPage'
 import PostList from './pages/PostList/List'
+import LoginPage from './pages/LoginPage/LoginPage'
 
 const App = () => {
   return (
     <Routes>
+      <Route
+        path='/login'
+        element={<LoginPage/>}
+      />
       <Route
         path='/postdetail'
         element={<PostDetailPage />}
