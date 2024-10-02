@@ -16,7 +16,7 @@
   max-width: 300px;
   flex-grow: 1;
 }
-
+ 
 .form {
   display: flex;
   flex-direction: column;
