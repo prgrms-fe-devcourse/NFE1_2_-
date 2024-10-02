@@ -4,11 +4,13 @@ import './MbtiTogle.css'
 interface MbtiToggleProps {
   isMbtiFilterVisible: boolean
   onToggleFilter: () => void
+  onSelect: (result: string) => void // prop 추가
 }
 
 const MbtiToggle: React.FC<MbtiToggleProps> = ({
   isMbtiFilterVisible,
   onToggleFilter,
+  onSelect, // prop 추가
 }) => {
   return (
     <>
@@ -17,7 +19,7 @@ const MbtiToggle: React.FC<MbtiToggleProps> = ({
           className={`toggle-label ${isMbtiFilterVisible ? 'active' : ''}`}
         >
           MBTI 필터링
-        </label>{' '}
+        </label>
         <div
           className={`toggle-slider ${isMbtiFilterVisible ? 'active' : ''}`}
           onClick={onToggleFilter}
@@ -30,7 +32,7 @@ const MbtiToggle: React.FC<MbtiToggleProps> = ({
       {isMbtiFilterVisible && (
         <div className='modal-filter'>
           <div>
-            <MbtiSelector />
+            <MbtiSelector onSelect={onSelect} /> {/* prop 전달 */}
           </div>
         </div>
       )}

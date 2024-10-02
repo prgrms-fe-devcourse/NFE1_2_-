@@ -1,4 +1,3 @@
-// Search.tsx
 import ModalComponent from '@/pages/MyPage/Component/ModalComponent/ModalComponent'
 import { useState } from 'react'
 import SearchButton from '@assets/icons/list_search.svg?react'
@@ -26,6 +25,10 @@ const Search = ({
     handleCloseModal() // 모달 닫기
   }
 
+  const handleMbtiSelect = (result: string) => {
+    console.log('선택된 MBTI:', result) // 선택된 MBTI 콘솔에 출력
+  }
+
   return (
     <ModalComponent
       isOpen={true}
@@ -39,6 +42,7 @@ const Search = ({
         <MbtiToggle
           isMbtiFilterVisible={isMbtiFilterVisible}
           onToggleFilter={() => setIsMbtiFilterVisible(!isMbtiFilterVisible)}
+          onSelect={handleMbtiSelect} // prop 전달
         />
       </div>
       <input
