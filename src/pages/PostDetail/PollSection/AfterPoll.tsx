@@ -22,9 +22,10 @@ const AfterPoll = ({ poll }: { poll: Poll }) => {
       style={{
         width: `${percentage}%`,
         display: percentage === 0 ? 'none' : 'flex',
+        borderRadius: percentage === 100 ? '19px' : '',
       }}
     >
-      {percentage > 0 && <p>{percentage} %</p>}
+      {percentage > 0 && <p>{percentage}%</p>}
     </div>
   )
 
