@@ -2,27 +2,38 @@ import { useState } from 'react'
 import ModalComponent from '../Component/ModalComponent/ModalComponent'
 import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
+import { User } from '@/typings/types'
 
-const OtherSection = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+interface SectionProps {
+  userData : User
+  isModalOpen: boolean
+  onChangeOpenModal: () => void
+  onChangeCloseModal: () => void
+}
+
+const OtherSection = (props: SectionProps) => {
+  const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
   const [deletePassword, setDeletePassword] = useState('')
 
-  const handleOpenModal = () => setIsModalOpen(true)
   const handleCloseModal = () => {
-    setIsModalOpen(false)
+    onChangeCloseModal()
     setDeletePassword('')
   }
 
   return (
+    <>
     <InfoSection title='기타'>
       <button
         className='info-item'
-        onClick={handleOpenModal}
+        onClick={onChangeOpenModal}
       >
         회원탈퇴
       </button>
+      
+      <p className='info-item'>로그아웃</p>
+    </InfoSection>
+    {isModalOpen && (
       <ModalComponent
-        isOpen={isModalOpen}
         onClose={handleCloseModal}
         buttonText={deletePassword ? '확인' : '닫기'}
         instruction='탈퇴 하시겠습니까?'
@@ -35,8 +46,8 @@ const OtherSection = () => {
           onChange={(e) => setDeletePassword(e.target.value)}
         />
       </ModalComponent>
-      <p className='info-item'>로그아웃</p>
-    </InfoSection>
+    )}
+    </>
   )
 }
 

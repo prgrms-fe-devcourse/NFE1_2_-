@@ -39,6 +39,19 @@ export const getUserData = async (userId: string): Promise<User> => {
   }
 }
 
+export const updateUserPassword = async (newPassword: string) => {
+  try {
+    const response = await axios.put(
+      `${END_POINT}settings/update-password`,
+      {"password" : newPassword},
+      RequestHeader,
+    )
+    return response.data
+  } catch (error) {
+    throw handleError(error)
+  }
+}
+
 export const getUserLikedData = async (
   userId: string,
   postId: string,
