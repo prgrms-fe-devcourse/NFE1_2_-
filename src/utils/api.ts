@@ -119,6 +119,7 @@ export const deletePost = async (postId: string) => {
 
 export interface RequestData {
   notificationType: 'COMMENT' | 'LIKE' | 'MESSAGE'
+  notificationTypeId: string
   userId: string
   postId: string
 }
@@ -155,7 +156,7 @@ export const postNotification = async (requestData: RequestData) => {
   try {
     const response = await axios.post(
       `${END_POINT}notifications/create`,
-      await notificationData(requestData),
+      requestData,
       RequestHeader,
     )
 
@@ -266,3 +267,5 @@ export const deleteComment = async (commentId: string) => {
     throw handleError(error)
   }
 }
+
+getUserData(USER_ID).then((data) => console.log(data))
