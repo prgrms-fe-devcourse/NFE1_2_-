@@ -27,14 +27,14 @@
   gap: 20px;
 }
 
-.gender-options label {
+.gender-option {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.gender-options input[type='radio'] {
-  margin-left: 15px;
+.gender-option span {
+  margin-right: 8px;
 }
 
 .birth-date-selector {
@@ -48,14 +48,12 @@
 }
 
 .birth-date-selector input {
-  width: 400px;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
   text-align: center;
-  align-self: center;
-  width: 100%;
 }
 
 .mbti-selector {
