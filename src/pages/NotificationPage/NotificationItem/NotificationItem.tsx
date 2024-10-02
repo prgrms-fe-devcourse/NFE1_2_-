@@ -7,6 +7,7 @@ import formatTime from '@/utils/formatTime'
 import { useCallback, useEffect, useState } from 'react'
 import { getPostData } from '@/utils/api'
 import { parseIfString } from '@/utils/formatPostData'
+import axios from 'axios'
 
 interface NotificationItemProps {
   notification: Notification
@@ -15,6 +16,27 @@ interface NotificationItemProps {
 interface NotificationData {
   notificationIcon: JSX.Element
   notificationText: string
+}
+
+const putNotification = async () => {
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ZjkwMWNjMzYyN2UzNTYzZTMyNzIyNCIsImVtYWlsIjoibGVlQGdtYWlsLmNvbSJ9LCJpYXQiOjE3Mjc1OTQ5NTZ9.2dbp6G3LSvdVMCUCDRscDfmPJTjrsQiPgONM7AmQ7eA' //localStorage에서 가져오도록 추후 수정
+  try {
+    const response = await axios.put<Notification[]>(
+      'https://kdt.frontend.5th.programmers.co.kr:5001/notifications/seen',
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    console.log('읽기 완료')
+    return response.data
+  } catch (error) {
+    console.error('알림 보기 오류:', error)
+    throw error
+  }
 }
 
 const NotificationItem = ({ notification }: NotificationItemProps) => {
@@ -50,9 +72,16 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
   const { notificationIcon, notificationText } = setNotificationData()
   const notificationTime = formatTime(notification.createdAt)
 
+  const handleNotification = () => {
+    putNotification()
+    
+  }
   return (
     <div className='notification-item-container'>
-      <div className='notification-item'>
+      <div
+        className='notification-item'
+        onClick={handleNotification}
+      >
         {notificationIcon}
         <div className='notification-text-container'>
           <p className='notification-text'>{notificationText}</p>
