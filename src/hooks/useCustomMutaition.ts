@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 type MutationConfig<T> = {
-  mutationFn: (data: T) => Promise<unknown>
+  mutationFn: (data?: T) => Promise<unknown>
   queryKey: string[]
   onSuccessCallback?: () => void
   onErrorCallback?: () => void
@@ -14,7 +14,6 @@ const useCustomMutation = <T>({
   onErrorCallback,
 }: MutationConfig<T>) => {
   const queryClient = useQueryClient()
-
   return useMutation({
     mutationFn,
     onSuccess: () => {

@@ -1,7 +1,7 @@
 import SendMessageIcon from '@assets/icons/details_send.svg?react'
 import BottomModal from '@components/BottomModal/BottomModal'
 import './index.css'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import { Post } from '@/typings/types'
 import { postComment, UserComment } from '@/utils/api'
 import useCustomMutation from '@/hooks/useCustomMutaition'
@@ -9,14 +9,22 @@ import useCustomMutation from '@/hooks/useCustomMutaition'
 interface CommentInputProps {
   onClick: () => void
   post: Post
+  parentInfo: string
+  setParentCommentInfo: Dispatch<SetStateAction<string>>
 }
-const CommentInput = ({ onClick, post }: CommentInputProps) => {
-  const [inputState, setInputState] = useState('')
+
+const CommentInput = ({
+  onClick,
+  post,
+  parentInfo,
+  setParentCommentInfo,
+}: CommentInputProps) => {
+  const [userComment, setUserComment] = useState('')
   const { _id } = post
 
   const mutationFn = (userComment: UserComment) => postComment(userComment)
   const onSuccessCallback = () => {
-    setInputState('')
+    setUserComment('')
     onClick()
   }
 
@@ -28,20 +36,24 @@ const CommentInput = ({ onClick, post }: CommentInputProps) => {
 
   const handleMessageInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const userComment = event.currentTarget.value.trim()
-    setInputState(userComment)
+    setUserComment(userComment)
   }
 
   const formatUserComment = () => {
     const { _id } = post
+    const parentId = parentInfo === '' ? null : parentInfo
     const newComment = JSON.stringify({
-      comment: inputState,
-      like: 0,
+      comment: userComment,
+      parentId,
+      like: [],
     })
     return { postId: _id, comment: newComment }
   }
 
   const handleSubmitMessage = () => {
     const userComment = formatUserComment()
+    // 대댓글 작성시 기존에 있던 parentId 값 초기화
+    setParentCommentInfo('')
     mutate(userComment)
   }
 

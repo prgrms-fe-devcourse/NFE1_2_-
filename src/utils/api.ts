@@ -252,3 +252,17 @@ export const postComment = async (userComment: UserComment) => {
     throw handleError(error)
   }
 }
+
+export const deleteComment = async (commentId: string) => {
+  try {
+    const response = await axios.delete(`${END_POINT}comments/delete`, {
+      data: {
+        id: commentId,
+      },
+      ...RequestHeader,
+    })
+    return response.data
+  } catch (error) {
+    throw handleError(error)
+  }
+}

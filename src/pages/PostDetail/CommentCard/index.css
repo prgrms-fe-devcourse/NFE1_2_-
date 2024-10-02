@@ -32,6 +32,13 @@
 .comment-detail-left {
   display: flex;
   gap: 0.8rem;
+
+  span {
+    width: 3.4rem;
+  }
+  button {
+    color: #7d7d7d;
+  }
 }
 
 .comment-detail {
