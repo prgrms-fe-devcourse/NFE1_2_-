@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 type MutationConfig<T> = {
-  mutationFn: (data?: T) => Promise<unknown>
+  mutationFn: (data: T) => Promise<T>
   queryKey: string[]
-  onSuccessCallback?: (data?: T) => Promise<unknown>
+  onSuccessCallback?: (data: T) => Promise<unknown>
   onErrorCallback?: () => void
 }
 
@@ -16,7 +16,7 @@ const useCustomMutation = <T>({
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn,
-    onSuccess: (data) => {
+    onSuccess: (data: T) => {
       queryClient.invalidateQueries({ queryKey })
       if (onSuccessCallback) {
         onSuccessCallback(data)

@@ -24,8 +24,8 @@ const BeforePoll = ({ postId, setIsVoted }: BeforePollProps) => {
       const voteSection = event.currentTarget.getAttribute('aria-label')
       const pollData: PollData =
         voteSection === 'agree'
-          ? { user: USER_ID, voted: 'agree' }
-          : { user: USER_ID, voted: 'disagree' }
+          ? { user: USER_ID as string, voted: 'agree' }
+          : { user: USER_ID as string, voted: 'disagree' }
 
       // useMutation으로 투표 요청 실행
       mutate(pollData)

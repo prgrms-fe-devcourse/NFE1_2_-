@@ -6,6 +6,7 @@ import { FormattedPost } from '@/typings/types'
 import {
   postComment,
   postNotification,
+  RequestData,
   USER_ID,
   UserComment,
 } from '@/utils/api'
@@ -25,18 +26,19 @@ const CommentInput = ({
   setParentCommentInfo,
 }: CommentInputProps) => {
   const [userComment, setUserComment] = useState('')
-
   const { _id } = post
   const postId = _id
+
   const mutationFn = (userComment: UserComment) => postComment(userComment)
   const onSuccessCallback = (responsData: { _id: string }) => {
     setUserComment('')
     onClick()
+
     const { _id } = responsData
-    const messageNotification = {
+    const messageNotification: RequestData = {
       notificationType: 'COMMENT',
       notificationTypeId: _id,
-      userId: USER_ID,
+      userId: USER_ID as string,
       postId: postId,
     }
     postNotification(messageNotification)
