@@ -41,7 +41,7 @@ const JoinPage: React.FC = () => {
     setUsername(value)
     setIsValidUsername(validateUsername(value))
     setShowErrorMessages(true)
-    setUsernameError('') // 사용자가 입력을 변경할 때 에러 메시지 초기화
+    setUsernameError('')
   }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,10 +82,12 @@ const JoinPage: React.FC = () => {
   const checkUsernameAvailability = async (username: string) => {
     try {
       const response = await axios.get(`https://kdt.frontend.5th.programmers.co.kr:5001/check-username?username=${username}`)
-      return !response.data.exists
+      return !response.data.exists // 'exists' 값이 false면 사용 가능한 아이디
     } catch (error) {
       console.error('Error checking username:', error)
-      return false
+      // 에러 발생 시 사용자에게 알림
+      alert('아이디 중복 확인 중 오류가 발생했습니다. 다시 시도해 주세요.')
+      return false // 에러 발생 시 기본적으로 사용 불가능으로 처리
     }
   }
 
@@ -103,7 +105,6 @@ const JoinPage: React.FC = () => {
       return
     }
 
-    // 아이디 중복 확인
     const isUsernameAvailable = await checkUsernameAvailability(username)
     if (!isUsernameAvailable) {
       setUsernameError('중복된 아이디입니다')
@@ -129,9 +130,12 @@ const JoinPage: React.FC = () => {
       )
 
       if (response.status === 200) {
-        login() // 로그인 상태를 true로 변경
-        console.log('Login status:', useAuthStore.getState().isLoggedIn) // 콘솔에 로그인 상태 출력
-        navigate('/joincomplete', { state: { username } })
+        // 로컬 스토리지에 id와 토큰 저장
+        localStorage.setItem('userId', response.data.user._id);
+        localStorage.setItem('token', response.data.token);
+        login()// Zustand 스토어의 로그인 상태를 true로 설정
+        console.log('Login status:', useAuthStore.getState().isLoggedIn)
+        navigate('/joincomplete', { state: { username } }) //회원가입 성공 페이지로 이동
       } else {
         alert(
           `회원가입 실패: ${response.data.message || '알 수 없는 오류가 발생했습니다.'}`
@@ -231,12 +235,19 @@ const JoinPage: React.FC = () => {
             </div>
 
             <div className='input-wrapper'>
+              {detailInfo && (
+                <div className='detail-info-display'>
+                  <p><span>MBTI</span> <span>{detailInfo.mbti}</span></p>
+                  <p><span>성별</span> <span>{detailInfo.gender}</span></p>
+                  <p><span>나이</span> <span>{detailInfo.birthDate}</span></p>                  
+                </div>
+              )}
               <button
                 type='button'
-                className='details-button'
+                className={`details-button ${detailInfo ? 'details-button-edit' : ''}`}
                 onClick={() => setShowDetailModal(true)}
               >
-                상세정보 선택
+                {detailInfo ? '상세정보 수정' : '상세정보 선택'}
               </button>
               {showErrorMessages && detailInfoError && (
                 <span className='error'>상세정보를 입력해주세요.</span>
@@ -244,7 +255,7 @@ const JoinPage: React.FC = () => {
             </div>
 
             <Link
-              to='/loginpage'
+              to='/login'
               className='join-link'
             >
               계정이 있으신가요? <span>로그인</span>

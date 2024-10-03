@@ -62,9 +62,15 @@ input::placeholder {
   background-color: #f2f2f2;
   color: #7d7d7d;
   border: none;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   text-align: center;
+}
+
+.details-button-edit{
+  background-color: #fff;
+  font-size: 0.8rem;
+  color: #000;
 }
 
 .join-link {
@@ -92,4 +98,17 @@ input::placeholder {
   cursor: pointer;
   margin-top: 20px;
   text-align: center;
+}
+
+.detail-info-display p{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.detail-info-display p span:first-child{
+  color: #393939;
+}
+
+.detail-info-display p span:last-child{
+  color: #7d7d7d;
 }
