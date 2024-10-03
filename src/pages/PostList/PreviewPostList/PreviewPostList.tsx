@@ -82,11 +82,16 @@ const PreviewPostList = ({
     : filteredPosts
 
   // 정렬 로직
-  const sortedPosts = mbtiFilteredPosts.sort((a, b) => {
+  const sortedPosts = mbtiFilteredPosts.sort((postA, postB) => {
     if (selectedSort === 'popular') {
-      return JSON.parse(b.title).checkCount - JSON.parse(a.title).checkCount // 인기순으로 정렬
+      return (
+        JSON.parse(postB.title).checkCount - JSON.parse(postA.title).checkCount
+      ) // 인기순으로 정렬s
     } else if (selectedSort === 'latest') {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime() // 최신순으로 정렬
+      return (
+        new Date(postB.createdAt).getTime() -
+        new Date(postA.createdAt).getTime()
+      ) // 최신순으로 정렬
     }
     return 0
   })

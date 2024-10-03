@@ -6,9 +6,11 @@ import Bedge from '../Bedge/Bedge'
 const PostCard = ({
   post,
   truncate = false,
+  checkCount = 0,
 }: {
   post: Post
   truncate?: boolean
+  checkCount?: number
 }) => {
   let title
   let fullName
@@ -43,7 +45,7 @@ const PostCard = ({
           <Bedge
             type='mbti'
             body={fullName.mbti}
-          />{' '}
+          />
           {fullName.gender}/{fullName.ageGroup}
         </div>
         <div className='category_right'>
@@ -53,7 +55,7 @@ const PostCard = ({
               width={24}
               height={24}
             />
-            {title.checkCount}
+            {checkCount}
           </div>
         </div>
       </div>
