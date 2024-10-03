@@ -1,0 +1,61 @@
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  html,body{
+    background-color: red;
+  }
+  .quote-container {
+    margin-bottom: 20px;
+  }
+  
+  .quote {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  
+  .quote-author {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 50px;
+  }
+  
+  .not-found-logo {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .heart-overlay1 {
+    position: absolute;
+    top: 30%;
+    left: 14%;
+
+    object-fit: contain;
+  }
+  .heart-overlay2 {
+    position: absolute;
+    top: 30%;
+    left: 64%;
+    object-fit: contain;
+  }
+  
+  .home-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .home-link:hover {
+    text-decoration: underline;
+  }

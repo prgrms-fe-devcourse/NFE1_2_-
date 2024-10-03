@@ -1,3 +1,5 @@
+
+import NotFound from '@pages/NotFound/NotFound'
 import PostDetailPage from '@pages/PostDetail/PostDetailPage'
 import MyPage from './pages/MyPage/MyPage'
 import PostCreate from './pages/PostCreate/PostCreate'
@@ -11,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import SplashScreen from '@pages/SplashScreen/SplashScreen'
 import { useState, useEffect } from 'react'
+
 
 const App = () => {
   
@@ -36,6 +39,9 @@ const App = () => {
   return (
     <>
     <Routes>
+      <Route 
+        path="*" 
+        element={<NotFound />} />
       <Route
         path='/join'
         element={<JoinPage />}
