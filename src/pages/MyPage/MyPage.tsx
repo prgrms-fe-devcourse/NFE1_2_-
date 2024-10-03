@@ -31,6 +31,7 @@ const MyPage = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['user'],
     queryFn: () => getUserData(USER_ID),
+    // refetchInterval : 1000
   })
   if (isLoading) {
     return <div>Loading</div>
