@@ -3,8 +3,10 @@ import { FormattedPost, Like, Post, User } from '@/typings/types'
 import formatPostData from './formatPostData'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
-export const USER_ID = import.meta.env.VITE_USER_ID
-export const USER_TOKEN = import.meta.env.VITE_TOKEN
+export const USER_ID = localStorage.getItem('userId')
+export const USER_TOKEN = localStorage.getItem('token')
+
+console.log(USER_ID)
 
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
@@ -43,9 +45,7 @@ export const updateUserData = async (fullname: string): Promise<void> => {
   try {
     const response = await axios.put(
       `${END_POINT}settings/update-user`,
-      { "fullName" : fullname,
-        "username" : "false"
-      },
+      { fullName: fullname, username: 'false' },
       RequestHeader,
     )
     return response.data
@@ -54,11 +54,13 @@ export const updateUserData = async (fullname: string): Promise<void> => {
   }
 }
 
-export const updateUserPassword = async (newPassword: string): Promise<void> => {
+export const updateUserPassword = async (
+  newPassword: string,
+): Promise<void> => {
   try {
     const response = await axios.put(
       `${END_POINT}settings/update-password`,
-      {"password" : newPassword},
+      { password: newPassword },
       RequestHeader,
     )
     return response.data
@@ -72,6 +74,7 @@ export const getUserLikedData = async (
   postId: string,
 ): Promise<string | undefined> => {
   const { likes }: { likes: Like[] } = await getUserData(userId)
+
   return likes.find((like) => like.post === postId)?._id
 }
 
@@ -303,11 +306,15 @@ export const logoutUser = async () => {
       throw new Error('로그인 정보가 없습니다.')
     }
 
-    const response = await axios.post(`${END_POINT}logout`, {}, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await axios.post(
+      `${END_POINT}logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
 
     localStorage.removeItem('token')
     return response.data
