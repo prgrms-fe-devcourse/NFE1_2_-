@@ -6,12 +6,14 @@ import './QuestionModal.css'
 interface QuestionProps {
   question: string
   onChangeQuestion: (question: string) => void
+  inputActive: boolean
+  onChangeInputActive: (inputActive: boolean) => void
 }
 
 const QuestionModal = (props: QuestionProps) => {
-  const { question, onChangeQuestion } = props
-  const [isQuestion, setIsQuestion] = useState<boolean>(false)
-  const [isInputActive, setIsInputActive] = useState<boolean>(false)
+  const { question, onChangeQuestion, inputActive, onChangeInputActive } = props
+  const [isQuestion, setIsQuestion] = useState<boolean>(true)
+  const [inputQuestion, setInputQuestion] = useState<string>(question)
 
   const questionList: string[] = [
     '헤어질까요?',
@@ -22,20 +24,32 @@ const QuestionModal = (props: QuestionProps) => {
 
   const handleQuestion = (value: string) => {
     onChangeQuestion(value)
-    setIsInputActive(false)
+    onChangeInputActive(false)
+    setInputQuestion('')
+  }
+
+  const checkRegex = (value: string) => {
+    const regex = /.+\?$/
+    return regex.test(value)
   }
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuestion: string = e.target.value
-    setIsQuestion(newQuestion.includes('?'))
-    if (newQuestion.includes('?')) {
+    setInputQuestion(newQuestion)
+
+    const isValid = checkRegex(newQuestion)
+    setIsQuestion(isValid)
+
+    if (isValid) {
       onChangeQuestion(newQuestion)
     }
   }
+
   const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    setInputQuestion('')
     const currentValue = (e.target as HTMLInputElement).value
     onChangeQuestion(currentValue)
-    setIsInputActive(true)
+    onChangeInputActive(true)
   }
 
   return (
@@ -52,7 +66,7 @@ const QuestionModal = (props: QuestionProps) => {
         {questionList.map((item, index) => (
           <button
             key={index}
-            className={`question-list-basic ${question === item ? 'active' : ''}`}
+            className={`question-list-basic ${!inputActive && question === item ? 'active' : ''}`}
             onClick={() => handleQuestion(item)}
           >
             <p>{item}</p>
@@ -61,18 +75,20 @@ const QuestionModal = (props: QuestionProps) => {
         ))}
       </div>
       <div className='question-list-input-container'>
-        <p
-          className={`question-list-input-title ${!isInputActive || isQuestion ? '' : 'question-false'}`}
-        >
-          질문 형태로 입력해주세요.
-        </p>
+        <p className={'question-list-input-title'}>질문 직접 입력하기</p>
         <input
           type='text'
-          placeholder='질문 직접 입력'
-          className={`question-list-input ${isInputActive ? 'active' : ''}`}
+          placeholder='예) 어떻게 할까요? '
+          value={inputActive ? inputQuestion : ''}
+          className={`question-list-input ${inputActive ? 'active' : ''}`}
           onChange={handleQuestionChange}
           onClick={handleInputClick}
         />
+        <p
+          className={`question-list-error ${!inputActive || isQuestion ? '' : 'question-false'}`}
+        >
+          질문 형태로 입력해주세요.
+        </p>
       </div>
     </div>
   )

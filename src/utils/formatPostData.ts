@@ -1,29 +1,33 @@
-import { Post } from '@/typings/types'
+import {
+  CommentDetail,
+  FormattedPost,
+  Post,
+  PostDetail,
+  UserDetailData,
+} from '@/typings/types'
 
-const formatPostData = (data: Post) => {
-  const { title, author } = data
+type FormatData = string | PostDetail | UserDetailData | CommentDetail
+export const parseIfString = (value: FormatData) =>
+  typeof value === 'string' ? JSON.parse(value) : value
 
-  let userData
-  if (typeof author.fullName === 'string') {
-    userData = JSON.parse(author.fullName)
-  } else {
-    userData = author.fullName
-  }
+const formatPostData = (data: Post): FormattedPost => {
+  const { title, author, comments } = data
 
-  let postDetail
-  if (typeof title === 'string') {
-    postDetail = JSON.parse(title)
-  } else {
-    postDetail = title
-  }
+  const userData = parseIfString(author.fullName)
+  const postDetail = parseIfString(title)
 
-  const post: Post = {
+  const formattedComments = comments.map(({ comment, author, ...rest }) => ({
+    ...rest,
+    comment: parseIfString(comment),
+    author: { ...author, fullName: userData },
+  }))
+
+  return {
     ...data,
     title: postDetail,
-    author: { ...data.author, fullName: userData },
+    comments: formattedComments,
+    author: { ...author, fullName: userData },
   }
-
-  return post
 }
 
 export default formatPostData

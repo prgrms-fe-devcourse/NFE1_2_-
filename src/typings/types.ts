@@ -20,6 +20,27 @@ export interface User {
   updatedAt: string
 }
 
+export interface FormattedUser {
+  coverImage?: string // 커버 이미지 (선택적)
+  image?: string // 프로필 이미지 (선택적)
+  role: string
+  emailVerified?: boolean // 사용되지 않음
+  banned?: boolean // 사용되지 않음
+  isOnline: boolean
+  posts: Post[]
+  likes: Like[]
+  comments: Comment[]
+  followers: User[]
+  following: Following[]
+  notifications: Notification[]
+  messages: Message[]
+  _id: string
+  fullName: UserDetailData
+  email: string
+  createdAt: string
+  updatedAt: string
+}
+
 // Following 모델
 export interface Following {
   _id: string
@@ -50,7 +71,7 @@ export interface Poll {
 
 // Post의 타이틀에 들어있는 데이터 베이스
 export interface PostDetail {
-  type: '이별' | '짝사랑' | '썸' | '데이트' | '기타' //게시글 타입
+  type: '이별' | '짝사랑' | '썸' | '데이트' | '기타' | '카테고리' //게시글 타입
   title: string // 포스트 타이틀
   body: string // 포스트 글
   checkCount: number // 게시글 확인 인원수
@@ -71,6 +92,19 @@ export interface Post {
   updatedAt: string
 }
 
+export interface FormattedPost {
+  likes: Like[]
+  comments: FormattedComment[]
+  _id: string
+  image?: string // 선택적
+  imagePublicId?: string // 선택적
+  title: PostDetail
+  channel: Channel
+  author: FormattedUser
+  createdAt: string
+  updatedAt: string
+}
+
 // Like 모델
 export interface Like {
   _id: string
@@ -83,8 +117,16 @@ export interface Like {
 // Comment 모델
 export interface Comment {
   _id: string
-  comment: string | CommentDetail
+  comment: string
   author: User
+  post: string // 포스트 id
+  createdAt: string
+  updatedAt: string
+}
+export interface FormattedComment {
+  _id: string
+  comment: CommentDetail
+  author: FormattedUser
   post: string // 포스트 id
   createdAt: string
   updatedAt: string
@@ -93,8 +135,8 @@ export interface Comment {
 // commnet 데이터 베이스에 들어갈 데이터베이스
 export interface CommentDetail {
   comment: string // 댓글 내용
-  like: number // 해당 댓글 LIKE
-  parentId?: string // 대댓글 작성시 parentId값 넣어서 POST (옵셔널)
+  like: string[] // 해당 댓글 LIKE
+  parentId: string | null // 대댓글 작성시 parentId값 넣어서 POST (옵셔널)
 }
 
 // Notification 모델

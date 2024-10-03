@@ -1,6 +1,6 @@
+import useCustomMutation from '@/hooks/useCustomMutaition'
 import AgreeOptionImg from '@assets/imgs/agree.png'
 import DisAgreeOptionImg from '@assets/imgs/disagree.png'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PollData, postPoll, USER_ID } from '@utils/api'
 import { useCallback } from 'react'
 
@@ -10,16 +10,13 @@ interface BeforePollProps {
 }
 
 const BeforePoll = ({ postId, setIsVoted }: BeforePollProps) => {
-  const queryClient = useQueryClient()
-  const mutation = useMutation({
-    mutationFn: (pollData: PollData) => postPoll(postId, pollData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', postId] })
-      setIsVoted(true)
-    },
-    onError: (error) => {
-      console.error('투표 실패', error)
-    },
+  const mutationFn = (pollData: PollData) => postPoll(postId, pollData)
+  const onSuccessCallback = () => setIsVoted(true)
+
+  const { mutate } = useCustomMutation({
+    queryKey: ['post', postId],
+    mutationFn,
+    onSuccessCallback,
   })
 
   const handleSubmitPoll = useCallback(
@@ -31,9 +28,9 @@ const BeforePoll = ({ postId, setIsVoted }: BeforePollProps) => {
           : { user: USER_ID, voted: 'disagree' }
 
       // useMutation으로 투표 요청 실행
-      mutation.mutate(pollData)
+      mutate(pollData)
     },
-    [mutation],
+    [mutate],
   )
 
   return (

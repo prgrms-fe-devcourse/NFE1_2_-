@@ -1,14 +1,25 @@
 import PostPageButton from '@components/PostPageButton/PostPageButton'
 import './index.css'
 import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { deletePost } from '@/utils/api'
+import { toast } from 'react-toastify'
 
-const EditPostContainer = () => {
+const EditPostContainer = ({ postId }: { postId: string }) => {
+  const navigate = useNavigate()
+
   const handleEdit = useCallback(() => {
-    console.log('handleEdit')
-  }, [])
-  const handleDelete = useCallback(() => {
-    console.log('handleDelete')
-  }, [])
+    navigate(`/create-post?postId=${postId}`)
+  }, [navigate, postId])
+
+  const handleDelete = useCallback(async () => {
+    try {
+      await deletePost(postId)
+      navigate('/')
+    } catch (error) {
+      toast.error(`에러 발생 ${error}`)
+    }
+  }, [navigate, postId])
 
   return (
     <div className='edit-post-container'>

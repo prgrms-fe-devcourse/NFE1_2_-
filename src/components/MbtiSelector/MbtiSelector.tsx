@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+
+import React, { useState, useEffect, useCallback } from 'react'
 import './MbtiSelector.css'
 
 type MbtiType = 'EI' | 'SN' | 'TF' | 'JP'
@@ -16,10 +17,15 @@ interface MbtiRowProps {
 }
 
 interface MbtiSelectorProps {
-  onSelect?: (result: string) => void // 추가된 부분
+
+  initialMbti?: string
+  onMbtiChange: (mbti: string) => void
 }
 
-const MbtiSelector: React.FC<MbtiSelectorProps> = ({ onSelect = () => {} }) => {
+const MbtiSelector: React.FC<MbtiSelectorProps> = ({
+  initialMbti,
+  onMbtiChange,
+}) => {
   const [mbti, setMbti] = useState<MbtiState>({
     EI: false,
     SN: false,
@@ -27,27 +33,36 @@ const MbtiSelector: React.FC<MbtiSelectorProps> = ({ onSelect = () => {} }) => {
     JP: false,
   })
 
-  const updateMbti = (key: MbtiType) => {
-    setMbti((prev) => {
-      const newMbti = { ...prev, [key]: !prev[key] }
-      onSelect(getMbtiResult(newMbti)) // MBTI 결과를 부모에게 전달
-      return newMbti
-    })
-  }
 
-  const getMbtiResult = (currentMbti: MbtiState): string => {
-    return (
-      (currentMbti.EI ? 'I' : 'E') +
-      (currentMbti.SN ? 'N' : 'S') +
-      (currentMbti.TF ? 'F' : 'T') +
-      (currentMbti.JP ? 'P' : 'J')
-    )
-  }
-
-  // 초기 상태에서 MBTI 결과를 부모에게 전달
   useEffect(() => {
-    onSelect(getMbtiResult(mbti))
-  }, [mbti, onSelect])
+    if (initialMbti) {
+      const initialMbtiState = {
+        EI: initialMbti[0] === 'E' ? false : true,
+        SN: initialMbti[1] === 'S' ? false : true,
+        TF: initialMbti[2] === 'T' ? false : true,
+        JP: initialMbti[3] === 'J' ? false : true,
+      }
+      setMbti(initialMbtiState)
+    }
+  }, [])
+
+  const updateMbti = (key: MbtiType) => {
+    setMbti((prev) => ({ ...prev, [key]: !prev[key] }))
+  }
+
+  const getMbtiResult = useCallback((): string => {
+    return (
+      (mbti.EI ? 'I' : 'E') +
+      (mbti.SN ? 'N' : 'S') +
+      (mbti.TF ? 'F' : 'T') +
+      (mbti.JP ? 'P' : 'J')
+    )
+  }, [mbti])
+
+  useEffect(() => {
+    const result = getMbtiResult()
+    onMbtiChange(result)
+  }, [getMbtiResult, onMbtiChange])
 
   return (
     <div className='mbti-container'>
@@ -85,7 +100,7 @@ const MbtiSelector: React.FC<MbtiSelectorProps> = ({ onSelect = () => {} }) => {
       <div className='mbti-result'>
         <p>
           선택된 MBTI{' '}
-          <span className='mbti-result-text'>{getMbtiResult(mbti)}</span>
+          <span className='mbti-result-text'>{getMbtiResult()}</span>
         </p>
       </div>
     </div>
