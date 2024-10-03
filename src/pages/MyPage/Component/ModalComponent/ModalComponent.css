@@ -1,4 +1,4 @@
-.modal-section{
+.modal-section {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -6,19 +6,27 @@
   align-items: center;
   gap: 1.2rem;
 
-  .modal-instruction{
+  .modal-instruction {
     margin-top: 1.5rem;
     font-size: 1.3rem;
     font-weight: bold;
   }
 
-  .modal-label{
-  font-size:0.9rem;
+  .modal-label {
+    font-size: 1rem;
+    margin: .5rem 0;
   }
 
-  .modal-check{
+  .modal-error-text {
+    margin: .3rem 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #fd3747;
+  }
+
+  .modal-check {
     font-size: 0.5rem;
-    color:#FD3747;
+    color: #fd3747;
     font-weight: bold;
   }
 
@@ -26,19 +34,22 @@
     width: 430px;
     height: 40px;
     padding: 1rem;
-    margin-top: 0.5rem;
     background-color: #ededed;
     border: none;
     border-radius: 5px;
   }
 
-  .search-button{
+  .modal-input:focus {
+    outline-color: #fd3747;
+  }
+
+  .search-button {
     position: absolute;
     right: 50px;
     bottom: 50px;
   }
-  
-  .modal-input.active{
+
+  .modal-input.active {
     margin-left: 35px;
   }
 }

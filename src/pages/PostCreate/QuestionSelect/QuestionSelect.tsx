@@ -10,6 +10,7 @@ interface QuestionProps {
 
 const QuestionSelect = (props: QuestionProps) => {
   const { question, onChangeQuestion } = props
+  const [inputActive, setInputActive] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   return (
     <div className='question-select'>
@@ -35,11 +36,13 @@ const QuestionSelect = (props: QuestionProps) => {
       {isModalOpen && (
         <BottomModal
           onClick={() => setIsModalOpen(false)}
-          buttonText='닫기'
+          buttonText={question === '' ? '닫기' : '확인'}
         >
           <QuestionModal
             question={question}
             onChangeQuestion={onChangeQuestion}
+            inputActive={inputActive}
+            onChangeInputActive={setInputActive}
           />
         </BottomModal>
       )}
