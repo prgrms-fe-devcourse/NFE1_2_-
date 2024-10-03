@@ -7,6 +7,8 @@ import PostList from './pages/PostList/List'
 import LoginPage from './pages/LoginPage/LoginPage'
 import JoinPage from './pages/JoinPage/JoinPage'
 import JoinCompletePage from './pages/JoinCompletePage/JoinCompletePage'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import SplashScreen from '@pages/SplashScreen/SplashScreen'
 import { useState, useEffect } from 'react'
 
@@ -32,6 +34,7 @@ const App = () => {
   }
 
   return (
+    <>
     <Routes>
       <Route
         path='/join'
@@ -69,6 +72,8 @@ const App = () => {
         element={<Navigate to="/" replace />} 
       />
     </Routes>
+    <ToastContainer />
+    </>
   )
 }
 
