@@ -19,7 +19,12 @@ interface CommentInputProps {
   setParentCommentInfo: Dispatch<SetStateAction<string>>
 }
 
-const CommentInput = ({ onClick, post, parentInfo }: CommentInputProps) => {
+const CommentInput = ({
+  onClick,
+  post,
+  parentInfo,
+  setParentCommentInfo,
+}: CommentInputProps) => {
   const [userComment, setUserComment] = useState('')
   const { _id } = post
   const postId = _id
@@ -62,6 +67,7 @@ const CommentInput = ({ onClick, post, parentInfo }: CommentInputProps) => {
 
   const handleSubmitMessage = () => {
     const userComment = formatUserComment()
+    setParentCommentInfo('')
     mutate(userComment)
   }
 
