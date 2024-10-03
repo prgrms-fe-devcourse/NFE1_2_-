@@ -15,13 +15,13 @@ import NotFound from '@/pages/NotFound/NotFound'
 const PostDetailPage = () => {
   const { postId } = useParams<{ postId: string }>()
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['post', postId],
     queryFn: () => getPostData(postId as string),
     enabled: !!postId,
   })
 
-  const [isVoted, setIsVoted] = useState<boolean | null>(false)
+  const [isVoted, setIsVoted] = useState<boolean | null>(null)
 
   if (isLoading) {
     return <div>Loading</div>
