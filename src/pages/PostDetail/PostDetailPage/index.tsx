@@ -9,15 +9,15 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { getPostData } from '@/utils/api'
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-const PostDetailPage = ({
-  postId = '66f6d523e5593e2a995daf58', //추후 프롭으로 받아와서 처리 예정,
-}: {
-  postId: string
-}) => {
+const PostDetailPage = () => {
+  const { postId } = useParams<{ postId: string }>()
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['post', postId],
-    queryFn: () => getPostData(postId),
+    queryFn: () => getPostData(postId as string),
+    enabled: !!postId,
   })
 
   const [isVoted, setIsVoted] = useState<boolean | null>(false)

@@ -10,22 +10,20 @@ const PostCard = ({
   post: Post
   truncate?: boolean
 }) => {
-  const title = JSON.parse(post.title)
-  const fullName = JSON.parse(post.author.fullName)
   return (
     <div className='post-card'>
-      <div className='title'>{title.title}</div>
+      <div className='title'>{post.title.title}</div>
       <div className='category'>
         <div className='category_left'>
           <Bedge
             type='type'
-            body={title.type}
+            body={post.title.type}
           />
           <Bedge
             type='mbti'
-            body={fullName.mbti}
+            body={post.author.fullName.mbti}
           />{' '}
-          {fullName.gender}/{fullName.ageGroup}
+          {post.author.fullName.gender}/{post.author.fullName.ageGroup}
         </div>
         <div className='category_right'>
           {new Date(post.createdAt).toLocaleDateString()}
@@ -34,7 +32,7 @@ const PostCard = ({
               width={24}
               height={24}
             />
-            {title.checkCount}
+            {post.title.checkCount}
           </div>
         </div>
       </div>
@@ -44,7 +42,7 @@ const PostCard = ({
           alt={post.title.title}
         />
       )}
-      <p className={`body ${truncate ? 'truncate' : ''}`}>{title.body}</p>
+      <p className={`body ${truncate ? 'truncate' : ''}`}>{post.title.body}</p>
     </div>
   )
 }

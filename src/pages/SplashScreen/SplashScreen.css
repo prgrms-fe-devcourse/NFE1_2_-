@@ -1,0 +1,26 @@
+  .splash-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+  }
+
+  .logo {
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    text-align: center;
+    color: #393939; 
+  }
+  
+  .footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 14px;
+    color: #7D7D7D; 
+  }
