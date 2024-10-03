@@ -1,7 +1,7 @@
 import './Bedge.css'
 
 interface BedgeProps {
-  type: 'mbti' | 'agree' | 'disagree' | 'best' | 'type' | 'author'
+  type: 'mbti' | 'agree' | 'disagree' | 'type' | 'author'
   body: string
 }
 
