@@ -32,8 +32,8 @@ const PollSection = ({ post, isVoted, setIsVoted }: PollSectionProps) => {
     _id,
     title: { poll },
   } = post
-
   const { title } = poll
+
   return (
     <div className='poll-container'>
       <h3 className='poll-title'>{title}</h3>
@@ -46,9 +46,12 @@ const PollSection = ({ post, isVoted, setIsVoted }: PollSectionProps) => {
         />
       )}
       <p className='poll-subtitle'>
-        {isVoted
-          ? '이제 댓글을 남겨보세요!'
-          : '의견을 선택하고 댓글을 확인해보세요!'}
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {[...poll.disagree, ...poll.agree].length === 0
+          ? '아직 투표가 없어요!'
+          : isVoted
+            ? '이제 댓글을 남겨보세요!'
+            : '의견을 선택하고 댓글을 확인해보세요!'}
       </p>
     </div>
   )

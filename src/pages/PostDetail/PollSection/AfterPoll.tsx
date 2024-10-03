@@ -37,7 +37,6 @@ const AfterPoll = ({ poll }: { poll: Poll }) => {
           src={BeforePollImg}
           alt='로고'
         />
-        <h3> 투표가 아직 없어요</h3>
       </>
     )
   }
