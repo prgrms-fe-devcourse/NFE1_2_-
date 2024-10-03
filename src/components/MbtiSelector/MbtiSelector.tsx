@@ -33,7 +33,6 @@ const MbtiSelector: React.FC<MbtiSelectorProps> = ({
 
   useEffect(() => {
     if (initialMbti) {
-      console.log(initialMbti)
       const initialMbtiState = {
         EI: initialMbti[0] === 'E' ? false : true,
         SN: initialMbti[1] === 'S' ? false : true,

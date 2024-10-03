@@ -38,7 +38,9 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
   // 확인 버튼 클릭 시 실행되는 함수
   // 선택된 정보를 부모 컴포넌트로 전달하고 모달을 닫음
   const handleConfirmAndClose = () => {
-    onSubmit(gender, birthDate, mbti)
+    if (birthDate && mbti) {
+      onSubmit(gender, birthDate, mbti)
+    }
     onClose()
   }
 
@@ -50,7 +52,7 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
   return (
     <BottomModal
       onClick={handleConfirmAndClose}
-      buttonText='확인'
+      buttonText={birthDate && mbti ? '확인' : '닫기'}
     >
       <div className='join-detail'>
         {/* 성별 선택 섹션 */}
@@ -94,6 +96,9 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
             onChange={(e) => setBirthDate(e.target.value)}
             placeholder='YYYY.MM.DD'
           />
+          {!birthDate && (
+            <p className='select-error-text'>생년월일을 입력하세요.</p>
+          )}
         </div>
 
         {/* MBTI 선택 섹션 */}
