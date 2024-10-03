@@ -36,24 +36,12 @@ const JoinPage: React.FC = () => {
     return passwordRegex.test(password)
   }
 
-  const handleUsernameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setUsername(value)
     setIsValidUsername(validateUsername(value))
     setShowErrorMessages(true)
-
-    if (validateUsername(value)) {
-      try {
-        const response = await axios.get(`https://kdt.frontend.5th.programmers.co.kr:5001/check-username?username=${value}`)
-        if (response.data.exists) {
-          setUsernameError('이미 존재하는 아이디입니다')
-        } else {
-          setUsernameError('')
-        }
-      } catch (error) {
-        console.error('Error checking username:', error)
-      }
-    }
+    setUsernameError('') // 사용자가 입력을 변경할 때 에러 메시지 초기화
   }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +79,16 @@ const JoinPage: React.FC = () => {
     setDetailInfoError(false)
   }
 
+  const checkUsernameAvailability = async (username: string) => {
+    try {
+      const response = await axios.get(`https://kdt.frontend.5th.programmers.co.kr:5001/check-username?username=${username}`)
+      return !response.data.exists
+    } catch (error) {
+      console.error('Error checking username:', error)
+      return false
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setShowErrorMessages(true)
@@ -102,6 +100,13 @@ const JoinPage: React.FC = () => {
       password !== confirmPassword ||
       !detailInfo
     ) {
+      return
+    }
+
+    // 아이디 중복 확인
+    const isUsernameAvailable = await checkUsernameAvailability(username)
+    if (!isUsernameAvailable) {
+      setUsernameError('중복된 아이디입니다')
       return
     }
 
