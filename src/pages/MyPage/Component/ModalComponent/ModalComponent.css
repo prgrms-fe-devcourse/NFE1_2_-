@@ -1,0 +1,55 @@
+.modal-section {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+
+  .modal-instruction {
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .modal-label {
+    font-size: 1rem;
+    margin: .5rem 0;
+  }
+
+  .modal-error-text {
+    margin: .3rem 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #fd3747;
+  }
+
+  .modal-check {
+    font-size: 0.5rem;
+    color: #fd3747;
+    font-weight: bold;
+  }
+
+  .modal-input {
+    width: 430px;
+    height: 40px;
+    padding: 1rem;
+    background-color: #ededed;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .modal-input:focus {
+    outline-color: #fd3747;
+  }
+
+  .search-button {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+  }
+
+  .modal-input.active {
+    margin-left: 35px;
+  }
+}

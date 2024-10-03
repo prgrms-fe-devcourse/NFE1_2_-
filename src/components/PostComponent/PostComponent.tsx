@@ -3,21 +3,29 @@ import ViewsIcon from '@/assets/icons/views.svg?react'
 import { Post } from '@/typings/types'
 import Bedge from '../Bedge/Bedge'
 
-const PostCard = ({ post }: { post: Post }) => {
+const PostCard = ({
+  post,
+  truncate = false,
+}: {
+  post: Post
+  truncate?: boolean
+}) => {
+  const title = JSON.parse(post.title)
+  const fullName = JSON.parse(post.author.fullName)
   return (
     <div className='post-card'>
-      <div className='title'>{post.title.title}</div>
+      <div className='title'>{title.title}</div>
       <div className='category'>
         <div className='category_left'>
           <Bedge
             type='type'
-            body={post.title.type}
+            body={title.type}
           />
           <Bedge
             type='mbti'
-            body={post.author.fullName.mbti}
+            body={fullName.mbti}
           />{' '}
-          {post.author.fullName.gender}/{post.author.fullName.ageGroup}
+          {fullName.gender}/{fullName.ageGroup}
         </div>
         <div className='category_right'>
           {new Date(post.createdAt).toLocaleDateString()}
@@ -26,7 +34,7 @@ const PostCard = ({ post }: { post: Post }) => {
               width={24}
               height={24}
             />
-            {post.title.checkCount}
+            {title.checkCount}
           </div>
         </div>
       </div>
@@ -36,7 +44,7 @@ const PostCard = ({ post }: { post: Post }) => {
           alt={post.title.title}
         />
       )}
-      <p className='body'>{post.title.body}</p>
+      <p className={`body ${truncate ? 'truncate' : ''}`}>{title.body}</p>
     </div>
   )
 }

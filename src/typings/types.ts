@@ -8,13 +8,13 @@ export interface User {
   isOnline: boolean
   posts: Post[]
   likes: Like[]
-  comments: string[]
+  comments: Comment[]
   followers: User[]
   following: Following[]
   notifications: Notification[]
   messages: Message[]
   _id: string
-  fullName: string
+  fullName: string | UserDetailData
   email: string
   createdAt: string
   updatedAt: string
@@ -43,14 +43,14 @@ export interface Channel {
 
 // 투표 탬플릿
 export interface Poll {
-  title: string //투표 타이틀
-  agree: number //투표 찬성 수
-  disagree: number //투표 반대 수
+  title: string // 투표 타이틀
+  agree: string[] // 찬성 배열
+  disagree: string[] // 반대 배열
 }
 
 // Post의 타이틀에 들어있는 데이터 베이스
 export interface PostDetail {
-  type: '이별' | '짝사랑' | '썸' | '데이트' | '기타' //게시글 타입
+  type: '이별' | '짝사랑' | '썸' | '데이트' | '기타' | '카테고리' //게시글 타입
   title: string // 포스트 타이틀
   body: string // 포스트 글
   checkCount: number // 게시글 확인 인원수
@@ -83,7 +83,7 @@ export interface Like {
 // Comment 모델
 export interface Comment {
   _id: string
-  comment: CommentDetail
+  comment: string | CommentDetail
   author: User
   post: string // 포스트 id
   createdAt: string
@@ -103,6 +103,7 @@ export interface Notification {
   _id: string
   author: User
   user: User | string
+  like?: string | null
   post?: string | null // 포스트 id (nullable)
   follow?: string // 팔로우 id (선택적)
   comment?: Comment // 선택적

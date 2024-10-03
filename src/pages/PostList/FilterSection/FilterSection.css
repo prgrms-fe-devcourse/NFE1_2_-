@@ -1,0 +1,53 @@
+.post-collection {
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sort-options{
+  display: flex;
+  position: relative;
+  padding:6px 8px;
+  flex-direction: row;
+  border-radius: 5px;
+  background-color: #F6F7F9;
+  gap:5px;
+  cursor: pointer;
+}
+
+.collection-title{
+  padding:6px 8px;
+  border-radius: 5px;
+  background-color: #F6F7F9;  
+  cursor: pointer;
+}
+
+.collected-title{
+  padding: 3px 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight:500;
+
+}
+
+.popular, .latest{
+  padding: 3px 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight:500;
+}
+
+.popular.active {
+  background-color: #FFF;
+}
+
+.latest.active {
+  background-color: #fff;
+}
+
+.collection-title.active{
+  .collected-title {
+    background-color: #fff; 
+  }
+}

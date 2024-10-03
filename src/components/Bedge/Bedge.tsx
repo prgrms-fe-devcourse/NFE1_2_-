@@ -1,7 +1,7 @@
 import './Bedge.css'
 
 interface BedgeProps {
-  type: 'mbti' | 'agree' | 'disagree' | 'best' | 'type'
+  type: 'mbti' | 'agree' | 'disagree' | 'best' | 'type' | 'author'
   body: string
 }
 
@@ -14,12 +14,12 @@ interface BedgeProps {
 
 const Bedge = ({ type, body }: BedgeProps) => {
   return (
-    <button
+    <div
       className='bedge'
       id={type}
     >
       {body}
-    </button>
+    </div>
   )
 }
 

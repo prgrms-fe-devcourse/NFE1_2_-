@@ -1,0 +1,15 @@
+.edit-post-container {
+  display: flex;
+  width: 100%;
+  margin-top: 2rem;
+  padding-top: 3.5rem;
+  justify-content: center;
+  border-top: 1px solid #eee;
+  gap: 1rem;
+
+  .post-page-button {
+    width: 6rem;
+    height: 1.7rem;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,17 @@
+.notification-container {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  .period-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 1rem;
+  }
+
+  .container-line {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #eeeeee;
+  }
+}

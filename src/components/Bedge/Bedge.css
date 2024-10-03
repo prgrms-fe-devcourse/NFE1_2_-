@@ -1,4 +1,7 @@
 .bedge {
+  display: flex;
+  align-content: center;
+  justify-content: center;
   width: 50px;
   height: 24px;
   margin-right: 5px;
@@ -28,6 +31,11 @@
 }
 
 #type {
+  background: #dbeddb;
+  color: #1c3829;
+}
+
+#author {
   background: #dbeddb;
   color: #1c3829;
 }
