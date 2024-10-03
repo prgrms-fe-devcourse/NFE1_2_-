@@ -4,7 +4,7 @@ import AccountSection from './MyPageSection/AccountSection'
 import OtherSection from './MyPageSection/OtherSection'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getUserData } from '@/utils/api'
+import { USER_ID, getUserData } from '@/utils/api'
 
 const MyPage = () => {
   const [modalOpen, setModalOpen] = useState({
@@ -30,13 +30,11 @@ const MyPage = () => {
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['user'],
-    queryFn: () => getUserData('66f36c0dcdb3ce68a6a135fc'),
+    queryFn: () => getUserData(USER_ID),
   })
-  console.log(data)
   if (isLoading) {
     return <div>Loading</div>
   }
-
   if (isError) {
     return <div>{error.message}</div>
   }

@@ -39,7 +39,7 @@ export const getUserData = async (userId: string): Promise<User> => {
   }
 }
 
-export const updateUserPassword = async (newPassword: string) => {
+export const updateUserPassword = async (newPassword: string): Promise<void> => {
   try {
     const response = await axios.put(
       `${END_POINT}settings/update-password`,

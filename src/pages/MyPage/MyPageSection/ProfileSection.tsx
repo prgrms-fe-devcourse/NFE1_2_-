@@ -4,7 +4,7 @@ import '../MyPage.css'
 import { parseIfString } from '@/utils/formatPostData'
 
 interface SectionProps {
-  userData : User
+  userData: User | undefined
   isModalOpen: boolean
   onChangeOpenModal: () => void
   onChangeCloseModal: () => void
@@ -12,7 +12,7 @@ interface SectionProps {
 
 const ProfileSection = (props: SectionProps) => {
   const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
-  const {gender , ageGroup, mbti} = parseIfString(userData.fullName)
+  const { gender, ageGroup, mbti } = parseIfString(userData.fullName)
 
   return (
     <InfoSection title='프로필'>
@@ -26,7 +26,6 @@ const ProfileSection = (props: SectionProps) => {
         나이<span className='value'>{ageGroup}대</span>
       </p>
       <div className='info-edit'>프로필 수정</div>
-      
     </InfoSection>
   )
 }
