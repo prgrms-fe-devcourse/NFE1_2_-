@@ -8,9 +8,11 @@ import LoginPage from './pages/LoginPage/LoginPage'
 import JoinPage from './pages/JoinPage/JoinPage'
 import JoinCompletePage from './pages/JoinCompletePage/JoinCompletePage'
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
+    <>
     <Routes>
       <Route
         path='/join'
@@ -43,7 +45,10 @@ const App = () => {
         path='/'
         element={<PostList />}
       />
+     
     </Routes>
+    <ToastContainer />
+    </>
   )
 }
 
