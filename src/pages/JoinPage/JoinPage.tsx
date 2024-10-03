@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './JoinPage.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -6,6 +6,10 @@ import Logo from '@assets/imgs/logo.png'
 import JoinDetail from './JoinDetail/JoinDetail'
 import Container from '@components/Conatiner/Container'
 import { useAuthStore } from '@store/authStore'
+
+interface User {
+  email: string;
+}
 
 const JoinPage: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -34,6 +38,21 @@ const JoinPage: React.FC = () => {
   const validatePassword = (password: string) => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/
     return passwordRegex.test(password)
+  }
+
+  const fetchAllUsers = async (): Promise<User[]> => {
+    try {
+      const response = await axios.get('https://kdt.frontend.5th.programmers.co.kr:5001/users/get-users')
+      return response.data
+    } catch (error) {
+      console.error('Error fetching users:', error)
+      return []
+    }
+  }
+
+  const checkUsernameAvailability = async (username: string): Promise<boolean> => {
+    const allUsers = await fetchAllUsers()
+    return !allUsers.some((user) => user.email === username)
   }
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,18 +98,6 @@ const JoinPage: React.FC = () => {
     setDetailInfoError(false)
   }
 
-  const checkUsernameAvailability = async (username: string) => {
-    try {
-      const response = await axios.get(`https://kdt.frontend.5th.programmers.co.kr:5001/check-username?username=${username}`)
-      return !response.data.exists // 'exists' 값이 false면 사용 가능한 아이디
-    } catch (error) {
-      console.error('Error checking username:', error)
-      // 에러 발생 시 사용자에게 알림
-      alert('아이디 중복 확인 중 오류가 발생했습니다. 다시 시도해 주세요.')
-      return false // 에러 발생 시 기본적으로 사용 불가능으로 처리
-    }
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setShowErrorMessages(true)
@@ -105,8 +112,9 @@ const JoinPage: React.FC = () => {
       return
     }
 
-    const isUsernameAvailable = await checkUsernameAvailability(username)
-    if (!isUsernameAvailable) {
+    // 아이디 중복 검사
+    const isAvailable = await checkUsernameAvailability(username)
+    if (!isAvailable) {
       setUsernameError('중복된 아이디입니다')
       return
     }
@@ -130,12 +138,11 @@ const JoinPage: React.FC = () => {
       )
 
       if (response.status === 200) {
-        // 로컬 스토리지에 id와 토큰 저장
-        localStorage.setItem('userId', response.data.user._id);
-        localStorage.setItem('token', response.data.token);
-        login()// Zustand 스토어의 로그인 상태를 true로 설정
+        localStorage.setItem('userId', response.data.user._id)
+        localStorage.setItem('token', response.data.token)
+        login()
         console.log('Login status:', useAuthStore.getState().isLoggedIn)
-        navigate('/joincomplete', { state: { username } }) //회원가입 성공 페이지로 이동
+        navigate('/joincomplete', { state: { username } })
       } else {
         alert(
           `회원가입 실패: ${response.data.message || '알 수 없는 오류가 발생했습니다.'}`
