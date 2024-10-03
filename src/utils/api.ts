@@ -39,6 +39,21 @@ export const getUserData = async (userId: string): Promise<User> => {
   }
 }
 
+export const updateUserData = async (fullname: string): Promise<void> => {
+  try {
+    const response = await axios.put(
+      `${END_POINT}settings/update-user`,
+      { "fullName" : fullname,
+        "username" : "false"
+      },
+      RequestHeader,
+    )
+    return response.data
+  } catch (error) {
+    throw handleError(error)
+  }
+}
+
 export const updateUserPassword = async (newPassword: string): Promise<void> => {
   try {
     const response = await axios.put(
