@@ -19,25 +19,20 @@ interface CommentInputProps {
   setParentCommentInfo: Dispatch<SetStateAction<string>>
 }
 
-const CommentInput = ({
-  onClick,
-  post,
-  parentInfo,
-  setParentCommentInfo,
-}: CommentInputProps) => {
+const CommentInput = ({ onClick, post, parentInfo }: CommentInputProps) => {
   const [userComment, setUserComment] = useState('')
   const { _id } = post
   const postId = _id
 
   const mutationFn = (userComment: UserComment) => postComment(userComment)
-  const onSuccessCallback = (responsData: { _id: string }) => {
+  const onSuccessCallback = (responsData: UserComment) => {
     setUserComment('')
     onClick()
 
     const { _id } = responsData
     const messageNotification: RequestData = {
       notificationType: 'COMMENT',
-      notificationTypeId: _id,
+      notificationTypeId: _id as string,
       userId: USER_ID as string,
       postId: postId,
     }
@@ -67,8 +62,6 @@ const CommentInput = ({
 
   const handleSubmitMessage = () => {
     const userComment = formatUserComment()
-    // 대댓글 작성시 기존에 있던 parentId 값 초기화
-    setParentCommentInfo('')
     mutate(userComment)
   }
 

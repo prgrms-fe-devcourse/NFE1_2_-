@@ -214,6 +214,7 @@ export const postPoll = async (postId: string, pollData: PollData) => {
 }
 
 export interface UserComment {
+  _id?: string
   comment: string
   postId: string
 }

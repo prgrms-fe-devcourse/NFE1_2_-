@@ -56,9 +56,7 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
     onSuccessCallback,
   })
 
-  const handleSubmitLiked = () => {
-    mutate(isLiked)
-  }
+  const handleSubmitLiked = () => mutate()
 
   return (
     <div className='like-btn-container'>
