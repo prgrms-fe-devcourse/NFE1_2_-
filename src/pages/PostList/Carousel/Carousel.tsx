@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react'
-import PrevButton from '@/assets/icons/back_button.svg?react'
-import NextButton from '@/assets/icons/next_button.svg?react'
 import Notification from '@/assets/icons/list_notification.svg?react'
 import './Carousel.css'
 
@@ -18,31 +15,6 @@ const Carousel = ({
 }: {
   setSelectedCategory: (category: string | null) => void
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1,
-      )
-    }, 3000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
-    )
-  }
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1,
-    )
-  }
-
-  //카테고리 클릭하면 해당 글 목록 보여줌, 전체 선택하면 카테고리 선택 X
   const handleImageClick = (category: string) => {
     if (category === '전체') {
       setSelectedCategory(null)
@@ -57,17 +29,10 @@ const Carousel = ({
         <Notification />
       </div>
       <div className='carousel'>
-        <PrevButton
-          className='carousel-button'
-          onClick={handlePrev}
-        />
-        <div
-          className='image-wrapper'
-          style={{ transform: `translateX(-${currentIndex * 250}px)` }}
-        >
+        <div className='image-wrapper'>
           {images.map((image, index) => (
             <button
-              className={`image-container ${currentIndex === index ? 'active' : ''}`}
+              className={`image-container`}
               key={index}
               onClick={() => handleImageClick(image.category)}
             >
@@ -75,17 +40,13 @@ const Carousel = ({
                 className='img'
                 src={image.src}
                 alt={image.alt}
-                width={170}
+                width={140}
                 height={80}
               />
               <div className='text-overlay'>{image.alt}</div>
             </button>
           ))}
         </div>
-        <NextButton
-          className='carousel-button'
-          onClick={handleNext}
-        />
       </div>
     </div>
   )

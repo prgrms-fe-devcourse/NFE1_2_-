@@ -2,48 +2,52 @@ import ModalComponent from '@/pages/MyPage/Component/ModalComponent/ModalCompone
 import { useState } from 'react'
 import SearchButton from '@assets/icons/list_search.svg?react'
 import MbtiToggle from '@/pages/PostList/MbtiToggle/MbtiToggle'
-
-const Search = ({ onClose }: { onClose: () => void }) => {
+const Search = ({
+  isSearchModalOpen,
+  onClose,
+  onSearch,
+}: {
+  onClose: () => void
+  onSearch: (searchTerm: string, mbti: string | null) => void
+}) => {
   const [search, setSearch] = useState('')
   const [isMbtiFilterVisible, setIsMbtiFilterVisible] = useState(false)
+  const [selectedMbti, setSelectedMbti] = useState<string | null>(null)
 
   const handleCloseModal = () => {
     onClose()
     setSearch('')
-    setIsMbtiFilterVisible(false)
+    setSelectedMbti(null) // 모달 닫을 때만 MBTI 초기화
   }
 
-  const inputFields = [
-    {
-      label: '',
-      value: search,
-      handleChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-        setSearch(e.target.value),
-      type: 'text',
-      placeholder: '검색어를 입력해주세요',
-    },
-  ]
+  const handleSearch = () => {
+    onSearch(search, selectedMbti) // 검색어와 선택된 MBTI 전달
+    handleCloseModal() // 검색 후 모달 닫기
+  }
 
-  const handleToggleFilter = () => {
-    setIsMbtiFilterVisible((prev) => !prev)
+  const handleMbtiToggle = () => {
+    setIsMbtiFilterVisible(!isMbtiFilterVisible) // MBTI 토글 상태만 제어
+  }
+
+  const handleMbtiSelect = (result: string) => {
+    setSelectedMbti(result)
+    console.log('선택된 MBTI:', result)
   }
 
   return (
     <ModalComponent
       isOpen={true}
-      onClose={handleCloseModal}
+      onClose={handleCloseModal} // 모달을 닫을 때만 onClose 호출
       buttonText={'닫기'}
       instruction='검색'
       detail='검색할 포스트 제목을 입력하거나, MBTI 필터링 기능을 이용해보세요.'
       filter={true}
-      inputFields={inputFields}
-      isMbtiFilterVisible={isMbtiFilterVisible}
-      onToggleFilter={handleToggleFilter}
     >
       <div className='mbti'>
         <MbtiToggle
           isMbtiFilterVisible={isMbtiFilterVisible}
-          onToggleFilter={handleToggleFilter}
+          onToggleFilter={handleMbtiToggle} // 토글 상태만 제어
+          onSelect={handleMbtiSelect} // 선택된 MBTI 상태 업데이트
         />
       </div>
       <input
@@ -53,7 +57,10 @@ const Search = ({ onClose }: { onClose: () => void }) => {
         onChange={(e) => setSearch(e.target.value)}
         placeholder='검색어를 입력해주세요'
       />
-      <button className='search-button'>
+      <button
+        className='search-button'
+        onClick={handleSearch}
+      >
         <SearchButton />
       </button>
     </ModalComponent>
