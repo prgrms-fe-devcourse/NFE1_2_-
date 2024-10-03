@@ -3,6 +3,7 @@ import PostCard from '@/components/PostComponent/PostComponent'
 import Interaction from '../Interaction/Interaction'
 import { Post } from '@/typings/types'
 import { useNavigate } from 'react-router-dom'
+import formatPostData from '@/utils/formatPostData'
 
 const PreviewPost = ({ post }: { post: Post }) => {
   const navigate = useNavigate()
@@ -31,7 +32,7 @@ const PreviewPost = ({ post }: { post: Post }) => {
       })
     }
 
-    navigate('/postdetail') // 상세 페이지로 이동
+    navigate(`/post/${post._id}`) // 상세 페이지로 이동
   }
   return (
     <section
@@ -40,7 +41,7 @@ const PreviewPost = ({ post }: { post: Post }) => {
       style={{ cursor: 'pointer' }}
     >
       <PostCard
-        post={post}
+        post={formatPostData(post)}
         truncate={true}
         checkCount={checkCount}
       />
