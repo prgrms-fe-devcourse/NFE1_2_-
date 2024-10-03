@@ -1,16 +1,15 @@
 import Bedge from '@components/Bedge/Bedge'
 import DetailTimeIcon from '@assets/icons/details_time.svg?react'
-import DetailLikeIcon from '@assets/icons/heart_before_select.svg?react'
 import DetailMessageIcon from '@assets/icons/details_comment.svg?react'
 import './index.css'
-import { Comment } from '@/typings/types'
 import formatTime from '@/utils/formatTime'
 import { useEffect, useState } from 'react'
 import { deleteComment, USER_ID } from '@/utils/api'
 import useCustomMutation from '@/hooks/useCustomMutaition'
+import { FormattedChlidrenComment } from '@/utils/formatCommentList'
 
 interface CommentCardProps {
-  comment: Comment
+  comment: FormattedChlidrenComment
   postId: string
   handleModalState: () => void
   onupdateParentInfo: (id: string) => void
@@ -18,6 +17,7 @@ interface CommentCardProps {
     agree: string[]
     disagree: string[]
   }
+  isReply: boolean
 }
 
 const CommentCard = ({
@@ -26,18 +26,25 @@ const CommentCard = ({
   handleModalState,
   onupdateParentInfo,
   pollData,
+  isReply,
 }: CommentCardProps) => {
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
 
   useEffect(() => {
-    const checkIsAuthor = comment.author._id === USER_ID
-    setIsAuthor(checkIsAuthor)
-  }, [comment.author._id])
+    if (comment?.author?._id) {
+      const checkIsAuthor = comment.author._id === USER_ID
+      setIsAuthor(checkIsAuthor)
+    }
+  }, [comment])
 
   const { mutate } = useCustomMutation({
     mutationFn: () => deleteComment(comment._id),
     queryKey: ['post', postId],
   })
+
+  if (comment.comment.comment === '삭제된 댓글입니다.') {
+    return <div className='comment-card'>삭제된 댓글입니다.</div>
+  }
 
   const { createdAt, author } = comment
   const { gender, ageGroup, mbti } = author.fullName
@@ -80,7 +87,7 @@ const CommentCard = ({
   }
 
   const handleDeleteComment = () => mutate()
-
+  const validateReply = comment.children.length === 0
   return (
     <div className='comment-card'>
       <div className='comment-personal-detail-container'>
@@ -110,29 +117,25 @@ const CommentCard = ({
             />
             <span>{formatTime(createdAt)}</span>
           </div>
-          <div className='comment-detail'>
-            <DetailLikeIcon
-              width={16}
-              height={16}
-              fill='#7d7d7d'
-            />
-            <span>좋아요</span>
-          </div>
-          <div className='comment-detail'>
-            <DetailMessageIcon
-              width={16}
-              height={16}
-            />
-            <button
-              data-id={comment._id}
-              onClick={handleReplyBtnClick}
-            >
-              대댓글
-            </button>
-          </div>
+          {!isReply && (
+            <div className='comment-detail'>
+              <DetailMessageIcon
+                width={16}
+                height={16}
+              />
+              <button
+                data-id={comment._id}
+                onClick={handleReplyBtnClick}
+              >
+                대댓글
+              </button>
+            </div>
+          )}
         </div>
         <div className='comment-detail-right'>
-          {isAuthor && <button onClick={handleDeleteComment}>삭제</button>}
+          {isAuthor && validateReply && (
+            <button onClick={handleDeleteComment}>삭제</button>
+          )}
         </div>
       </div>
     </div>

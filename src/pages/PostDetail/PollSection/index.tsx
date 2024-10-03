@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import AfterPoll from './AfterPoll'
 import BeforePoll from './BeforePoll'
 import './index.css'
-import { Post } from '@/typings/types'
+import { FormattedPost } from '@/typings/types'
 
-const PollSection = ({ post }: { post: Post }) => {
+const PollSection = ({ post }: { post: FormattedPost }) => {
   const [isVoted, setIsVoted] = useState<boolean | null>(null)
   useEffect(() => {
     // 유저가 작성자 또는 투표를 완료했는지 검증

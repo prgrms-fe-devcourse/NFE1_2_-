@@ -2,7 +2,7 @@ import SendMessageIcon from '@assets/icons/details_send.svg?react'
 import BottomModal from '@components/BottomModal/BottomModal'
 import './index.css'
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
-import { Post } from '@/typings/types'
+import { FormattedPost } from '@/typings/types'
 import {
   postComment,
   postNotification,
@@ -13,7 +13,7 @@ import useCustomMutation from '@/hooks/useCustomMutaition'
 
 interface CommentInputProps {
   onClick: () => void
-  post: Post
+  post: FormattedPost
   parentInfo: string
   setParentCommentInfo: Dispatch<SetStateAction<string>>
 }
@@ -43,9 +43,9 @@ const CommentInput = ({
   }
 
   const { mutate, isPending } = useCustomMutation({
-    queryKey: ['post', _id],
     mutationFn,
     onSuccessCallback,
+    queryKey: ['post', _id],
   })
 
   const handleMessageInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -59,7 +59,6 @@ const CommentInput = ({
     const newComment = JSON.stringify({
       comment: userComment,
       parentId,
-      like: [],
     })
     return { postId: _id, comment: newComment }
   }
