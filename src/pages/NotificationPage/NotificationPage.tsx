@@ -3,33 +3,14 @@ import './NotificationPage.css'
 import Navigator from '@/components/Navigatior/Navigator'
 import NotificationContainer from './NotificationContainer/NotificationContainer'
 import { Notification } from '@/typings/types'
-import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import timeSeparation from '@/utils/timeSeparation'
-
-const getNotification = async (): Promise<Notification[]> => {
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ZjkwMWNjMzYyN2UzNTYzZTMyNzIyNCIsImVtYWlsIjoibGVlQGdtYWlsLmNvbSJ9LCJpYXQiOjE3Mjc1OTQ5NTZ9.2dbp6G3LSvdVMCUCDRscDfmPJTjrsQiPgONM7AmQ7eA' //localStorage에서 가져오도록 추후 수정
-  try {
-    const response = await axios.get<Notification[]>(
-      'https://kdt.frontend.5th.programmers.co.kr:5001/notifications',
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    )
-    return response.data
-  } catch (error) {
-    console.error('알림 가져오기 오류:', error)
-    throw error
-  }
-}
+import { getNotification } from '@/utils/api'
 
 const NotificationPage = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['notifications'],
-    queryFn: getNotification,
+    queryFn: () => getNotification(),
     // refetchInterval : 1000 //새로고침
   })
 

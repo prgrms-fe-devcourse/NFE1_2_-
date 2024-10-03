@@ -1,33 +1,13 @@
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './PostCreateButton.css'
 import { PostDetail } from '@/typings/types'
 import { useNavigate } from 'react-router-dom'
+import { createPost } from '@/utils/api'
 
 interface PostCreateProps {
   postData: PostDetail
   postImage: File | null
-}
-
-const createPost = async (newPost: FormData) => {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ZjkwMWNjMzYyN2UzNTYzZTMyNzIyNCIsImVtYWlsIjoibGVlQGdtYWlsLmNvbSJ9LCJpYXQiOjE3Mjc1OTQ5NTZ9.2dbp6G3LSvdVMCUCDRscDfmPJTjrsQiPgONM7AmQ7eA' //localStorage에서 가져오도록 추후 수정
-  try {
-    const response = await axios.post(
-      'https://kdt.frontend.5th.programmers.co.kr:5001/posts/create',
-      newPost,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      },
-    )
-    return response.data
-  } catch (error) {
-    console.error('포스트 생성 오류:', error)
-    throw error
-  }
 }
 
 const PostCreateButton = (props: PostCreateProps) => {
@@ -53,7 +33,7 @@ const PostCreateButton = (props: PostCreateProps) => {
     if (postImage) {
       newFormData.append('image', postImage)
     }
-    newFormData.append('channelId', '66f4aabccdb3ce68a6a139bf')
+    newFormData.append('channelId', '66f6b3b7e5593e2a995daf1f')
     createPost(newFormData)
     navigate('/')
   }
