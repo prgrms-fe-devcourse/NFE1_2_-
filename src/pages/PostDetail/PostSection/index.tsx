@@ -24,7 +24,7 @@ const PostSection = ({ post }: { post: Post }) => {
         postId={_id}
       />
 
-      {isAuthor && <EditPostContainer />}
+      {isAuthor && <EditPostContainer postId={post._id} />}
     </section>
   )
 }

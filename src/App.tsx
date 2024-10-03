@@ -15,15 +15,16 @@ const App = () => {
         path='/join'
         element={<JoinPage />}
       />
-      <Route 
-        path="/joincomplete" 
-        element={<JoinCompletePage />} />
       <Route
-        path='/login'
-        element={<LoginPage/>}
+        path='/joincomplete'
+        element={<JoinCompletePage />}
       />
       <Route
-        path='/postdetail'
+        path='/login'
+        element={<LoginPage />}
+      />
+      <Route
+        path='/post/:postId'
         element={<PostDetailPage />}
       />
       <Route
