@@ -54,7 +54,6 @@ const OtherSection = (props: SectionProps) => {
         >
           회원탈퇴
         </button>
-        
         <button className='info-item' onClick={handleLogout}>로그아웃</button>
       </InfoSection>
       {isModalOpen && (
