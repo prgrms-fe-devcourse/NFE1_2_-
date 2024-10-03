@@ -3,15 +3,15 @@ import AfterPoll from './AfterPoll'
 import BeforePoll from './BeforePoll'
 import './index.css'
 import { FormattedPost } from '@/typings/types'
+import { USER_ID } from '@/utils/api'
 
 interface PollSectionProps {
   post: FormattedPost
   isVoted: boolean | null
   setIsVoted: React.Dispatch<React.SetStateAction<boolean | null>>
 }
-  
+
 const PollSection = ({ post, isVoted, setIsVoted }: PollSectionProps) => {
-  
   useEffect(() => {
     // 유저가 작성자 또는 투표를 완료했는지 검증
     const {
@@ -21,10 +21,8 @@ const PollSection = ({ post, isVoted, setIsVoted }: PollSectionProps) => {
     const { agree, disagree } = poll
     const voterList = [...agree, ...disagree]
 
-    const checkIsVoter = voterList.some(
-      (voter) => voter === import.meta.env.VITE_USER_ID,
-    )
-    const checkIsAhuthor = import.meta.env.VITE_USER_ID === author._id
+    const checkIsVoter = voterList.some((voter) => voter === USER_ID)
+    const checkIsAhuthor = USER_ID === author._id
     const checkValidUser = checkIsAhuthor || checkIsVoter
 
     setIsVoted(checkValidUser)

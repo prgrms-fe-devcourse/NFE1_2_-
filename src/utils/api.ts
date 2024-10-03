@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { FormattedPost, Like, Post, User, Notification} from '@/typings/types'
+import { FormattedPost, Like, Post, User, Notification } from '@/typings/types'
 import formatPostData from './formatPostData'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
-export const USER_ID = import.meta.env.VITE_USER_ID
-export const USER_TOKEN = import.meta.env.VITE_TOKEN
+export const USER_ID = localStorage.getItem('userId')
+export const USER_TOKEN = localStorage.getItem('token')
 
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
@@ -82,6 +82,7 @@ export const getUserLikedData = async (
   postId: string,
 ): Promise<string | undefined> => {
   const { likes }: { likes: Like[] } = await getUserData(userId)
+
   return likes.find((like) => like.post === postId)?._id
 }
 
