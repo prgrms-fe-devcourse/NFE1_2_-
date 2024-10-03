@@ -8,6 +8,7 @@ import formatPostData from '@/utils/formatPostData'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { getPostData } from '@/utils/api'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 const PostDetailPage = () => {
@@ -19,6 +20,8 @@ const PostDetailPage = () => {
     enabled: !!postId,
   })
 
+  const [isVoted, setIsVoted] = useState<boolean | null>(false)
+
   if (isLoading) {
     return <div>Loading</div>
   }
@@ -29,6 +32,7 @@ const PostDetailPage = () => {
 
   if (data) {
     const post = formatPostData(data)
+
     return (
       <>
         {/* 토스티파이 사용을 위한 영역 지정 */}
@@ -39,8 +43,15 @@ const PostDetailPage = () => {
         />
         <DetailPageLayout pageName='post-detail'>
           <PostSection post={post} />
-          <PostPoll post={post} />
-          <CommentSection post={post} />
+          <PostPoll
+            post={post}
+            isVoted={isVoted}
+            setIsVoted={setIsVoted}
+          />
+          <CommentSection
+            post={post}
+            isVoted={isVoted}
+          />
         </DetailPageLayout>
       </>
     )

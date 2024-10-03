@@ -6,8 +6,14 @@ import CommentBtn from '../CommentBtn'
 import CommentInput from '../CommentInput'
 import ReplyCard from '../ReplyCard'
 import formatCommentList from '@/utils/formatCommentList'
+import BeforePollImg from '@assets/imgs/투표 전 사진.png'
 
-const CommentSection = ({ post }: { post: FormattedPost }) => {
+interface CommentSectionProps {
+  post: FormattedPost
+  isVoted: boolean | null
+}
+
+const CommentSection = ({ post, isVoted }: CommentSectionProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [parentCommentInfo, setParentCommentInfo] = useState('')
 
@@ -22,8 +28,18 @@ const CommentSection = ({ post }: { post: FormattedPost }) => {
     setParentCommentInfo(parentId)
   }
 
+  if (!isVoted) {
+    return (
+      <>
+        <section className='comment-section'>
+          <p className='comment-total'>댓글 17</p>
+          <img src={BeforePollImg} />
+        </section>
+      </>
+    )
+  }
+  
   const commentList = formatCommentList(comments)
-
   return (
     <>
       <section className='comment-section'>
