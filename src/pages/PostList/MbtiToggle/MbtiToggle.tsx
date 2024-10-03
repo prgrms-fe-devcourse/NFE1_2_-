@@ -1,4 +1,4 @@
-import MbtiSelector from '@/components/MbtiSelector/MbtiSelector'
+import MbtiSelector_2 from '@/components/MbtiSelector/MbtiSelector_2'
 import './MbtiTogle.css'
 
 interface MbtiToggleProps {
@@ -32,7 +32,7 @@ const MbtiToggle: React.FC<MbtiToggleProps> = ({
       {isMbtiFilterVisible && (
         <div className='modal-filter'>
           <div>
-            <MbtiSelector onSelect={onSelect} />
+            <MbtiSelector_2 onSelect={onSelect} />
           </div>
         </div>
       )}

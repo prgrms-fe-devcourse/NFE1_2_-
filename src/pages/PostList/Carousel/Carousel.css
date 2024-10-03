@@ -8,16 +8,16 @@
 
 .image-wrapper {
   display: flex;
-  width: 500px; /* 총 너비 */
+  width: 500px; 
   flex-direction: row;
   align-items: center;
-  overflow-x: auto; /* 수평 스크롤 활성화 */
+  overflow-x: auto; 
   transition: transform 0.5s ease;
-  scroll-behavior: smooth; /* 스크롤 부드럽게 */
+  scroll-behavior: smooth; 
 }
 
 .image-wrapper::-webkit-scrollbar {
-  display: none; /* Chrome 및 Safari에서 스크롤바 숨기기 */
+  display: none; 
 }
 
 .image-container {
