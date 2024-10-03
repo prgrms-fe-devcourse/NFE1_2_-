@@ -325,6 +325,7 @@ export const logoutUser = async () => {
     )
 
     localStorage.removeItem('token')
+    localStorage.removeItem('userId')
     return response.data
   } catch (error) {
     throw handleError(error)
