@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import PrevButton from '@/assets/icons/back_button.svg?react'
-import NextButton from '@/assets/icons/next_button.svg?react'
 import Notification from '@/assets/icons/list_notification.svg?react'
 import './Carousel.css'
 
@@ -18,7 +15,6 @@ const Carousel = ({
 }: {
   setSelectedCategory: (category: string | null) => void
 }) => {
-  // currentIndex 상태는 더 이상 필요하지 않으므로 삭제
   const handleImageClick = (category: string) => {
     if (category === '전체') {
       setSelectedCategory(null)

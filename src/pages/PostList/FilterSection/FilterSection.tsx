@@ -16,15 +16,17 @@ const FilterSection = ({
 }: FilterSectionProps) => {
   const [selectedSort, setSelectedSortState] = useState('popular')
 
-  const handleSortClick = (sortType) => {
-    setSelectedSortState(sortType)
-    setSelectedSort(sortType)
+  //인기순/최신순
+  const handleSortClick = (sortType: 'popular' | 'latest') => {
+    setSelectedSortState(sortType) //선택된 정렬 옵션에 맞게 클래스를 추가할 수 있도록 함 (로컬 상태 관리용)
+    setSelectedSort(sortType) //부모 컴포넌트 상태 변경
   }
 
+  //내 글 모아보기
   const handleCollectionClick = () => {
     setIsCollectionActive(!isCollectionActive)
     if (!isCollectionActive) {
-      setAuthorId('66f36c0dcdb3ce68a6a135fc')
+      setAuthorId('66f36c0dcdb3ce68a6a135fc') //내글모아보기 선택되면 특정 사용자의 글만 보이도록 id설정
     } else {
       setAuthorId(null)
     }

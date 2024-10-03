@@ -16,10 +16,10 @@ interface MbtiRowProps {
 }
 
 interface MbtiSelectorProps {
-  onSelect: (result: string) => void // 추가된 부분
+  onSelect?: (result: string) => void // 추가된 부분
 }
 
-const MbtiSelector: React.FC<MbtiSelectorProps> = ({ onSelect }) => {
+const MbtiSelector: React.FC<MbtiSelectorProps> = ({ onSelect = () => {} }) => {
   const [mbti, setMbti] = useState<MbtiState>({
     EI: false,
     SN: false,
@@ -47,7 +47,7 @@ const MbtiSelector: React.FC<MbtiSelectorProps> = ({ onSelect }) => {
   // 초기 상태에서 MBTI 결과를 부모에게 전달
   useEffect(() => {
     onSelect(getMbtiResult(mbti))
-  }, [])
+  }, [mbti, onSelect])
 
   return (
     <div className='mbti-container'>

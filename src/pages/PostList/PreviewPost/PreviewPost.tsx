@@ -3,11 +3,12 @@ import PostCard from '@/components/PostComponent/PostComponent'
 import Interaction from '../Interaction/Interaction'
 import { Post } from '@/typings/types'
 import { useNavigate } from 'react-router-dom'
+
 const PreviewPost = ({ post }: { post: Post }) => {
   const navigate = useNavigate()
   const [checkCount, setCheckCount] = useState(0)
 
-  // 컴포넌트가 마운트될 때 checkCount를 로컬 스토리지에서 가져옴
+  // 조회수 - 컴포넌트가 마운트될 때 checkCount를 로컬 스토리지에서 가져옴
   useEffect(() => {
     const storedCheckCount = localStorage.getItem(`checkCount_${post._id}`)
     if (storedCheckCount) {
