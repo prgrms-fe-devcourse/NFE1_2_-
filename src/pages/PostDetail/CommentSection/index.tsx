@@ -4,8 +4,12 @@ import { useState } from 'react'
 import CommentCard from '../CommentCard'
 import CommentBtn from '../CommentBtn'
 import CommentInput from '../CommentInput'
-
-const CommentSection = ({ post }: { post: Post }) => {
+import BeforePollImg from '@assets/imgs/투표 전 사진.png'
+interface CommentSectionProps {
+  post: Post
+  isVoted: boolean | null
+}
+const CommentSection = ({ post, isVoted }: CommentSectionProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [parentCommentInfo, setParentCommentInfo] = useState('')
 
@@ -18,6 +22,17 @@ const CommentSection = ({ post }: { post: Post }) => {
 
   const handleUpdateParentInfo = (parentId: string) => {
     setParentCommentInfo(parentId)
+  }
+
+  if (!isVoted) {
+    return (
+      <>
+        <section className='comment-section'>
+          <p className='comment-total'>댓글 17</p>
+          <img src={BeforePollImg} />
+        </section>
+      </>
+    )
   }
 
   return (
