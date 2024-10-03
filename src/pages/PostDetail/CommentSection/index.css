@@ -1,12 +1,11 @@
 .comment-section {
   margin-bottom: 3rem;
+  img {
+    width: 100%;
+  }
 }
 
 .comment-total {
   margin-bottom: 1rem;
   font-weight: 500;
-}
-
-img {
-  width: 100%;
 }

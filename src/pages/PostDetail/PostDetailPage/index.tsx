@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { getPostData } from '@/utils/api'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import NotFound from '@/pages/NotFound/NotFound'
 
 const PostDetailPage = () => {
   const { postId } = useParams<{ postId: string }>()
@@ -27,7 +28,7 @@ const PostDetailPage = () => {
   }
 
   if (isError) {
-    return <div>{error.message}</div>
+    return <NotFound />
   }
 
   if (data) {

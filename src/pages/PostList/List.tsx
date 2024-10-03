@@ -27,7 +27,7 @@ const PostList = () => {
     const fetchAllPosts = async () => {
       try {
         const response = await axios.get(
-          `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/${authorId}`,
+          `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
         )
         setAllPosts(response.data) // 전체 포스트 저장
       } catch (error) {
