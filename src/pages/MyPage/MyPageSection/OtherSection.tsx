@@ -9,7 +9,7 @@ import { logoutUser } from '@/utils/api'
 import { useAuthStore } from '@/store/authStore'
 
 interface SectionProps {
-  userData: User
+  userData: User | undefined
   isModalOpen: boolean
   onChangeOpenModal: () => void
   onChangeCloseModal: () => void

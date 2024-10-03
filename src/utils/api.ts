@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FormattedPost, Like, Post, User } from '@/typings/types'
+import { FormattedPost, Like, Post, User, Notification} from '@/typings/types'
 import formatPostData from './formatPostData'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
@@ -40,13 +40,16 @@ export const getUserData = async (userId: string): Promise<User> => {
 }
 
 export const updateUserData = async (fullname: string): Promise<void> => {
+  const token = localStorage.getItem('token')
   try {
     const response = await axios.put(
       `${END_POINT}settings/update-user`,
-      { "fullName" : fullname,
-        "username" : "false"
+      { fullName: fullname, username: 'false' },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-      RequestHeader,
     )
     return response.data
   } catch (error) {
@@ -54,12 +57,19 @@ export const updateUserData = async (fullname: string): Promise<void> => {
   }
 }
 
-export const updateUserPassword = async (newPassword: string): Promise<void> => {
+export const updateUserPassword = async (
+  newPassword: string,
+): Promise<void> => {
+  const token = localStorage.getItem('token')
   try {
     const response = await axios.put(
       `${END_POINT}settings/update-password`,
-      {"password" : newPassword},
-      RequestHeader,
+      { password: newPassword },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
     )
     return response.data
   } catch (error) {
@@ -303,15 +313,91 @@ export const logoutUser = async () => {
       throw new Error('로그인 정보가 없습니다.')
     }
 
-    const response = await axios.post(`${END_POINT}logout`, {}, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await axios.post(
+      `${END_POINT}logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
 
     localStorage.removeItem('token')
     return response.data
   } catch (error) {
     throw handleError(error)
+  }
+}
+
+export const getAuthUser = async (): Promise<User> => {
+  const token = localStorage.getItem('token')
+  try {
+    const response = await axios.get(`${END_POINT}auth-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    throw handleError(error)
+  }
+}
+
+export const createPost = async (newPost: FormData) => {
+  const token = localStorage.getItem('token')
+  try {
+    const response = await axios.post(
+      'https://kdt.frontend.5th.programmers.co.kr:5001/posts/create',
+      newPost,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    )
+    return response.data
+  } catch (error) {
+    console.error('포스트 생성 오류:', error)
+    throw error
+  }
+}
+
+export const getNotification = async (): Promise<Notification[]> => {
+  const token = localStorage.getItem('token')
+  try {
+    const response = await axios.get<Notification[]>(
+      'https://kdt.frontend.5th.programmers.co.kr:5001/notifications',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response.data
+  } catch (error) {
+    console.error('알림 가져오기 오류:', error)
+    throw error
+  }
+}
+
+export const putNotification = async () => {
+  const token = localStorage.getItem('token')
+  try {
+    const response = await axios.put<Notification[]>(
+      'https://kdt.frontend.5th.programmers.co.kr:5001/notifications/seen',
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    console.log('읽기 완료')
+    return response.data
+  } catch (error) {
+    console.error('알림 보기 오류:', error)
+    throw error
   }
 }
