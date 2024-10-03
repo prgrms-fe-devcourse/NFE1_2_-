@@ -14,8 +14,8 @@ interface SectionProps {
 
 const ProfileSection = (props: SectionProps) => {
   const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
-  const fullName = userData?.fullName
-  const { gender, ageGroup, mbti } = parseIfString(fullName as UserDetailData)
+  const fullName = parseIfString(userData?.fullName as UserDetailData)
+  const { gender, ageGroup, mbti } = fullName
 
   const calculateAgeGroup = (birthDate: string) => {
     const today = new Date()
@@ -61,6 +61,7 @@ const ProfileSection = (props: SectionProps) => {
       </InfoSection>
       {isModalOpen && (
         <JoinDetail
+          editData={fullName}
           onSubmit={handleEditProfile}
           onClose={onChangeCloseModal}
         />

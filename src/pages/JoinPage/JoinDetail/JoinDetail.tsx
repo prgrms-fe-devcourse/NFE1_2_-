@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BottomModal from '@components/BottomModal/BottomModal'
 import MbtiSelector from '@components/MbtiSelector/MbtiSelector'
 // SVG 아이콘 import
@@ -8,15 +8,27 @@ import './JoinDetail.css'
 
 // 컴포넌트 props 타입 정의
 interface JoinDetailProps {
+  editData?: { gender: '남' | '여'; mbti: string }
   onSubmit: (gender: '남' | '여', birthDate: string, mbti: string) => void
   onClose: () => void
 }
 
-const JoinDetail: React.FC<JoinDetailProps> = ({ onSubmit, onClose }) => {
+const JoinDetail: React.FC<JoinDetailProps> = ({
+  editData,
+  onSubmit,
+  onClose,
+}) => {
   // 상태 관리: 성별, 생년월일, MBTI
   const [gender, setGender] = useState<'남' | '여'>('남')
   const [birthDate, setBirthDate] = useState('')
   const [mbti, setMbti] = useState('')
+
+  useEffect(() => {
+    if (editData) {
+      setGender(editData.gender)
+      setMbti(editData.mbti)
+    }
+  }, [editData])
 
   // MBTI 선택 핸들러
   const handleMbtiChange = (selectedMbti: string) => {
@@ -46,19 +58,33 @@ const JoinDetail: React.FC<JoinDetailProps> = ({ onSubmit, onClose }) => {
           <h3>성별</h3>
           <div className='gender-options'>
             {/* 남성 선택 옵션 */}
-            <div className='gender-option' onClick={() => handleGenderSelect('남')}>
+            <div
+              className='gender-option'
+              onClick={() => handleGenderSelect('남')}
+            >
               {/* 선택 상태에 따라 다른 SVG 아이콘 표시 */}
               <span>남</span>
-              {gender === '남' ? <Write_after_select /> : <Write_before_select />}
+              {gender === '남' ? (
+                <Write_after_select />
+              ) : (
+                <Write_before_select />
+              )}
             </div>
             {/* 여성 선택 옵션 */}
-            <div className='gender-option' onClick={() => handleGenderSelect('여')}>
+            <div
+              className='gender-option'
+              onClick={() => handleGenderSelect('여')}
+            >
               <span>여</span>
-              {gender === '여' ? <Write_after_select /> : <Write_before_select />}             
+              {gender === '여' ? (
+                <Write_after_select />
+              ) : (
+                <Write_before_select />
+              )}
             </div>
           </div>
         </div>
-        
+
         {/* 생년월일 입력 섹션 */}
         <div className='birth-date-selector'>
           <h3>생년월일</h3>
@@ -69,12 +95,19 @@ const JoinDetail: React.FC<JoinDetailProps> = ({ onSubmit, onClose }) => {
             placeholder='YYYY.MM.DD'
           />
         </div>
-        
+
         {/* MBTI 선택 섹션 */}
         <div className='mbti-selector'>
           <h3>MBTI</h3>
           {/* MbtiSelector 컴포넌트를 사용하여 MBTI 선택 UI 구현 */}
-          <MbtiSelector onMbtiChange={handleMbtiChange} />
+          {editData ? (
+            <MbtiSelector
+              initialMbti={editData.mbti}
+              onMbtiChange={handleMbtiChange}
+            />
+          ) : (
+            <MbtiSelector onMbtiChange={handleMbtiChange} />
+          )}
         </div>
       </div>
     </BottomModal>
