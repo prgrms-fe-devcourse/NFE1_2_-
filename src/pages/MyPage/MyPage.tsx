@@ -4,7 +4,7 @@ import AccountSection from './MyPageSection/AccountSection'
 import OtherSection from './MyPageSection/OtherSection'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { USER_ID, getUserData } from '@/utils/api'
+import { getUserData } from '@/utils/api'
 
 const MyPage = () => {
   const [modalOpen, setModalOpen] = useState({
@@ -27,12 +27,14 @@ const MyPage = () => {
       [modal]: false,
     }))
   }
-
+  const userId = localStorage.getItem('userId')
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['user'],
-    queryFn: () => getUserData(USER_ID),
+    queryFn: () => getUserData(userId as string),
+    enabled: !!userId
     // refetchInterval : 1000
   })
+
   if (isLoading) {
     return <div>Loading</div>
   }
