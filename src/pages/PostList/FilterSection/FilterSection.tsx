@@ -1,25 +1,43 @@
 import { useState } from 'react'
 import './FilterSection.css'
 
-const FilterSection = () => {
-  const [selectedSort, setSelectedSort] = useState('popular')
-  const [isCollectionActive, setCollectionActive] = useState(false)
+interface FilterSectionProps {
+  isCollectionActive: boolean
+  setIsCollectionActive: (active: boolean) => void
+  setAuthorId: (id: string | null) => void
+  setSelectedSort: (sort: 'popular' | 'latest') => void
+}
 
-  const handleSortClick = (sortType: string) => {
+const FilterSection = ({
+  isCollectionActive,
+  setIsCollectionActive,
+  setAuthorId,
+  setSelectedSort,
+}: FilterSectionProps) => {
+  const [selectedSort, setSelectedSortState] = useState('popular')
+
+  const handleSortClick = (sortType) => {
+    setSelectedSortState(sortType)
     setSelectedSort(sortType)
   }
 
   const handleCollectionClick = () => {
-    setCollectionActive(!isCollectionActive)
+    setIsCollectionActive(!isCollectionActive)
+    if (!isCollectionActive) {
+      setAuthorId('66f36c0dcdb3ce68a6a135fc')
+    } else {
+      setAuthorId(null)
+    }
   }
+
   return (
     <div className='post-collection'>
-      <div
+      <button
         className={`collection-title ${isCollectionActive ? 'active' : ''}`}
         onClick={handleCollectionClick}
       >
         <div className='collected-title'>내 글 모아보기</div>
-      </div>
+      </button>
       <div className='sort-options'>
         <div
           className={`popular ${selectedSort === 'popular' ? 'active' : ''}`}
