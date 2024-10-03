@@ -16,11 +16,11 @@ const NotFound: React.FC = () => {
         <p className="quote-author">- 아리스토텔레스</p>
         <img src={NotLogo} alt="404 Not Found" className="not-found-logo" />
       </div>
-      <div className="image-container">
+  
         <img src={Aristo} alt="Aristotle" className="aristotle-image" />
         <img src={Heart} alt="Heart" className="heart-overlay1" />
         <img src={Heart} alt="Heart" className="heart-overlay2" />
-      </div>
+
     </div>
     </Container>
   );
