@@ -282,3 +282,43 @@ export const deleteComment = async (commentId: string) => {
 }
 
 getUserData(USER_ID).then((data) => console.log(data))
+
+/**
+ * 사용자 비밀번호를 확인
+ * @param password 확인할 비밀번호
+ * @returns 비밀번호 확인 결과
+ */
+export const verifyPassword = async (password: string): Promise<boolean> => {
+  try {
+    // 현재 비밀번호로 업데이트를 시도하여 비밀번호 확인
+    await updateUserPassword(password)
+    return true
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 400) {
+        // 비밀번호가 틀린 경우
+        return false
+      }
+      // 다른 HTTP 오류
+      throw new Error(`서버 오류: ${error.response?.status} - ${error.response?.data}`)
+    }
+    // 네트워크 오류 등
+    throw new Error(`네트워크 오류: ${error instanceof Error ? error.message : '알 수 없는 오류'}`)
+  }
+}
+
+/**
+ * 회원 탈퇴를 처리
+ * @returns 탈퇴 처리 결과
+ */
+export const withdrawUser = async (): Promise<void> => {
+  try {
+    await axios.put(
+      `${END_POINT}settings/update-user`,
+      { username: true },
+      RequestHeader
+    )
+  } catch (error) {
+    throw handleError(error)
+  }
+}
