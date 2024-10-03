@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react'
 import './MbtiSelector.css'
 
@@ -16,6 +17,7 @@ interface MbtiRowProps {
 }
 
 interface MbtiSelectorProps {
+
   initialMbti?: string
   onMbtiChange: (mbti: string) => void
 }
@@ -30,6 +32,7 @@ const MbtiSelector: React.FC<MbtiSelectorProps> = ({
     TF: false,
     JP: false,
   })
+
 
   useEffect(() => {
     if (initialMbti) {
@@ -93,6 +96,7 @@ const MbtiSelector: React.FC<MbtiSelectorProps> = ({
           onChange={() => updateMbti('JP')}
         />
       </div>
+
       <div className='mbti-result'>
         <p>
           선택된 MBTI{' '}

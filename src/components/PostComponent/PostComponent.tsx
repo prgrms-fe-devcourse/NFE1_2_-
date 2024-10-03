@@ -7,13 +7,17 @@ import formatTime from '@/utils/formatTime'
 const PostCard = ({
   post,
   truncate = false,
+  checkCount = 0,
 }: {
   post: FormattedPost
   truncate?: boolean
+  checkCount?: number
 }) => {
+
   return (
     <div className='post-card'>
       <div className='title'>{post.title.title}</div>
+
       <div className='category'>
         <div className='category_left'>
           <Bedge
@@ -22,9 +26,11 @@ const PostCard = ({
           />
           <Bedge
             type='mbti'
+
             body={post.author.fullName.mbti}
           />{' '}
           {post.author.fullName.gender}/{post.author.fullName.ageGroup}
+
         </div>
         <div className='category_right'>
           {formatTime(post.createdAt)}
@@ -33,14 +39,16 @@ const PostCard = ({
               width={24}
               height={24}
             />
+
             {post.title.checkCount}
+
           </div>
         </div>
       </div>
       {post.image && (
         <img
           src={post.image}
-          alt={post.title.title}
+          alt={title.title}
         />
       )}
       <p className={`body ${truncate ? 'truncate' : ''}`}>{post.title.body}</p>
