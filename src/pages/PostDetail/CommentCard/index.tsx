@@ -1,6 +1,5 @@
 import Bedge from '@components/Bedge/Bedge'
 import DetailTimeIcon from '@assets/icons/details_time.svg?react'
-import DetailLikeIcon from '@assets/icons/heart_before_select.svg?react'
 import DetailMessageIcon from '@assets/icons/details_comment.svg?react'
 import './index.css'
 import formatTime from '@/utils/formatTime'
@@ -88,7 +87,7 @@ const CommentCard = ({
   }
 
   const handleDeleteComment = () => mutate()
-
+  const validateReply = comment.children.length === 0
   return (
     <div className='comment-card'>
       <div className='comment-personal-detail-container'>
@@ -118,14 +117,6 @@ const CommentCard = ({
             />
             <span>{formatTime(createdAt)}</span>
           </div>
-          <div className='comment-detail'>
-            <DetailLikeIcon
-              width={16}
-              height={16}
-              fill='#7d7d7d'
-            />
-            <span>좋아요</span>
-          </div>
           {!isReply && (
             <div className='comment-detail'>
               <DetailMessageIcon
@@ -142,7 +133,9 @@ const CommentCard = ({
           )}
         </div>
         <div className='comment-detail-right'>
-          {isAuthor && <button onClick={handleDeleteComment}>삭제</button>}
+          {isAuthor && validateReply && (
+            <button onClick={handleDeleteComment}>삭제</button>
+          )}
         </div>
       </div>
     </div>

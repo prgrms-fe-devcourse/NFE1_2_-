@@ -267,5 +267,3 @@ export const deleteComment = async (commentId: string) => {
     throw handleError(error)
   }
 }
-
-getUserData(USER_ID).then((data) => console.log(data))

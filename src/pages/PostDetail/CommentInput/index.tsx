@@ -43,9 +43,9 @@ const CommentInput = ({
   }
 
   const { mutate, isPending } = useCustomMutation({
-    queryKey: ['post', _id],
     mutationFn,
     onSuccessCallback,
+    queryKey: ['post', _id],
   })
 
   const handleMessageInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -59,7 +59,6 @@ const CommentInput = ({
     const newComment = JSON.stringify({
       comment: userComment,
       parentId,
-      like: [],
     })
     return { postId: _id, comment: newComment }
   }

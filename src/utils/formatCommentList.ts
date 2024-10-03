@@ -1,4 +1,4 @@
-import { FormattedComment, FormattedUser } from '@/typings/types'
+import { FormattedComment } from '@/typings/types'
 
 // 댓글에 children 추가
 export interface FormattedChlidrenComment extends FormattedComment {
@@ -36,23 +36,6 @@ const formatCommentList = (
     if (parentCommentList[parentId]) {
       // 부모 댓글이 존재할 경우
       parentCommentList[parentId].children.push(...childCommentList[parentId])
-    } else {
-      // 부모 댓글이 없을 경우
-      parentCommentList[parentId] = {
-        _id: parentId,
-        comment: {
-          comment: '삭제된 댓글입니다.',
-          parentId: null,
-          like: [],
-        },
-        author: {
-          /* 기본 author 정보 */
-        } as FormattedUser, // 필요에 맞게 기본 author 정보 설정
-        post: '', // 기본 post 정보
-        createdAt: '',
-        updatedAt: '',
-        children: childCommentList[parentId],
-      }
     }
   })
 
