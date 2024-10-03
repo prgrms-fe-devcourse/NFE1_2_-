@@ -281,4 +281,26 @@ export const deleteComment = async (commentId: string) => {
   }
 }
 
+//로그아웃 
 getUserData(USER_ID).then((data) => console.log(data))
+
+export const logoutUser = async () => {
+  try {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      throw new Error('로그인 정보가 없습니다.')
+    }
+
+    const response = await axios.post(`${END_POINT}logout`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    localStorage.removeItem('token')
+    return response.data
+  } catch (error) {
+    throw handleError(error)
+  }
+}
+

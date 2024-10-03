@@ -7,6 +7,7 @@ import PostList from './pages/PostList/List'
 import LoginPage from './pages/LoginPage/LoginPage'
 import JoinPage from './pages/JoinPage/JoinPage'
 import JoinCompletePage from './pages/JoinCompletePage/JoinCompletePage'
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
