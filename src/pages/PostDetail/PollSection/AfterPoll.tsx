@@ -1,4 +1,5 @@
 import { Poll } from '@/typings/types'
+import BeforePollImg from '@assets/imgs/logo.png'
 
 const AfterPoll = ({ poll }: { poll: Poll }) => {
   const formatGraphData = (poll: Poll) => {
@@ -28,6 +29,17 @@ const AfterPoll = ({ poll }: { poll: Poll }) => {
       {percentage > 0 && <p>{percentage}%</p>}
     </div>
   )
+
+  if ([...poll.agree, ...poll.disagree].length === 0) {
+    return (
+      <>
+        <img
+          src={BeforePollImg}
+          alt='로고'
+        />
+      </>
+    )
+  }
 
   return (
     <div className='poll-result-container'>
