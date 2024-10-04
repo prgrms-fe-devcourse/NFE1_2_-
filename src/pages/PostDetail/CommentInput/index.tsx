@@ -7,7 +7,6 @@ import {
   postComment,
   postNotification,
   RequestData,
-  USER_ID,
   UserComment,
 } from '@/utils/api'
 import useCustomMutation from '@/hooks/useCustomMutaition'
@@ -26,7 +25,7 @@ const CommentInput = ({
   setParentCommentInfo,
 }: CommentInputProps) => {
   const [userComment, setUserComment] = useState('')
-  const { _id } = post
+  const { _id, author } = post
   const postId = _id
 
   const mutationFn = (userComment: UserComment) => postComment(userComment)
@@ -38,7 +37,7 @@ const CommentInput = ({
     const messageNotification: RequestData = {
       notificationType: 'COMMENT',
       notificationTypeId: _id as string,
-      userId: USER_ID as string,
+      userId: author._id,
       postId: postId,
     }
     postNotification(messageNotification)

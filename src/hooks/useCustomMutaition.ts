@@ -22,6 +22,7 @@ const useCustomMutation = <T, E = unknown>({
       if (onSuccessCallback) {
         await onSuccessCallback(data) // Promise 처리
       }
+
       return data
     },
     onError: (error: E) => {
