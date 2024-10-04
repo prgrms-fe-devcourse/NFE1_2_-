@@ -15,6 +15,12 @@ const Search = ({
   const [isMbtiFilterVisible, setIsMbtiFilterVisible] = useState(false)
   const [selectedMbti, setSelectedMbti] = useState<string | null>(null)
 
+  const handleAdditionalReset = () => {
+    onReset()
+    setSearch('')
+    setIsMbtiFilterVisible(false)
+  }
+
   const handleCloseModal = () => {
     onClose()
     // setSearch('')
@@ -49,7 +55,7 @@ const Search = ({
           isMbtiFilterVisible={isMbtiFilterVisible}
           onToggleFilter={handleMbtiToggle} // 토글 상태만 제어
           onSelect={handleMbtiSelect} // 선택된 M BTI 상태 업데이트
-          onReset={onReset} // MbtiToggle에 초기화 함수 전달
+          onReset={handleAdditionalReset} // MbtiToggle에 초기화 함수 전달
         />
       </div>
       <input
