@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import './FilterSection.css'
+import { getMyPostList } from '@/utils/api'
+import formatPostData from '@/utils/formatPostData'
+import { FormattedPost, Post } from '@/typings/types'
+import axios from 'axios'
 
 interface FilterSectionProps {
   isCollectionActive: boolean
@@ -10,9 +14,9 @@ interface FilterSectionProps {
 
 const FilterSection = ({
   isCollectionActive,
-  setIsCollectionActive,
-  setAuthorId,
   setSelectedSort,
+  setAllPosts,
+  setIsCollectionActive,
 }: FilterSectionProps) => {
   const [selectedSort, setSelectedSortState] = useState('latest')
 
@@ -23,12 +27,29 @@ const FilterSection = ({
   }
 
   //내 글 모아보기
-  const handleCollectionClick = () => {
-    setIsCollectionActive(!isCollectionActive)
+  const handleCollectionClick = async () => {
     if (!isCollectionActive) {
-      setAuthorId('66f36c0dcdb3ce68a6a135fc') //내글모아보기 선택되면 특정 사용자의 글만 보이도록 id설정
+      const myPostList = await getMyPostList()
+      if (myPostList) {
+        const formattedMyPostList: FormattedPost[] = myPostList.map(
+          (mypost: Post) => formatPostData(mypost),
+        )
+        setAllPosts(formattedMyPostList)
+        setIsCollectionActive(true)
+      }
     } else {
-      setAuthorId(null)
+      try {
+        const response = await axios.get(
+          `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
+        )
+        const formattedPostList: FormattedPost[] = response.data.map(
+          (post: Post) => formatPostData(post),
+        )
+        setAllPosts(formattedPostList)
+        setIsCollectionActive(false)
+      } catch (error) {
+        console.error('전체 포스트를 가져오는 데 실패했습니다:', error)
+      }
     }
   }
 
