@@ -19,7 +19,10 @@ const formatPostData = (data: Post): FormattedPost => {
   const formattedComments = comments.map(({ comment, author, ...rest }) => ({
     ...rest,
     comment: parseIfString(comment),
-    author: { ...author, fullName: parseIfString(author.fullName) },
+    author: {
+      ...author,
+      fullName: parseIfString(author?.fullName) || '알수없음',
+    },
   }))
 
   return {
