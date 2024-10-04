@@ -1,0 +1,47 @@
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+  }
+  
+  .loading-gif {
+    width: 300px;
+    height: 300px;
+    margin-top: 20px;
+  }
+  
+  .loading-text {
+    color: #FD3747;
+    font-weight: 600;
+    font-size: 3rem;
+    display: flex;
+  }
+  
+  .loading-text span {
+    display: inline-block;
+    animation: wave 1s infinite;
+    animation-delay: calc(.1s * var(--i));
+  }
+  
+  @keyframes wave {
+    0%, 40%, 100% {
+      transform: translateY(0);
+    }
+    20% {
+      transform: translateY(-15px);
+    }
+  }
+  
+  .loading-text span:nth-child(1) { --i: 1; }
+  .loading-text span:nth-child(2) { --i: 2; }
+  .loading-text span:nth-child(3) { --i: 3; }
+  .loading-text span:nth-child(4) { --i: 4; }
+  .loading-text span:nth-child(5) { --i: 5; }
+  .loading-text span:nth-child(6) { --i: 6; }
+  .loading-text span:nth-child(7) { --i: 7; }
+  .loading-text span:nth-child(8) { --i: 8; }
+  .loading-text span:nth-child(9) { --i: 9; }
+  .loading-text span:nth-child(10) { --i: 10; }
