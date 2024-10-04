@@ -5,16 +5,18 @@ interface DetailPageLayoutProps {
   children: React.ReactNode
   pageText?: string
   pageName?: string
+  newPath? : boolean
 }
 
 const DetailPageLayout = ({
   children,
   pageText,
   pageName,
+  newPath
 }: DetailPageLayoutProps) => {
   return (
     <Container pageName={pageName}>
-      <TopNavigator pageText={pageText} />
+      <TopNavigator pageText={pageText} newPath={newPath} />
       {children}
     </Container>
   )

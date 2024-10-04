@@ -57,14 +57,12 @@ const PostCreate = () => {
     const postData = formatPostData(post)
     const isPollAgree = postData.title.poll.agree
     const isPollDisAgree = postData.title.poll.disagree
-    console.log(post)
-    console.log(postData)
-
     setPostData((prevState) => ({
       ...prevState,
       ['type']: postData.title.type,
       ['title']: postData.title.title,
       ['body']: postData.title.body,
+      ['checkCount'] : postData.title.checkCount,
       ['poll']: postData.title.poll,
     }))
     if (postData.image) {
@@ -110,7 +108,7 @@ const PostCreate = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <DetailPageLayout>
+    <DetailPageLayout newPath={true}>
       <div className='post-create'>
         <CategorySelect
           category={postData.type}
@@ -131,6 +129,7 @@ const PostCreate = () => {
         />
         <QuestionSelect
           isPoll={isPoll}
+          category={postData.type}
           question={postData.poll.title}
           onChangeQuestion={handlePollChange('title')}
         />
