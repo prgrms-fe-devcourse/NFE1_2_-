@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import CategorySelect from './CategorySelect/CategorySelect'
 import PostContent from './PostContent/PostContent'
 import PostCreateButton from './PostCreateButton/PostCreateButton'
@@ -7,6 +7,9 @@ import AddImage from './AddImage/AddImage'
 import DetailPageLayout from '@/layouts/DetailPageLayout/DetailPageLayout'
 import './PostCreate.css'
 import { PostDetail } from '@/typings/types'
+import { useLocation } from 'react-router-dom'
+import { getPostData } from '@/utils/api'
+import formatPostData from '@/utils/formatPostData'
 
 const PostCreate = () => {
   const [postData, setPostData] = useState<PostDetail>({
@@ -21,6 +24,33 @@ const PostCreate = () => {
     },
   })
   const [postImage, setPostImage] = useState<File | null>(null)
+  const location = useLocation()
+  const editPostId : string | null = new URLSearchParams(location.search).get('postId')
+
+  const getPost = useCallback(async () => {
+    const post = await getPostData(editPostId as string)
+    console.log(post)
+    const postData = formatPostData(post)
+    console.log(postData)
+    setPostData((prevState) => ({
+      ...prevState,
+      ['type'] : postData.title.type,
+      ['title']: postData.title.title,
+      ['body'] : postData.title.body,
+      ['poll'] : postData.title.poll
+    }))
+
+    const isPollAgree = postData.title.poll.agree
+    const isPollDisAgree = postData.title.poll.disagree
+    if (isPollAgree.length > 0 || isPollDisAgree.length > 0) {
+    }
+  }, [])
+
+  useEffect(() => {
+    if(editPostId) {
+      getPost()
+    }
+  }, [editPostId])
 
   const handlePostChange = useCallback(
     (key: keyof PostDetail) => (value: string) => {
