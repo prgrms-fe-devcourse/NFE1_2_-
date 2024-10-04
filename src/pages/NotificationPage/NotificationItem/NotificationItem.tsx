@@ -5,8 +5,9 @@ import Comment from '@assets/icons/notification_comment.svg?react'
 import Like from '@assets/icons/notification_like.svg?react'
 import formatTime from '@/utils/formatTime'
 import { useCallback, useEffect, useState } from 'react'
-import { getPostData, putNotification } from '@/utils/api'
+import { getPostData } from '@/utils/api'
 import { parseIfString } from '@/utils/formatPostData'
+import { useNavigate } from 'react-router-dom'
 
 interface NotificationItemProps {
   notification: Notification
@@ -19,6 +20,7 @@ interface NotificationData {
 
 const NotificationItem = ({ notification }: NotificationItemProps) => {
   const [postTitle, setPostTitle] = useState<string>('')
+  const navigate = useNavigate()
 
   const getPostTitle = async (notification: Notification) => {
     if (notification.post) {
@@ -44,7 +46,7 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
     }
     return {
       notificationIcon: <Popular />,
-      notificationText: `축하합니다! 회원님의 게시글 [${postTitle}]이 인기글에 선정되었어요!`,
+      notificationText: `[${postTitle}] 알림이 도착했습니다.`,
     }
   }, [notification, postTitle])
 
@@ -52,7 +54,8 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
   const notificationTime = formatTime(notification.createdAt)
 
   const handleNotification = () => {
-    putNotification()
+    // putNotification() //읽음처리
+    navigate(`/post/${notification.post}`)
   }
   return (
     <div className='notification-item-container'>

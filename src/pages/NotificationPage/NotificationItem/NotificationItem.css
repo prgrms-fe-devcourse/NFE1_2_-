@@ -1,7 +1,11 @@
 .notification-item-container {
   display: flex;
-  width: 90%;
-  margin: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #eeeeee;
+  }
 
   .notification-item {
     display: flex;
