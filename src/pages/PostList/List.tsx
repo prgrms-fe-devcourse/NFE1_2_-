@@ -5,8 +5,11 @@ import MainPageLayout from '@/layouts/MainPageLayout/MainPageLayout'
 import PreviewPostList from './PreviewPostList/PreviewPostList'
 import FilterSection from './FilterSection/FilterSection'
 import Search from './Search/Search' // Search 컴포넌트 import
+import { useModalStore } from '@/store/ModalStore'
 
 const PostList = () => {
+  const { isSearchModalOpen, setIsSearchModalOpen } = useModalStore()
+
   //카테고리
   const [selectedCategory, setSelectedCategory] = useState(null)
 
@@ -17,7 +20,6 @@ const PostList = () => {
 
   //검색
   const [searchResults, setSearchResults] = useState([]) // 검색 결과 상태 추가
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
   const [selectedMbti, setSelectedMbti] = useState<string | null>(null)
   const [allPosts, setAllPosts] = useState([]) // 전체 포스트 상태 추가
   const [hasSearched, setHasSearched] = useState(false) // 검색 여부 상태 추가
@@ -104,6 +106,10 @@ const PostList = () => {
     }
   }
 
+  const openSearchModal = () => {
+    setIsSearchModalOpen(true)
+  }
+
   const closeSearchModal = () => {
     setIsSearchModalOpen(false)
   }
@@ -125,7 +131,6 @@ const PostList = () => {
             onSearch={handleSearch}
           />
         )}
-
         <PreviewPostList
           channelId='66f6b3b7e5593e2a995daf1f'
           selectedCategory={selectedCategory}
