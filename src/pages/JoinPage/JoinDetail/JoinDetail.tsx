@@ -8,27 +8,63 @@ import './JoinDetail.css'
 
 // 컴포넌트 props 타입 정의
 interface JoinDetailProps {
-  editData?: { gender: '남' | '여'; mbti: string }
+  initialData?: { gender: '남' | '여'; birthDate? : string; mbti: string }
   onSubmit: (gender: '남' | '여', birthDate: string, mbti: string) => void
   onClose: () => void
 }
 
 const JoinDetail: React.FC<JoinDetailProps> = ({
-  editData,
+  initialData,
   onSubmit,
   onClose,
 }) => {
   // 상태 관리: 성별, 생년월일, MBTI
   const [gender, setGender] = useState<'남' | '여'>('남')
   const [birthDate, setBirthDate] = useState('')
+  const [isBirthDate, setIsBirthDate] = useState<boolean>(false)
   const [mbti, setMbti] = useState('')
-
   useEffect(() => {
-    if (editData) {
-      setGender(editData.gender)
-      setMbti(editData.mbti)
+    if (initialData) {
+      setGender(initialData.gender)
+      setMbti(initialData.mbti)
+      if(initialData.birthDate) {
+        setBirthDate(initialData.birthDate)
+        setIsBirthDate(true)
+      }
     }
-  }, [editData])
+  }, [initialData])
+
+  const formatDate = (value: string) => {
+    // 숫자만 남기기
+    const dateText = value.replace(/\D/g, '')
+
+    // 최대 8자리로 제한
+    if (dateText.length <= 8) {
+      let formattedValue = dateText
+
+      // 4번째 자리와 6번째 자리 뒤에 하이픈 추가
+      if (dateText.length > 4) {
+        formattedValue = dateText.slice(0, 4) + '-' + dateText.slice(4)
+      }
+      if (dateText.length > 6) {
+        formattedValue =
+          formattedValue.slice(0, 7) + '-' + formattedValue.slice(7)
+      }
+
+      setBirthDate(formattedValue)
+
+      if (formattedValue.length === 10) {
+        setIsBirthDate(true)
+      } else {
+        setIsBirthDate(false)
+      }
+    }
+  }
+
+  //날짜 선택 핸들러
+  const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formatDate(e.target.value)
+  }
 
   // MBTI 선택 핸들러
   const handleMbtiChange = (selectedMbti: string) => {
@@ -38,7 +74,7 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
   // 확인 버튼 클릭 시 실행되는 함수
   // 선택된 정보를 부모 컴포넌트로 전달하고 모달을 닫음
   const handleConfirmAndClose = () => {
-    if (birthDate && mbti) {
+    if (isBirthDate && mbti) {
       onSubmit(gender, birthDate, mbti)
     }
     onClose()
@@ -52,7 +88,7 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
   return (
     <BottomModal
       onClick={handleConfirmAndClose}
-      buttonText={birthDate && mbti ? '확인' : '닫기'}
+      buttonText={isBirthDate && mbti ? '확인' : '닫기'}
     >
       <div className='join-detail'>
         {/* 성별 선택 섹션 */}
@@ -91,12 +127,14 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
         <div className='birth-date-selector'>
           <h3>생년월일</h3>
           <input
-            type='date'
+            type='text'
+            className='birth-date-input'
             value={birthDate}
-            onChange={(e) => setBirthDate(e.target.value)}
-            placeholder='YYYY.MM.DD'
+            onChange={handleAgeChange}
+            placeholder='YYYY-MM-DD'
+            maxLength={10}
           />
-          {!birthDate && (
+          {!isBirthDate && (
             <p className='select-error-text'>생년월일을 입력하세요.</p>
           )}
         </div>
@@ -105,9 +143,9 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
         <div className='mbti-selector'>
           <h3>MBTI</h3>
           {/* MbtiSelector 컴포넌트를 사용하여 MBTI 선택 UI 구현 */}
-          {editData ? (
+          {initialData ? (
             <MbtiSelector
-              initialMbti={editData.mbti}
+              initialMbti={initialData.mbti}
               onMbtiChange={handleMbtiChange}
             />
           ) : (

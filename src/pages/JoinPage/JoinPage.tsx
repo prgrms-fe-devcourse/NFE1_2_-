@@ -278,6 +278,7 @@ const JoinPage: React.FC = () => {
 
         {showDetailModal && (
           <JoinDetail
+          initialData={detailInfo? detailInfo : undefined}
             onSubmit={handleDetailSubmit}
             onClose={() => setShowDetailModal(false)}
           />
