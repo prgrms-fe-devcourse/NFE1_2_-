@@ -6,12 +6,15 @@ import CreatePostIcon from '@assets/icons/bottom_create_post.svg?react'
 import MyIcon from '@assets/icons/bottom_my.svg?react'
 import MyIconClicked from '@assets/icons/bottom_my_clicked.svg?react'
 import './Navigator.css'
-import { useAuthStore } from '@/store/authStore'
+import { getAuthUser } from '@utils/api'
+import { useSearchContext } from '@/utils/SearchContext'
 
 const Navigator = () => {
+  const { setIsSearchModalOpen } = useSearchContext()
+
   const navigate = useNavigate()
   const location = useLocation()
-  const { isLoggedIn } = useAuthStore()
+
   const handleNavigation = (path: string) => {
     if (path) {
       navigate(path)
@@ -19,11 +22,13 @@ const Navigator = () => {
   }
 
   const handleNavigationAuthUser = (path: string) => {
-    if (isLoggedIn) {
-      navigate(path)
-    } else {
-      navigate('/login')
-    }
+    getAuthUser().then((user) => {
+      if (user) {
+        navigate(path)
+      } else {
+        navigate('/login')
+      }
+    })
   }
 
   return (
@@ -35,7 +40,10 @@ const Navigator = () => {
         {location.pathname === '/' ? <HomeIconClicked /> : <HomeIcon />}
       </button>
 
-      <button className='nav-button'>
+      <button
+        className='nav-button'
+        onClick={() => setIsSearchModalOpen(true)} // 모달 열기
+      >
         <SearchIcon />
       </button>
 
