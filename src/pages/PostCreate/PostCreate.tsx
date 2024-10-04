@@ -24,8 +24,11 @@ const PostCreate = () => {
     },
   })
   const [postImage, setPostImage] = useState<File | null>(null)
+  const [isPoll, setIsPoll] = useState<boolean>(false)
   const location = useLocation()
-  const editPostId : string | null = new URLSearchParams(location.search).get('postId')
+  const editPostId: string | null = new URLSearchParams(location.search).get(
+    'postId',
+  )
 
   const getPost = useCallback(async () => {
     const post = await getPostData(editPostId as string)
@@ -34,20 +37,21 @@ const PostCreate = () => {
     console.log(postData)
     setPostData((prevState) => ({
       ...prevState,
-      ['type'] : postData.title.type,
+      ['type']: postData.title.type,
       ['title']: postData.title.title,
-      ['body'] : postData.title.body,
-      ['poll'] : postData.title.poll
+      ['body']: postData.title.body,
+      ['poll']: postData.title.poll,
     }))
 
     const isPollAgree = postData.title.poll.agree
     const isPollDisAgree = postData.title.poll.disagree
     if (isPollAgree.length > 0 || isPollDisAgree.length > 0) {
+      setIsPoll(true)
     }
   }, [])
 
   useEffect(() => {
-    if(editPostId) {
+    if (editPostId) {
       getPost()
     }
   }, [editPostId])
@@ -93,6 +97,7 @@ const PostCreate = () => {
           onChangeImage={setPostImage}
         />
         <QuestionSelect
+          isPoll={isPoll}
           question={postData.poll.title}
           onChangeQuestion={handlePollChange('title')}
         />
