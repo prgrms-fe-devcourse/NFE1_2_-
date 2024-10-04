@@ -8,13 +8,13 @@ import './JoinDetail.css'
 
 // 컴포넌트 props 타입 정의
 interface JoinDetailProps {
-  editData?: { gender: '남' | '여'; mbti: string }
+  initialData?: { gender: '남' | '여'; birthDate? : string; mbti: string }
   onSubmit: (gender: '남' | '여', birthDate: string, mbti: string) => void
   onClose: () => void
 }
 
 const JoinDetail: React.FC<JoinDetailProps> = ({
-  editData,
+  initialData,
   onSubmit,
   onClose,
 }) => {
@@ -24,11 +24,15 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
   const [isBirthDate, setIsBirthDate] = useState<boolean>(false)
   const [mbti, setMbti] = useState('')
   useEffect(() => {
-    if (editData) {
-      setGender(editData.gender)
-      setMbti(editData.mbti)
+    if (initialData) {
+      setGender(initialData.gender)
+      setMbti(initialData.mbti)
+      if(initialData.birthDate) {
+        setBirthDate(initialData.birthDate)
+        setIsBirthDate(true)
+      }
     }
-  }, [editData])
+  }, [initialData])
 
   const formatDate = (value: string) => {
     // 숫자만 남기기
@@ -139,9 +143,9 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
         <div className='mbti-selector'>
           <h3>MBTI</h3>
           {/* MbtiSelector 컴포넌트를 사용하여 MBTI 선택 UI 구현 */}
-          {editData ? (
+          {initialData ? (
             <MbtiSelector
-              initialMbti={editData.mbti}
+              initialMbti={initialData.mbti}
               onMbtiChange={handleMbtiChange}
             />
           ) : (
