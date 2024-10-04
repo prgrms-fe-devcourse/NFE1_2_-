@@ -7,10 +7,10 @@ import MyIcon from '@assets/icons/bottom_my.svg?react'
 import MyIconClicked from '@assets/icons/bottom_my_clicked.svg?react'
 import './Navigator.css'
 import { getAuthUser } from '@utils/api'
-import { useSearchContext } from '@/utils/SearchContext'
+import { useModalStore } from '@/store/ModalStore'
 
 const Navigator = () => {
-  const { setIsSearchModalOpen } = useSearchContext()
+  const { setIsSearchModalOpen } = useModalStore()
 
   const navigate = useNavigate()
   const location = useLocation()

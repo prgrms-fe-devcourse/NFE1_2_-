@@ -5,10 +5,10 @@ import MainPageLayout from '@/layouts/MainPageLayout/MainPageLayout'
 import PreviewPostList from './PreviewPostList/PreviewPostList'
 import FilterSection from './FilterSection/FilterSection'
 import Search from './Search/Search' // Search 컴포넌트 import
-import { useSearchContext } from '@/utils/SearchContext'
+import { useModalStore } from '@/store/ModalStore'
 
 const PostList = () => {
-  const { isSearchModalOpen, setIsSearchModalOpen } = useSearchContext()
+  const { isSearchModalOpen, setIsSearchModalOpen } = useModalStore()
 
   //카테고리
   const [selectedCategory, setSelectedCategory] = useState(null)
