@@ -4,8 +4,8 @@ import './index.css'
 import { Like } from '@/typings/types'
 import { FC, useEffect, useState } from 'react'
 import {
-  getLikedData,
-  getUserLikedData,
+  cancelLiked,
+  postLiked,
   postNotification,
   RequestData,
   USER_ID,
@@ -19,35 +19,44 @@ interface LikeButtonProps {
 
 const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
   const [isLiked, setIsLiked] = useState<boolean | null>(null)
+  const [likeCount, setLikeCount] = useState<number>(0)
 
-  const mutationFn = (currentLikedState: boolean | null) =>
-    getLikedData(currentLikedState, { userId: USER_ID as string, postId })
-  const onSuccessCallback = () => setIsLiked((prevState) => !prevState)
+  const checkUserLike = likes.some(({ user }) => user === USER_ID)
+  const likedId = likes.find((like) => like.user === USER_ID)?._id
 
+  useEffect(() => {
+    setIsLiked(checkUserLike)
+    setLikeCount(likes.length)
+  }, [checkUserLike, likes.length])
+
+  const mutationFn = async (): Promise<void> => {
+    if (isLiked === false) {
+      await postLiked(postId)
+    } else {
+      const likedId = likes.find((like) => like.user === USER_ID)?._id
+      await cancelLiked(likedId as unknown as string)
+    }
+  }
+
+  const onSuccessCallback = async () => {
+    setIsLiked((prevState) => !prevState)
+    setLikeCount((prevState) => (isLiked ? prevState - 1 : prevState + 1))
+
+    const requestData: RequestData = {
+      notificationType: 'LIKE',
+      notificationTypeId: likedId as string,
+      userId: USER_ID as string,
+      postId,
+    }
+    await postNotification(requestData)
+  }
   const { mutate } = useCustomMutation({
     queryKey: ['post', postId],
     mutationFn,
     onSuccessCallback,
   })
 
-  useEffect(() => {
-    // 최초 진입시 해당 게시물에 유저가 Like를 남겼는지 체크
-    const checkUserLike = likes.some(({ user }) => user === USER_ID)
-    setIsLiked(checkUserLike)
-  }, [likes])
-
-  const handleSubmitLiked = () => {
-    mutate(isLiked)
-    if (isLiked) {
-      const requestData: RequestData = {
-        notificationType: 'LIKE',
-        userId: USER_ID as string,
-        postId,
-        notificationTypeId: getUserLikedData(USER_ID as string, postId),
-      }
-      postNotification(requestData)
-    }
-  }
+  const handleSubmitLiked = () => mutate()
 
   return (
     <div className='like-btn-container'>
@@ -68,7 +77,7 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
           />
         )}
       </button>
-      <p>{likes.length}</p>
+      <p>{likeCount}</p>
     </div>
   )
 }

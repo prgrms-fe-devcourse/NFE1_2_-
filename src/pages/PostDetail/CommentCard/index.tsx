@@ -37,14 +37,10 @@ const CommentCard = ({
     }
   }, [comment])
 
-  const { mutate } = useCustomMutation({
-    mutationFn: () => deleteComment(comment._id),
+  const { mutate } = useCustomMutation<string>({
+    mutationFn: (commentId: string) => deleteComment(commentId),
     queryKey: ['post', postId],
   })
-
-  if (comment.comment.comment === '삭제된 댓글입니다.') {
-    return <div className='comment-card'>삭제된 댓글입니다.</div>
-  }
 
   const { createdAt, author } = comment
   const { gender, ageGroup, mbti } = author.fullName
@@ -55,7 +51,6 @@ const CommentCard = ({
   const isVotedAgree = pollData.agree.includes(commentAuthorId)
   // 유저가 밴대에 투표했는지 식별
   const isVotedDisagree = pollData.disagree.includes(commentAuthorId)
-
   // 벳지 컴포넌트의 라벨 값
   const getVotedSideLabel = () => {
     if (isVotedAgree) {
@@ -66,7 +61,6 @@ const CommentCard = ({
     }
     return '작성자'
   }
-
   // 벳지 컴포넌트의 라벨 type 값
   const getVotedSideType = () => {
     if (isVotedAgree) {
@@ -86,8 +80,10 @@ const CommentCard = ({
     handleModalState()
   }
 
-  const handleDeleteComment = () => mutate()
+  const handleDeleteComment = () => mutate(comment._id)
+
   const validateReply = comment.children.length === 0
+
   return (
     <div className='comment-card'>
       <div className='comment-personal-detail-container'>

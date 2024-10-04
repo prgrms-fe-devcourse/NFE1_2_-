@@ -1,31 +1,32 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-type MutationConfig<T> = {
-  mutationFn: (data?: T) => Promise<unknown>
+type MutationConfig<T, E = unknown> = {
+  mutationFn: (data: T) => Promise<T>
   queryKey: string[]
-  onSuccessCallback?: (data?: T) => Promise<unknown>
-  onErrorCallback?: () => void
+  onSuccessCallback?: (data: T) => Promise<unknown> | void
+  onErrorCallback?: (error: E) => void
 }
 
-const useCustomMutation = <T>({
+const useCustomMutation = <T, E = unknown>({
   mutationFn,
   queryKey,
   onSuccessCallback,
   onErrorCallback,
-}: MutationConfig<T>) => {
+}: MutationConfig<T, E>) => {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn,
-    onSuccess: (data) => {
+    onSuccess: async (data: T) => {
       queryClient.invalidateQueries({ queryKey })
       if (onSuccessCallback) {
-        onSuccessCallback(data)
+        await onSuccessCallback(data) // Promise 처리
       }
       return data
     },
-    onError: (error) => {
+    onError: (error: E) => {
       if (onErrorCallback) {
-        onErrorCallback()
+        onErrorCallback(error) // 오류를 callback에 전달
       } else {
         console.error('에러 발생', error)
       }

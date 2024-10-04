@@ -13,7 +13,7 @@ const BeforePoll = ({ postId, setIsVoted }: BeforePollProps) => {
   const mutationFn = (pollData: PollData) => postPoll(postId, pollData)
   const onSuccessCallback = () => setIsVoted(true)
 
-  const { mutate } = useCustomMutation({
+  const { mutate } = useCustomMutation<PollData>({
     queryKey: ['post', postId],
     mutationFn,
     onSuccessCallback,
@@ -22,10 +22,10 @@ const BeforePoll = ({ postId, setIsVoted }: BeforePollProps) => {
   const handleSubmitPoll = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       const voteSection = event.currentTarget.getAttribute('aria-label')
-      const pollData: PollData =
-        voteSection === 'agree'
-          ? { user: USER_ID, voted: 'agree' }
-          : { user: USER_ID, voted: 'disagree' }
+      const pollData: PollData = {
+        user: USER_ID as string,
+        voted: voteSection === 'agree' ? 'agree' : 'disagree',
+      }
 
       // useMutation으로 투표 요청 실행
       mutate(pollData)
