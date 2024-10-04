@@ -8,7 +8,7 @@ import { USER_ID } from '@/utils/api'
 
 const PostSection = ({ post }: { post: FormattedPost }) => {
   const [isAuthor, setIsAuthor] = useState<boolean | null>(null)
-  const { likes, _id, author } = post
+  const { author } = post
 
   useEffect(() => {
     // 유저가 포스트의 author인지 판단, 그 후 수정 버튼 및 삭제 버튼 표시
@@ -20,10 +20,7 @@ const PostSection = ({ post }: { post: FormattedPost }) => {
   return (
     <section className='post-section'>
       <PostComponent post={post} />
-      <LikeButton
-        likes={likes}
-        postId={_id}
-      />
+      <LikeButton post={post} />
 
       {isAuthor && <EditPostContainer postId={post._id} />}
     </section>

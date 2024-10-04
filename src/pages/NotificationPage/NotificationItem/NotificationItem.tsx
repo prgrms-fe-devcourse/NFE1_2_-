@@ -19,6 +19,7 @@ interface NotificationData {
 
 const NotificationItem = ({ notification }: NotificationItemProps) => {
   const [postTitle, setPostTitle] = useState<string>('')
+
   const getPostTitle = async (notification: Notification) => {
     if (notification.post) {
       const post = await getPostData(notification.post)
