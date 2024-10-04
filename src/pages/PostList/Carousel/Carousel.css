@@ -39,7 +39,7 @@
 }
 
 .carousel-img {
-  width: 150px;
+  width: 160px;
   height: 63px;
   border-radius: 10px;
   object-fit: cover;
@@ -80,11 +80,11 @@
 }
 
 .carousel-prev {
-  left: -40px;
+  left: -15px;
 }
 
 .carousel-next {
-  right: -40px;
+  right: -15px;
 }
 
 .carousel-nav-button svg {
