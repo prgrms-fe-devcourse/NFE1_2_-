@@ -1,0 +1,29 @@
+.spinner-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); 
+  }
+  
+  .spinner {
+    width: 4rem;
+    height: 4rem;
+    color: #FD3747; 
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .section-container {
+    position: relative;
+    min-height: 100vh;
+  }
