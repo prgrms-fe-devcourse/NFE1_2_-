@@ -19,7 +19,7 @@ const formatPostData = (data: Post): FormattedPost => {
   const formattedComments = comments.map(({ comment, author, ...rest }) => ({
     ...rest,
     comment: parseIfString(comment),
-    author: { ...author, fullName: userData },
+    author: { ...author, fullName: parseIfString(author.fullName) },
   }))
 
   return {
