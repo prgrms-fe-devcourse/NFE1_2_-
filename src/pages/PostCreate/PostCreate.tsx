@@ -129,6 +129,7 @@ const PostCreate = () => {
         />
         <QuestionSelect
           isPoll={isPoll}
+          category={postData.type}
           question={postData.poll.title}
           onChangeQuestion={handlePollChange('title')}
         />

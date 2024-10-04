@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import BeforeSelect from '@assets/icons/write_before_select.svg?react'
 import AfterSelect from '@assets/icons/write_after_select.svg?react'
 import './QuestionModal.css'
@@ -17,9 +17,11 @@ const QuestionModal = (props: QuestionProps) => {
 
   const questionList: string[] = [
     '헤어질까요?',
-    '사과할까요?',
+    '연락할까요?',
     '고백할까요?',
+    '데이트 신청할까요?',
     '다시 연락할까요?',
+    '사과할까요?',
   ]
 
   const handleQuestion = (value: string) => {
@@ -51,6 +53,16 @@ const QuestionModal = (props: QuestionProps) => {
     onChangeQuestion(currentValue)
     onChangeInputActive(true)
   }
+
+  //수정 시 입력한 질문 유지되도록 설정
+  useEffect(() => {
+    const isValidQuestion = questionList.includes(question)
+    onChangeInputActive(!isValidQuestion)
+    if(!isValidQuestion){
+      onChangeQuestion(question)
+    }
+    console.log(isValidQuestion)
+  },[])
 
   return (
     <div className='question-modal'>
