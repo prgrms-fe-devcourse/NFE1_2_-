@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './JoinPage.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -6,6 +6,10 @@ import Logo from '@assets/imgs/logo.png'
 import JoinDetail from './JoinDetail/JoinDetail'
 import Container from '@components/Conatiner/Container'
 import { useAuthStore } from '@store/authStore'
+
+interface User {
+  email: string;
+}
 
 const JoinPage: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -36,24 +40,27 @@ const JoinPage: React.FC = () => {
     return passwordRegex.test(password)
   }
 
-  const handleUsernameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const fetchAllUsers = async (): Promise<User[]> => {
+    try {
+      const response = await axios.get('https://kdt.frontend.5th.programmers.co.kr:5001/users/get-users')
+      return response.data
+    } catch (error) {
+      console.error('Error fetching users:', error)
+      return []
+    }
+  }
+
+  const checkUsernameAvailability = async (username: string): Promise<boolean> => {
+    const allUsers = await fetchAllUsers()
+    return !allUsers.some((user) => user.email === username)
+  }
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setUsername(value)
     setIsValidUsername(validateUsername(value))
     setShowErrorMessages(true)
-
-    if (validateUsername(value)) {
-      try {
-        const response = await axios.get(`https://kdt.frontend.5th.programmers.co.kr:5001/check-username?username=${value}`)
-        if (response.data.exists) {
-          setUsernameError('이미 존재하는 아이디입니다')
-        } else {
-          setUsernameError('')
-        }
-      } catch (error) {
-        console.error('Error checking username:', error)
-      }
-    }
+    setUsernameError('')
   }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,6 +112,13 @@ const JoinPage: React.FC = () => {
       return
     }
 
+    // 아이디 중복 검사
+    const isAvailable = await checkUsernameAvailability(username)
+    if (!isAvailable) {
+      setUsernameError('중복된 아이디입니다')
+      return
+    }
+
     const ageGroup = calculateAgeGroup(detailInfo.birthDate)
 
     const fullNameObject = {
@@ -124,8 +138,10 @@ const JoinPage: React.FC = () => {
       )
 
       if (response.status === 200) {
-        login() // 로그인 상태를 true로 변경
-        console.log('Login status:', useAuthStore.getState().isLoggedIn) // 콘솔에 로그인 상태 출력
+        localStorage.setItem('userId', response.data.user._id)
+        localStorage.setItem('token', response.data.token)
+        login()
+        console.log('Login status:', useAuthStore.getState().isLoggedIn)
         navigate('/joincomplete', { state: { username } })
       } else {
         alert(
@@ -226,12 +242,19 @@ const JoinPage: React.FC = () => {
             </div>
 
             <div className='input-wrapper'>
+              {detailInfo && (
+                <div className='detail-info-display'>
+                  <p><span>MBTI</span> <span>{detailInfo.mbti}</span></p>
+                  <p><span>성별</span> <span>{detailInfo.gender}</span></p>
+                  <p><span>나이</span> <span>{detailInfo.birthDate}</span></p>                  
+                </div>
+              )}
               <button
                 type='button'
-                className='details-button'
+                className={`details-button ${detailInfo ? 'details-button-edit' : ''}`}
                 onClick={() => setShowDetailModal(true)}
               >
-                상세정보 선택
+                {detailInfo ? '상세정보 수정' : '상세정보 선택'}
               </button>
               {showErrorMessages && detailInfoError && (
                 <span className='error'>상세정보를 입력해주세요.</span>
@@ -239,7 +262,7 @@ const JoinPage: React.FC = () => {
             </div>
 
             <Link
-              to='/loginpage'
+              to='/login'
               className='join-link'
             >
               계정이 있으신가요? <span>로그인</span>
