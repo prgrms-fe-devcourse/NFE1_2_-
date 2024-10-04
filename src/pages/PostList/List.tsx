@@ -24,19 +24,20 @@ const PostList = () => {
   const [allPosts, setAllPosts] = useState([]) // 전체 포스트 상태 추가
   const [hasSearched, setHasSearched] = useState(false) // 검색 여부 상태 추가
 
-  // 전체 포스트 로드, 처음 로드될 때 검색결과가 null이라 아무것도 보여주지 않았었음
-  useEffect(() => {
-    const fetchAllPosts = async () => {
-      try {
-        const response = await axios.get(
-          `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
-        )
-        setAllPosts(response.data) // 전체 포스트 저장
-      } catch (error) {
-        console.error('전체 포스트를 가져오는 데 실패했습니다:', error)
-      }
+  // 전체 포스트 로드 함수 (외부로 분리)
+  const fetchAllPosts = async () => {
+    try {
+      const response = await axios.get(
+        `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
+      )
+      setAllPosts(response.data) // 전체 포스트 저장
+    } catch (error) {
+      console.error('전체 포스트를 가져오는 데 실패했습니다:', error)
     }
-    // 검색을 하지 않았을 때만 전체 포스트를 로드
+  }
+
+  // 컴포넌트가 처음 로드될 때 전체 포스트 불러오기
+  useEffect(() => {
     if (!hasSearched) {
       fetchAllPosts()
     }
@@ -106,6 +107,12 @@ const PostList = () => {
     }
   }
 
+  // 초기화 버튼을 눌렀을 때 전체 포스트를 다시 불러오는 함수
+  const handleReset = () => {
+    setHasSearched(false) // 검색 여부 초기화
+    fetchAllPosts() // 전체 포스트 다시 로드
+  }
+
   const openSearchModal = () => {
     setIsSearchModalOpen(true)
   }
@@ -129,6 +136,7 @@ const PostList = () => {
             isSearchModalOpen={isSearchModalOpen}
             onClose={closeSearchModal}
             onSearch={handleSearch}
+            onReset={handleReset} // 초기화 함수 전달
           />
         )}
         <PreviewPostList
