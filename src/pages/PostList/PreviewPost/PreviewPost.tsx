@@ -38,7 +38,7 @@ const PreviewPost = ({ post }: { post: Post }) => {
       <PostCard
         post={formatPostData(post)}
         truncate={true}
-        checkCount={0}
+        checkCount={title.checkCount}
       />
       <Interaction post={formatPostData(post)} />
     </section>

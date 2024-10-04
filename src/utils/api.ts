@@ -355,7 +355,6 @@ export interface UpdatePost {
 export const formatFormData = (formData: UpdatePost) => {
   const postPollForm = new FormData()
   Object.entries(formData).forEach(([key, value]) => {
-    // value가 string 타입이 아닌 경우 처리 필요
     postPollForm.append(key, value as string)
   })
 
@@ -367,7 +366,7 @@ export const updatePost = async (formData: FormData) => {
     const response = await axios.put(`${END_POINT}posts/update`, formData, {
       headers: {
         Authorization: `Bearer ${ADMIN_TOKEN}`,
-        'Content-Type': 'multipart/form-data', // FormData를 사용할 때 Content-Type 설정
+        'Content-Type': 'multipart/form-data',
       },
     })
     return response.data
