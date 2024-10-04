@@ -5,12 +5,14 @@ interface MbtiToggleProps {
   isMbtiFilterVisible: boolean
   onToggleFilter: () => void
   onSelect: (result: string) => void
+  onReset: () => void // 초기화 함수 prop 추가
 }
 
 const MbtiToggle: React.FC<MbtiToggleProps> = ({
   isMbtiFilterVisible,
   onToggleFilter,
   onSelect,
+  onReset,
 }) => {
   return (
     <>
@@ -30,7 +32,7 @@ const MbtiToggle: React.FC<MbtiToggleProps> = ({
         </div>
         <button
           className='reload-button'
-          onClick={() => window.location.reload()}
+          onClick={onReset}
         >
           초기화
         </button>

@@ -6,6 +6,7 @@ const Search = ({
   isSearchModalOpen,
   onClose,
   onSearch,
+  onReset,
 }: {
   onClose: () => void
   onSearch: (searchTerm: string, mbti: string | null) => void
@@ -48,6 +49,7 @@ const Search = ({
           isMbtiFilterVisible={isMbtiFilterVisible}
           onToggleFilter={handleMbtiToggle} // 토글 상태만 제어
           onSelect={handleMbtiSelect} // 선택된 M BTI 상태 업데이트
+          onReset={onReset} // MbtiToggle에 초기화 함수 전달
         />
       </div>
       <input
