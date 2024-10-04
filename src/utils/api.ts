@@ -272,19 +272,19 @@ export const logoutUser = async () => {
   }
 }
 
-export const getAuthUser = async (): Promise<User> => {
-  const token = localStorage.getItem('token')
-  try {
-    const response = await axios.get(`${END_POINT}auth-user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    return response.data
-  } catch (error) {
-    throw handleError(error)
-  }
-}
+// export const getAuthUser = async (): Promise<User> => {
+//   const token = localStorage.getItem('token')
+//   try {
+//     const response = await axios.get(`${END_POINT}auth-user`, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     })
+//     return response.data
+//   } catch (error) {
+//     throw handleError(error)
+//   }
+// }
 
 export const createPost = async (newPost: FormData) => {
   const token = localStorage.getItem('token')

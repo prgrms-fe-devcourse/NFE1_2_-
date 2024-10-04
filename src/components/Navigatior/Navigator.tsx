@@ -6,12 +6,12 @@ import CreatePostIcon from '@assets/icons/bottom_create_post.svg?react'
 import MyIcon from '@assets/icons/bottom_my.svg?react'
 import MyIconClicked from '@assets/icons/bottom_my_clicked.svg?react'
 import './Navigator.css'
-import { getAuthUser } from '@/utils/api'
+import { useAuthStore } from '@/store/authStore'
 
 const Navigator = () => {
   const navigate = useNavigate()
   const location = useLocation()
-
+  const { isLoggedIn } = useAuthStore()
   const handleNavigation = (path: string) => {
     if (path) {
       navigate(path)
@@ -19,13 +19,11 @@ const Navigator = () => {
   }
 
   const handleNavigationAuthUser = (path: string) => {
-    getAuthUser().then((user) => {
-      if (user) {
-        navigate(path)
-      } else {
-        navigate('/login')
-      }
-    })
+    if (isLoggedIn) {
+      navigate(path)
+    } else {
+      navigate('/login')
+    }
   }
 
   return (

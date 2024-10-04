@@ -7,7 +7,14 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  isLoggedIn: false,
-  login: () => set({ isLoggedIn: true }),
-  logout: () => set({ isLoggedIn: false }),
+  isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
+  login: () => {
+    set({ isLoggedIn: true })
+    localStorage.setItem('isLoggedIn', 'true')
+  },
+
+  logout: () => {
+    set({ isLoggedIn: false })
+    localStorage.removeItem('isLoggedIn')
+  },
 }))
