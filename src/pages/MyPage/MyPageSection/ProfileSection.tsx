@@ -3,9 +3,9 @@ import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
 import { parseIfString } from '@/utils/formatPostData'
 import JoinDetail from '@/pages/JoinPage/JoinDetail/JoinDetail'
-import { updateUserData } from '@/utils/api'
 
 interface SectionProps {
+  mutate: (fullname: string) => void
   userData: User | undefined
   isModalOpen: boolean
   onChangeOpenModal: () => void
@@ -13,7 +13,13 @@ interface SectionProps {
 }
 
 const ProfileSection = (props: SectionProps) => {
-  const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
+  const {
+    mutate,
+    userData,
+    isModalOpen,
+    onChangeOpenModal,
+    onChangeCloseModal,
+  } = props
   const fullName = parseIfString(userData?.fullName as UserDetailData)
   const { gender, ageGroup, mbti } = fullName
 
@@ -36,8 +42,7 @@ const ProfileSection = (props: SectionProps) => {
       mbti: mbti,
     }
     const fullname = JSON.stringify(fullNameObject)
-    updateUserData(fullname)
-    console.log('변경완료', gender, birthDate, mbti)
+    mutate(fullname)
   }
 
   return (
