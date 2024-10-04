@@ -3,15 +3,23 @@ import './NotificationPage.css'
 import Navigator from '@/components/Navigatior/Navigator'
 import NotificationContainer from './NotificationContainer/NotificationContainer'
 import { Notification } from '@/typings/types'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import timeSeparation from '@/utils/timeSeparation'
-import { getNotification } from '@/utils/api'
+import { getNotification, putNotification } from '@/utils/api'
 
 const NotificationPage = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => getNotification(),
     // refetchInterval : 1000 //새로고침
+  })
+  const mutationFn = () => putNotification()
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] })
+    },
   })
 
   if (isLoading) {
@@ -48,6 +56,14 @@ const NotificationPage = () => {
       pageName='notification'
       pageText='알림'
     >
+      <div className='read-button-container'>
+        <button
+          className='read-button'
+          onClick={() => mutate()}
+        >
+          읽음 처리
+        </button>
+      </div>
       {unreadNotifications && unreadNotifications.length > 0 && (
         <NotificationContainer
           period='읽지 않음'
