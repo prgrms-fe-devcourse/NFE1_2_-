@@ -306,6 +306,26 @@ export const createPost = async (newPost: FormData) => {
   }
 }
 
+export const editPost = async (newPost: FormData) => {
+  const token = localStorage.getItem('token')
+  try {
+    const response = await axios.put(
+      'https://kdt.frontend.5th.programmers.co.kr:5001/posts/update',
+      newPost,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    )
+    return response.data
+  } catch (error) {
+    console.error('포스트 생성 오류:', error)
+    throw error
+  }
+}
+
 export const getNotification = async (): Promise<Notification[]> => {
   const token = localStorage.getItem('token')
   try {

@@ -3,15 +3,20 @@ import 'react-toastify/dist/ReactToastify.css'
 import './PostCreateButton.css'
 import { PostDetail } from '@/typings/types'
 import { useNavigate } from 'react-router-dom'
-import { createPost } from '@/utils/api'
+import { createPost, editPost } from '@/utils/api'
 
 interface PostCreateProps {
+  isEdit: boolean
+  isImgDelete: boolean
+  postId: string | null
   postData: PostDetail
   postImage: File | null
+  imagePublicId: string
 }
 
 const PostCreateButton = (props: PostCreateProps) => {
-  const { postData, postImage } = props
+  const { isEdit, isImgDelete, postId, postData, postImage, imagePublicId } =
+    props
   const navigate = useNavigate()
   const handlePostCreate = () => {
     if (postData.type === '카테고리') {
@@ -35,17 +40,55 @@ const PostCreateButton = (props: PostCreateProps) => {
     }
     newFormData.append('channelId', '66f6b3b7e5593e2a995daf1f')
     createPost(newFormData)
+
     navigate('/')
+  }
+
+  const handlePostEdit = () => {
+    if (!postData.title.trim()) {
+      toast.error('제목을 입력하세요')
+      return
+    } else if (!postData.body.trim()) {
+      toast.error('내용을 입력하세요')
+      return
+    } else if (!postData.poll.title) {
+      toast.error('질문을 선택하세요')
+      return
+    }
+
+    const newFormData = new FormData()
+    newFormData.append('postId', postId as string)
+    newFormData.append('title', JSON.stringify(postData))
+    if (postImage) {
+      newFormData.append('image', postImage)
+    }
+    if (isEdit && isImgDelete) {
+      newFormData.append('imageToDeletePublicId', imagePublicId)
+    }
+    newFormData.append('channelId', '66f6b3b7e5593e2a995daf1f')
+    editPost(newFormData)
+
+    navigate('/')
+    console.log('수정 완료')
   }
 
   return (
     <div className='post-create-button-container'>
-      <button
-        className='post-create-button'
-        onClick={handlePostCreate}
-      >
-        글쓰기
-      </button>
+      {isEdit ? (
+        <button
+          className='post-create-button'
+          onClick={handlePostEdit}
+        >
+          수정하기
+        </button>
+      ) : (
+        <button
+          className='post-create-button'
+          onClick={handlePostCreate}
+        >
+          글쓰기
+        </button>
+      )}
       <ToastContainer
         position='top-center' //알림 위치 설정
         autoClose={3000} // 자동 off 시간

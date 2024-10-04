@@ -1,15 +1,18 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import PostPageButton from '@/components/PostPageButton/PostPageButton'
 import './AddImage.css'
 
 interface AddImageProps {
+  isUpload: boolean
+  onChangeUpload: (isUpload: boolean) => void
+  onChangeImgDelete : (isImgDelete : boolean) => void
   postImage: File | null
   onChangeImage: (postImage: File | null) => void
 }
 
 const AddImage = (props: AddImageProps) => {
-  const { postImage, onChangeImage } = props
-  const [isUpload, setIsUpload] = useState<boolean>(false)
+  const { isUpload, onChangeUpload, onChangeImgDelete, postImage, onChangeImage } = props
+
   const imageInputRef = useRef<HTMLInputElement | null>(null)
   const handleAddImage = () => {
     imageInputRef.current?.click()
@@ -17,7 +20,8 @@ const AddImage = (props: AddImageProps) => {
 
   const handleDeleteImage = () => {
     onChangeImage(null)
-    setIsUpload(false)
+    onChangeUpload(false)
+    onChangeImgDelete(true)
     if (imageInputRef.current) {
       imageInputRef.current.value = ''
     }
@@ -27,7 +31,7 @@ const AddImage = (props: AddImageProps) => {
     const imgFile = e.target.files?.[0] || null
     if (imgFile) {
       onChangeImage(imgFile)
-      setIsUpload(true)
+      onChangeUpload(true)
     }
   }
   return (

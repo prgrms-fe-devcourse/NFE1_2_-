@@ -4,12 +4,13 @@ import BottomModal from '@/components/BottomModal/BottomModal'
 import QuestionModal from '../QuestionModal/QuestionModal'
 
 interface QuestionProps {
+  isPoll: boolean
   question: string
   onChangeQuestion: (question: string) => void
 }
 
 const QuestionSelect = (props: QuestionProps) => {
-  const { question, onChangeQuestion } = props
+  const { isPoll, question, onChangeQuestion } = props
   const [inputActive, setInputActive] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   return (
@@ -25,12 +26,18 @@ const QuestionSelect = (props: QuestionProps) => {
         <div className='question-selected'>
           <p className='question-selected-title'>선택한 질문</p>
           <div className='question-selected-name'>{question}</div>
-          <button
-            className='question-reselect'
-            onClick={() => setIsModalOpen(true)}
-          >
-            질문 다시 선택
-          </button>
+          {!isPoll ? (
+            <button
+              className='question-reselect'
+              onClick={() => setIsModalOpen(true)}
+            >
+              질문 다시 선택
+            </button>
+          ) : (
+            <p className='question-reselect-error'>
+              투표가 이미 진행되어 질문을 수정할 수 없습니다.
+            </p>
+          )}
         </div>
       )}
       {isModalOpen && (
