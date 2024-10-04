@@ -57,8 +57,12 @@ const PreviewPostList = ({
 
   //필터링
   const filteredPosts = selectedCategory
-    ? posts.filter((post) => JSON.parse(post.title).type === selectedCategory)
-    : posts //카테고리 필터링
+    ? posts.filter((post) => {
+        const titleObject =
+          typeof post.title === 'string' ? JSON.parse(post.title) : post.title
+        return titleObject.type === selectedCategory
+      })
+    : posts
   const mbtiFilteredPosts = selectedMbti
     ? filteredPosts.filter((post) => {
         const postMbti = JSON.parse(post.author.fullName).mbti // MBTI 정보가 post.title에 있다고 가정
