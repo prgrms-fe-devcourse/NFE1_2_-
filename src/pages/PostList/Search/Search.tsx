@@ -55,6 +55,11 @@ const Search = ({
         className={`modal-input ${isMbtiFilterVisible ? 'active' : ''}`}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleSearch()
+          }
+        }}
         placeholder='검색어를 입력해주세요'
       />
       <button
