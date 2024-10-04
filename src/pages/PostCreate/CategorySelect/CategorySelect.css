@@ -6,12 +6,12 @@
   position: relative;
   width: 100%;
   padding: 12px;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 
   .category-container {
     display: flex;
     align-items: center;
-    width: 80%;
+    width: 100%;
 
     .category-button {
       display: flex;
@@ -21,7 +21,7 @@
 
       .category-title {
         margin-right: 1rem;
-        font-size: 14px;
+        font-size: 0.9rem;
         font-weight: normal;
       }
     }
