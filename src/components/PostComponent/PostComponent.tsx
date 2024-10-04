@@ -26,7 +26,7 @@ const PostCard = ({
             type='mbti'
             body={post.author.fullName.mbti}
           />{' '}
-          {post.author.fullName.gender}/{post.author.fullName.ageGroup}
+          {post.author.fullName.gender}/{post.author.fullName.ageGroup}대
         </div>
         <div className='category_right'>
           {formatTime(post.createdAt)}

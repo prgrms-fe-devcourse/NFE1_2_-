@@ -306,6 +306,26 @@ export const createPost = async (newPost: FormData) => {
   }
 }
 
+export const editPost = async (newPost: FormData) => {
+  const token = localStorage.getItem('token')
+  try {
+    const response = await axios.put(
+      'https://kdt.frontend.5th.programmers.co.kr:5001/posts/update',
+      newPost,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    )
+    return response.data
+  } catch (error) {
+    console.error('포스트 생성 오류:', error)
+    throw error
+  }
+}
+
 export const getNotification = async (): Promise<Notification[]> => {
   const token = localStorage.getItem('token')
   try {
@@ -341,5 +361,36 @@ export const putNotification = async () => {
   } catch (error) {
     console.error('알림 보기 오류:', error)
     throw error
+  }
+}
+
+export interface UpdatePost {
+  postId: string
+  title: string
+  image: string | null
+  imageToDeletePublicId?: string
+  channelId: string
+}
+
+export const formatFormData = (formData: UpdatePost) => {
+  const postPollForm = new FormData()
+  Object.entries(formData).forEach(([key, value]) => {
+    postPollForm.append(key, value as string)
+  })
+
+  return postPollForm
+}
+
+export const updatePost = async (formData: FormData) => {
+  try {
+    const response = await axios.put(`${END_POINT}posts/update`, formData, {
+      headers: {
+        Authorization: `Bearer ${ADMIN_TOKEN}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data
+  } catch (error) {
+    throw handleError(error)
   }
 }
