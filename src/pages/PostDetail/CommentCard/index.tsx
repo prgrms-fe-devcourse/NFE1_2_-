@@ -92,10 +92,6 @@ const CommentCard = ({
     <div className='comment-card'>
       <div className='comment-personal-detail-container'>
         <Bedge
-          type='best'
-          body='Best'
-        />
-        <Bedge
           type='mbti'
           body={mbti}
         />
