@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Container from '@components/Conatiner/Container';
+import DetailPageLayout from '@/layouts/DetailPageLayout/DetailPageLayout';
 import './LoginPage.css';
 import Logo from '@assets/imgs/logo.png';
 import { useAuthStore } from '@store/authStore';
@@ -73,7 +73,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <Container>
+    <DetailPageLayout>
       <div className="page-wrapper">
         <header>
           <img src={Logo} className='logo' alt="Logo" />
@@ -107,7 +107,7 @@ const LoginPage: React.FC = () => {
           </form>
         </section>
       </div>
-    </Container>
+    </DetailPageLayout>
   );
 };
 
