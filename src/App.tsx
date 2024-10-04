@@ -5,12 +5,12 @@ import 'react-toastify/dist/ReactToastify.css'
 import Loading from '@pages/Loading/Loading' 
 import SplashScreen from '@pages/SplashScreen/SplashScreen'
 import PostCreate from './pages/PostCreate/PostCreate'
+import PostList from './pages/PostList/List'
 
 const NotFound = lazy(() => import('@pages/NotFound/NotFound'))
 const PostDetailPage = lazy(() => import('@pages/PostDetail/PostDetailPage'))
 const MyPage = lazy(() => import('./pages/MyPage/MyPage'))
 const NotificationPage = lazy(() => import('./pages/NotificationPage/NotificationPage'))
-const PostList = lazy(() => import('./pages/PostList/List'))
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'))
 const JoinPage = lazy(() => import('./pages/JoinPage/JoinPage'))
 const JoinCompletePage = lazy(() => import('./pages/JoinCompletePage/JoinCompletePage'))
