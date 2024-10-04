@@ -11,6 +11,7 @@ import { getPostData } from '@/utils/api'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import NotFound from '@/pages/NotFound/NotFound'
+import Loading from '@/pages/Loading/Loading'
 
 const PostDetailPage = () => {
   const { postId } = useParams<{ postId: string }>()
@@ -24,7 +25,7 @@ const PostDetailPage = () => {
   const [isVoted, setIsVoted] = useState<boolean | null>(null)
 
   if (isLoading) {
-    return <div>Loading</div>
+    return <Loading />
   }
 
   if (isError) {

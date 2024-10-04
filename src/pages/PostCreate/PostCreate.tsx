@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom'
 import { getPostData } from '@/utils/api'
 import formatPostData from '@/utils/formatPostData'
 import axios from 'axios'
+import Loading from '@/pages/Loading/Loading'
 
 const PostCreate = () => {
   const getImageFile = async (imageUrl: string) => {
@@ -45,6 +46,7 @@ const PostCreate = () => {
   const [imagePublicId, setImagePublicId] = useState<string>('')
   const [isPoll, setIsPoll] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const location = useLocation()
   const editPostId: string | null = new URLSearchParams(location.search).get(
     'postId',
@@ -105,8 +107,9 @@ const PostCreate = () => {
     },
     [],
   )
-
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <DetailPageLayout>
       <div className='post-create'>
         <CategorySelect
@@ -138,6 +141,7 @@ const PostCreate = () => {
           postId={editPostId}
           postData={postData}
           postImage={postImage}
+          onChangeLoading={setIsLoading} // 로딩 상태를 변경할 수 있는 props 전달
         />
       </div>
     </DetailPageLayout>
