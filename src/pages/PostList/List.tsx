@@ -120,8 +120,9 @@ const PostList = () => {
         <Carousel setSelectedCategory={setSelectedCategory} />
         <FilterSection
           isCollectionActive={isCollectionActive}
-          setIsCollectionActive={setIsCollectionActive}
           setAuthorId={setAuthorId}
+          setAllPosts={setAllPosts}
+          setIsCollectionActive={setIsCollectionActive}
           setSelectedSort={setSelectedSort}
         />
         {isSearchModalOpen && (

@@ -373,12 +373,12 @@ export interface UpdatePost {
 }
 
 export const formatFormData = (formData: UpdatePost) => {
-  const postPollForm = new FormData()
+  const postFormData = new FormData()
   Object.entries(formData).forEach(([key, value]) => {
-    postPollForm.append(key, value as string)
+    postFormData.append(key, value as string)
   })
 
-  return postPollForm
+  return postFormData
 }
 
 export const updatePost = async (formData: FormData) => {
@@ -389,6 +389,15 @@ export const updatePost = async (formData: FormData) => {
         'Content-Type': 'multipart/form-data',
       },
     })
+    return response.data
+  } catch (error) {
+    throw handleError(error)
+  }
+}
+
+export const getMyPostList = async () => {
+  try {
+    const response = await axios.get(`${END_POINT}posts/author/${USER_ID}`)
     return response.data
   } catch (error) {
     throw handleError(error)
