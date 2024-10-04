@@ -14,7 +14,7 @@ const FilterSection = ({
   setAuthorId,
   setSelectedSort,
 }: FilterSectionProps) => {
-  const [selectedSort, setSelectedSortState] = useState('popular')
+  const [selectedSort, setSelectedSortState] = useState('latest')
 
   //인기순/최신순
   const handleSortClick = (sortType: 'popular' | 'latest') => {
@@ -42,16 +42,16 @@ const FilterSection = ({
       </button>
       <div className='sort-options'>
         <div
-          className={`popular ${selectedSort === 'popular' ? 'active' : ''}`}
-          onClick={() => handleSortClick('popular')}
-        >
-          인기순
-        </div>
-        <div
           className={`latest ${selectedSort === 'latest' ? 'active' : ''}`}
           onClick={() => handleSortClick('latest')}
         >
           최신순
+        </div>
+        <div
+          className={`popular ${selectedSort === 'popular' ? 'active' : ''}`}
+          onClick={() => handleSortClick('popular')}
+        >
+          인기순
         </div>
       </div>
     </div>
