@@ -1,40 +1,34 @@
-import { useEffect, useState } from 'react'
 import PostCard from '@/components/PostComponent/PostComponent'
 import Interaction from '../Interaction/Interaction'
-import { Post } from '@/typings/types'
+import { FormattedPost, Post } from '@/typings/types'
 import { useNavigate } from 'react-router-dom'
 import formatPostData from '@/utils/formatPostData'
+import { useAuthStore } from '@/store/authStore'
+import { formatFormData, UpdatePost, updatePost } from '@/utils/api'
 
 const PreviewPost = ({ post }: { post: Post }) => {
   const navigate = useNavigate()
-  const [checkCount, setCheckCount] = useState(0)
+  const { isLoggedIn } = useAuthStore()
+  const formattedPost: FormattedPost = formatPostData(post)
 
-  // 조회수 - 컴포넌트가 마운트될 때 checkCount를 로컬 스토리지에서 가져옴
-  useEffect(() => {
-    const storedCheckCount = localStorage.getItem(`checkCount_${post._id}`)
-    if (storedCheckCount) {
-      setCheckCount(Number(storedCheckCount)) // 문자열을 숫자로 변환
-    }
-  }, [post._id])
+  const { channel, image, title, _id } = formattedPost
 
-  const handlePostClick = () => {
-    const userId = post.author._id
-    console.log(userId)
-    const userCheckCountKey = `checkCount_${post._id}_${userId}` // 사용자별 체크 카운트 키
-
-    // 사용자가 이미 클릭한 경우에는 카운트 증가하지 않음
-    if (!localStorage.getItem(userCheckCountKey)) {
-      setCheckCount((prevCount) => {
-        const newCount = prevCount + 1 // checkCount 증가
-        localStorage.setItem(`checkCount_${post._id}`, String(newCount)) // 전체 카운트를 로컬 스토리지에 저장
-        localStorage.setItem(userCheckCountKey, 'true') // 사용자가 클릭했음을 기록
-        return newCount // 업데이트된 checkCount 반환
+  const handlePostClick = async () => {
+    if (isLoggedIn) {
+      const updateData: UpdatePost = {
+        channelId: channel._id,
+        image: image as string,
+        title: JSON.stringify({ ...title, checkCount: title.checkCount + 1 }),
+        postId: _id,
+      }
+      const formData = formatFormData(updateData)
+      await updatePost(formData).then(() => {
+        navigate(`/post/${_id}`)
       })
+    } else {
+      navigate(`/login`)
     }
-
-    navigate(`/post/${post._id}`) // 상세 페이지로 이동
   }
-
   return (
     <section
       className='post-section'
@@ -44,7 +38,7 @@ const PreviewPost = ({ post }: { post: Post }) => {
       <PostCard
         post={formatPostData(post)}
         truncate={true}
-        checkCount={checkCount}
+        checkCount={0}
       />
       <Interaction post={formatPostData(post)} />
     </section>
