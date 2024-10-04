@@ -6,6 +6,7 @@ import JoinDetail from '@/pages/JoinPage/JoinDetail/JoinDetail'
 import { updateUserData } from '@/utils/api'
 
 interface SectionProps {
+  mutate
   userData: User | undefined
   isModalOpen: boolean
   onChangeOpenModal: () => void
@@ -13,8 +14,15 @@ interface SectionProps {
 }
 
 const ProfileSection = (props: SectionProps) => {
-  const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
+  const {
+    mutate,
+    userData,
+    isModalOpen,
+    onChangeOpenModal,
+    onChangeCloseModal,
+  } = props
   const fullName = parseIfString(userData?.fullName as UserDetailData)
+  console.log(fullName)
   const { gender, ageGroup, mbti } = fullName
 
   const calculateAgeGroup = (birthDate: string) => {
@@ -37,6 +45,7 @@ const ProfileSection = (props: SectionProps) => {
     }
     const fullname = JSON.stringify(fullNameObject)
     updateUserData(fullname)
+    mutate()
     console.log('변경완료', gender, birthDate, mbti)
   }
 

@@ -2,9 +2,10 @@ import MainPageLayout from '@/layouts/MainPageLayout/MainPageLayout'
 import ProfileSection from './MyPageSection/ProfileSection'
 import AccountSection from './MyPageSection/AccountSection'
 import OtherSection from './MyPageSection/OtherSection'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getUserData } from '@/utils/api'
+import useCustomMutation from '@/hooks/useCustomMutaition'
 
 const MyPage = () => {
   const [modalOpen, setModalOpen] = useState({
@@ -42,6 +43,13 @@ const MyPage = () => {
     return <div>{error.message}</div>
   }
 
+  const mutationFn = () => getUserData(userId as string)
+
+  // const { data, mutate } = useCustomMutation({
+  //   mutationFn,
+  //   queryKey: ['profile'],
+  // })
+
   return (
     <MainPageLayout>
       <section>
@@ -51,6 +59,7 @@ const MyPage = () => {
         <ProfileSection
           userData={data}
           isModalOpen={profileModal}
+          mutate={mutate}
           onChangeOpenModal={() => handleOpenModal('profileModal')}
           onChangeCloseModal={() => handleCloseModal('profileModal')}
         />
