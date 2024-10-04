@@ -103,6 +103,7 @@ const PostList = () => {
   const handleReset = () => {
     setHasSearched(false) // 검색 여부 초기화
     fetchAllPosts() // 전체 포스트 다시 로드
+    setIsSearchModalOpen(false)
   }
 
   const openSearchModal = () => {
