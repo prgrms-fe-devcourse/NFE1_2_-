@@ -4,11 +4,11 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Loading from '@pages/Loading/Loading' 
 import SplashScreen from '@pages/SplashScreen/SplashScreen'
+import PostCreate from './pages/PostCreate/PostCreate'
 
 const NotFound = lazy(() => import('@pages/NotFound/NotFound'))
 const PostDetailPage = lazy(() => import('@pages/PostDetail/PostDetailPage'))
 const MyPage = lazy(() => import('./pages/MyPage/MyPage'))
-const PostCreate = lazy(() => import('./pages/PostCreate/PostCreate'))
 const NotificationPage = lazy(() => import('./pages/NotificationPage/NotificationPage'))
 const PostList = lazy(() => import('./pages/PostList/List'))
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'))
