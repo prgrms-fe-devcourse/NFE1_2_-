@@ -16,7 +16,7 @@ const PostList = () => {
   //내 글 모아보기, 내 글 모아보기에 필요한 userId 인기순/최신순
   const [isCollectionActive, setIsCollectionActive] = useState(false)
   const [authorId, setAuthorId] = useState(null)
-  const [selectedSort, setSelectedSort] = useState('popular')
+  const [selectedSort, setSelectedSort] = useState('latest')
 
   //검색
   const [searchResults, setSearchResults] = useState([]) // 검색 결과 상태 추가
