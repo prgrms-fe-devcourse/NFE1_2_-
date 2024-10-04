@@ -1,23 +1,24 @@
-import NotFound from '@pages/NotFound/NotFound'
-import PostDetailPage from '@pages/PostDetail/PostDetailPage'
-import MyPage from './pages/MyPage/MyPage'
-import PostCreate from './pages/PostCreate/PostCreate'
+import { useState, useEffect, Suspense, lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import NotificationPage from './pages/NotificationPage/NotificationPage'
-import PostList from './pages/PostList/List'
-import LoginPage from './pages/LoginPage/LoginPage'
-import JoinPage from './pages/JoinPage/JoinPage'
-import JoinCompletePage from './pages/JoinCompletePage/JoinCompletePage'
-import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Loading from '@pages/Loading/Loading' 
 import SplashScreen from '@pages/SplashScreen/SplashScreen'
-import { useState, useEffect } from 'react'
+
+const NotFound = lazy(() => import('@pages/NotFound/NotFound'))
+const PostDetailPage = lazy(() => import('@pages/PostDetail/PostDetailPage'))
+const MyPage = lazy(() => import('./pages/MyPage/MyPage'))
+const PostCreate = lazy(() => import('./pages/PostCreate/PostCreate'))
+const NotificationPage = lazy(() => import('./pages/NotificationPage/NotificationPage'))
+const PostList = lazy(() => import('./pages/PostList/List'))
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'))
+const JoinPage = lazy(() => import('./pages/JoinPage/JoinPage'))
+const JoinCompletePage = lazy(() => import('./pages/JoinCompletePage/JoinCompletePage'))
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(true)
 
   useEffect(() => {
-    // 세션 스토리지 사용
     const hasVisitedBefore = sessionStorage.getItem('hasVisitedBefore')
     if (hasVisitedBefore) {
       setShowSplash(false)
@@ -35,53 +36,40 @@ const App = () => {
 
   return (
     <>
-      <Routes>
-        <Route
-          path='*'
-          element={<NotFound />}
-        />
-        <Route
-          path='/join'
-          element={<JoinPage />}
-        />
-        <Route
-          path='/joincomplete'
-          element={<JoinCompletePage />}
-        />
-        <Route
-          path='/login'
-          element={<LoginPage />}
-        />
-        <Route
-          path='/post/:postId'
-          element={<PostDetailPage />}
-        />
-        <Route
-          path='/my'
-          element={<MyPage />}
-        />
-        <Route
-          path='/create-post'
-          element={<PostCreate />}
-        />
-        <Route
-          path='/notification'
-          element={<NotificationPage />}
-        />
-        <Route
-          path='/'
-          element={<PostList />}
-        />
-        <Route
-          path='*'
-          element={
-            <Navigate
-              to='/'
-              replace
-            />
-          }
-        />
-      </Routes>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route 
+            path='*' 
+            element={<NotFound />} />
+          <Route 
+            path='/join' 
+            element={<JoinPage />} />
+          <Route 
+            path='/joincomplete' 
+            element={<JoinCompletePage />} />
+          <Route 
+            path='/login' 
+            element={<LoginPage />} />
+          <Route 
+            path='/post/:postId' 
+            element={<PostDetailPage />} />
+          <Route 
+            path='/my' 
+            element={<MyPage />} />
+          <Route 
+            path='/create-post' 
+            element={<PostCreate />} />
+          <Route 
+            path='/notification' 
+            element={<NotificationPage />} />
+          <Route 
+            path='/' 
+            element={<PostList />} />
+          <Route 
+            path='*' 
+            element={<Navigate to='/' replace />} />
+        </Routes>
+      </Suspense>
       <ToastContainer />
     </>
   )
