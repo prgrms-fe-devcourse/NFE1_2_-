@@ -10,8 +10,24 @@ import { PostDetail } from '@/typings/types'
 import { useLocation } from 'react-router-dom'
 import { getPostData } from '@/utils/api'
 import formatPostData from '@/utils/formatPostData'
+import axios from 'axios'
 
 const PostCreate = () => {
+  const getImageFile = async (imageUrl: string) => {
+    try {
+      const response = await axios.get(imageUrl, {
+        responseType: 'blob',
+      })
+      const postValue = imageUrl.split('/post/')[1]
+      const file = new File([response.data], postValue, {
+        type: response.data.type,
+      })
+      setPostImage(file)
+    } catch (error) {
+      console.error('Error image as file:', error)
+    }
+  }
+
   const [postData, setPostData] = useState<PostDetail>({
     type: '카테고리',
     title: '',
@@ -24,7 +40,11 @@ const PostCreate = () => {
     },
   })
   const [postImage, setPostImage] = useState<File | null>(null)
+  const [isUpload, setIsUpload] = useState<boolean>(false)
+  const [isImgDelete, setIsImgDelete] = useState<boolean>(false)
+  const [imagePublicId, setImagePublicId] = useState<string>('')
   const [isPoll, setIsPoll] = useState<boolean>(false)
+  const [isEdit, setIsEdit] = useState<boolean>(false)
   const location = useLocation()
   const editPostId: string | null = new URLSearchParams(location.search).get(
     'postId',
@@ -32,9 +52,12 @@ const PostCreate = () => {
 
   const getPost = useCallback(async () => {
     const post = await getPostData(editPostId as string)
-    console.log(post)
     const postData = formatPostData(post)
+    const isPollAgree = postData.title.poll.agree
+    const isPollDisAgree = postData.title.poll.disagree
+    console.log(post)
     console.log(postData)
+
     setPostData((prevState) => ({
       ...prevState,
       ['type']: postData.title.type,
@@ -42,9 +65,12 @@ const PostCreate = () => {
       ['body']: postData.title.body,
       ['poll']: postData.title.poll,
     }))
+    if (postData.image) {
+      setIsUpload(true)
+      getImageFile(postData.image)
+      setImagePublicId(postData.imagePublicId as string)
+    }
 
-    const isPollAgree = postData.title.poll.agree
-    const isPollDisAgree = postData.title.poll.disagree
     if (isPollAgree.length > 0 || isPollDisAgree.length > 0) {
       setIsPoll(true)
     }
@@ -53,6 +79,7 @@ const PostCreate = () => {
   useEffect(() => {
     if (editPostId) {
       getPost()
+      setIsEdit(true)
     }
   }, [editPostId])
 
@@ -93,6 +120,9 @@ const PostCreate = () => {
           onChangeContent={handlePostChange('body')}
         />
         <AddImage
+          isUpload={isUpload}
+          onChangeUpload={setIsUpload}
+          onChangeImgDelete={setIsImgDelete}
           postImage={postImage}
           onChangeImage={setPostImage}
         />
@@ -102,6 +132,10 @@ const PostCreate = () => {
           onChangeQuestion={handlePollChange('title')}
         />
         <PostCreateButton
+          isEdit={isEdit}
+          isImgDelete={isImgDelete}
+          imagePublicId={imagePublicId}
+          postId={editPostId}
           postData={postData}
           postImage={postImage}
         />
