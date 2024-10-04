@@ -55,7 +55,7 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
 
   const handleNotification = () => {
     // putNotification() //읽음처리
-    navigate(`/post/${notification.post}`)
+    navigate(`/post/${notification.post}`, { state: { from: '/notification' } })
   }
   return (
     <div className='notification-item-container'>
