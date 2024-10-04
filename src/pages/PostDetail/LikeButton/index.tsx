@@ -66,13 +66,13 @@ const LikeButton: FC<LikeButtonProps> = ({ likes, postId }) => {
       >
         {isLiked ? (
           <SelectedLikeIcon
-            width={35}
-            height={35}
+            width={33}
+            height={33}
           />
         ) : (
           <LikeIcon
-            width={40}
-            height={40}
+            width={33}
+            height={33}
             fill='#eee'
           />
         )}

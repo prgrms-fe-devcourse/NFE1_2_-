@@ -31,9 +31,9 @@ const Interaction = ({ post }: { post: FormattedPost }) => {
         </div>
         <div className='icon-value'>
           <HeartBefore
-            width={20}
-            height={20}
-            fill='#7D7D7D'
+            width={16}
+            height={16}
+            fill='#7d7d7d'
           ></HeartBefore>
           <span>{likes.length}</span>
         </div>
