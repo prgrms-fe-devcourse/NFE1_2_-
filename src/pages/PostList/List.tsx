@@ -46,20 +46,26 @@ const PostList = () => {
       const response = await axios.get(
         `https://kdt.frontend.5th.programmers.co.kr:5001/users/${userId}`,
       )
-      return response.data
+      return response.data || null
     } catch (error) {
       console.error('유저 데이터를 가져오는 데 실패했습니다:', error)
+
+      return null
     }
   }
-  const formatPostData = async (post) => {
+
+  //변수명
+  const formatPostDataSearch = async (post) => {
     const { author, ...restPost } = post
     const userIdArray = Object.values(author).slice(0, 24)
     const userId = userIdArray.join('')
     try {
       const userData = await getUserData(userId)
+      console.log(userData)
+
       return {
         ...restPost,
-        author: { ...author, fullName: userData.fullName }, // fullName 추가
+        author: { ...author, fullName: userData?.fullName || '알수없음' }, // fullName 추가
       }
     } catch (error) {
       console.error(`Failed to fetch fullName for userId: ${userId}`, error)
@@ -78,6 +84,7 @@ const PostList = () => {
       )
       // 응답 데이터 가져오기
       const data = response.data
+      console.log(`응답데이터: ${JSON.stringify(data, null, 2)}`)
 
       const filteredData = data.filter(
         (post) => post.channel === '66f6b3b7e5593e2a995daf1f',
@@ -85,16 +92,20 @@ const PostList = () => {
 
       // 포스트 데이터를 형식화
       const formattedData = await Promise.all(
-        filteredData.map(async (post) => await formatPostData(post)),
+        filteredData.map(async (post) => await formatPostDataSearch(post)),
       )
       setSearchResults(formattedData) // 검색 결과 저장
       console.log(formattedData)
       setSelectedMbti(mbti) // MBTI 저장
       setHasSearched(true) // 검색을 한 것으로 설정
-      setIsSearchModalOpen(false) // 검색 후 모달 닫기
+      // setIsSearchModalOpen(false) // 검색 후 모달 닫기
     } catch (error) {
       console.error('검색 결과를 가져오는 데 실패했습니다:', error)
     }
+  }
+
+  const closeSearchModal = () => {
+    setIsSearchModalOpen(false)
   }
 
   return (
@@ -107,13 +118,14 @@ const PostList = () => {
           setAuthorId={setAuthorId}
           setSelectedSort={setSelectedSort}
         />
-        <Search
-          isSearchModalOpen={isSearchModalOpen}
-          onClose={() => {
-            setIsSearchModalOpen(false)
-          }}
-          onSearch={handleSearch}
-        />
+        {isSearchModalOpen && (
+          <Search
+            isSearchModalOpen={isSearchModalOpen}
+            onClose={closeSearchModal}
+            onSearch={handleSearch}
+          />
+        )}
+
         <PreviewPostList
           channelId='66f6b3b7e5593e2a995daf1f'
           selectedCategory={selectedCategory}

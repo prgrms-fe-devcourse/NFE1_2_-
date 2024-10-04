@@ -22,7 +22,7 @@ const Search = ({
 
   const handleSearch = () => {
     onSearch(search, selectedMbti) // 검색어와 선택된 MBTI 전달
-    handleCloseModal() // 검색 후 모달 닫기
+    // handleCloseModal() // 검색 후 모달 닫기
   }
 
   const handleMbtiToggle = () => {
@@ -47,7 +47,7 @@ const Search = ({
         <MbtiToggle
           isMbtiFilterVisible={isMbtiFilterVisible}
           onToggleFilter={handleMbtiToggle} // 토글 상태만 제어
-          onSelect={handleMbtiSelect} // 선택된 MBTI 상태 업데이트
+          onSelect={handleMbtiSelect} // 선택된 M BTI 상태 업데이트
         />
       </div>
       <input

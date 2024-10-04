@@ -19,8 +19,7 @@ const Navigator = () => {
   }
 
   const handleNavigationAuthUser = (path: string) => {
-    getAuthUser()
-    .then((user) => {
+    getAuthUser().then((user) => {
       if (user) {
         navigate(path)
       } else {
