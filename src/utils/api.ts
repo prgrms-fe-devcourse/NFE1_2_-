@@ -363,3 +363,34 @@ export const putNotification = async () => {
     throw error
   }
 }
+
+export interface UpdatePost {
+  postId: string
+  title: string
+  image: string | null
+  imageToDeletePublicId?: string
+  channelId: string
+}
+
+export const formatFormData = (formData: UpdatePost) => {
+  const postPollForm = new FormData()
+  Object.entries(formData).forEach(([key, value]) => {
+    postPollForm.append(key, value as string)
+  })
+
+  return postPollForm
+}
+
+export const updatePost = async (formData: FormData) => {
+  try {
+    const response = await axios.put(`${END_POINT}posts/update`, formData, {
+      headers: {
+        Authorization: `Bearer ${ADMIN_TOKEN}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data
+  } catch (error) {
+    throw handleError(error)
+  }
+}

@@ -51,6 +51,7 @@ const PostList = () => {
       console.error('유저 데이터를 가져오는 데 실패했습니다:', error)
     }
   }
+
   const formatPostData = async (post) => {
     const { author, ...restPost } = post
     const userIdArray = Object.values(author).slice(0, 24)
