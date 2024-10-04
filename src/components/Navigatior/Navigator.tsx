@@ -31,6 +31,11 @@ const Navigator = () => {
     })
   }
 
+  const handleSearchButton = () => {
+    setIsSearchModalOpen(true)
+    handleNavigation('/')
+  }
+
   return (
     <nav className='navigator'>
       <button
@@ -42,7 +47,7 @@ const Navigator = () => {
 
       <button
         className='nav-button'
-        onClick={() => setIsSearchModalOpen(true)} // 모달 열기
+        onClick={handleSearchButton} // 모달 열기
       >
         <SearchIcon />
       </button>
