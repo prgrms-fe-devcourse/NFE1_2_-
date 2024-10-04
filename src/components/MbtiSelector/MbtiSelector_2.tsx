@@ -16,7 +16,7 @@ interface MbtiRowProps {
 }
 
 interface MbtiSelectorProps {
-  onSelect?: (result: string) => void // 추가된 부분
+  onSelect?: (result: string | null) => void // 추가된 부분
 }
 
 const MbtiSelector_2: React.FC<MbtiSelectorProps> = ({
@@ -32,7 +32,13 @@ const MbtiSelector_2: React.FC<MbtiSelectorProps> = ({
   const updateMbti = (key: MbtiType) => {
     setMbti((prev) => {
       const newMbti = { ...prev, [key]: !prev[key] }
-      onSelect(getMbtiResult(newMbti)) // MBTI 결과를 부모에게 전달
+      // 선택 해제할 경우 null을 전달
+      if (!newMbti[key]) {
+        onSelect(null)
+      } else {
+        onSelect(getMbtiResult(newMbti)) // MBTI 결과를 부모에게 전달
+      }
+
       return newMbti
     })
   }

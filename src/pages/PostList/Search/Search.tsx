@@ -34,6 +34,7 @@ const Search = ({
 
   const handleMbtiToggle = () => {
     setIsMbtiFilterVisible(!isMbtiFilterVisible) // MBTI 토글 상태만 제어
+    setSelectedMbti(null)
   }
 
   const handleMbtiSelect = (result: string) => {
