@@ -34,6 +34,7 @@ const PreviewPost = ({ post }: { post: Post }) => {
 
     navigate(`/post/${post._id}`) // 상세 페이지로 이동
   }
+
   return (
     <section
       className='post-section'
@@ -45,11 +46,7 @@ const PreviewPost = ({ post }: { post: Post }) => {
         truncate={true}
         checkCount={checkCount}
       />
-      <Interaction
-        likes={post.likes.length}
-        comments={post.comments.length}
-        polls={30}
-      />
+      <Interaction post={formatPostData(post)} />
     </section>
   )
 }
