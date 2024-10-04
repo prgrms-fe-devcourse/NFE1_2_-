@@ -78,11 +78,17 @@ const PostList = () => {
       )
       // 응답 데이터 가져오기
       const data = response.data
+
+      const filteredData = data.filter(
+        (post) => post.channel === '66f6b3b7e5593e2a995daf1f',
+      )
+
       // 포스트 데이터를 형식화
       const formattedData = await Promise.all(
-        data.map(async (post) => await formatPostData(post)),
+        filteredData.map(async (post) => await formatPostData(post)),
       )
       setSearchResults(formattedData) // 검색 결과 저장
+      console.log(formattedData)
       setSelectedMbti(mbti) // MBTI 저장
       setHasSearched(true) // 검색을 한 것으로 설정
       setIsSearchModalOpen(false) // 검색 후 모달 닫기
@@ -101,15 +107,13 @@ const PostList = () => {
           setAuthorId={setAuthorId}
           setSelectedSort={setSelectedSort}
         />
-        {isSearchModalOpen && (
-          <Search
-            isSearchModalOpen={false}
-            onClose={() => {
-              setIsSearchModalOpen(false)
-            }}
-            onSearch={handleSearch}
-          />
-        )}
+        <Search
+          isSearchModalOpen={isSearchModalOpen}
+          onClose={() => {
+            setIsSearchModalOpen(false)
+          }}
+          onSearch={handleSearch}
+        />
         <PreviewPostList
           channelId='66f6b3b7e5593e2a995daf1f'
           selectedCategory={selectedCategory}

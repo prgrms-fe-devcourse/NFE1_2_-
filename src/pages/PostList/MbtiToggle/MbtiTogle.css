@@ -4,7 +4,7 @@
   flex-direction: row;
   gap:0.5rem;
   align-items: center;
-  
+  padding-bottom: 20px; 
   
   .toggle-label {
     font-size: 0.9rem;
@@ -40,5 +40,10 @@
 
   .toggle-label.active{
     margin-left: 32px;
+  }
+
+  .reload-button{
+    font-size: 0.9rem;
+    padding-left: 240px;
   }
 }

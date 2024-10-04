@@ -28,6 +28,12 @@ const MbtiToggle: React.FC<MbtiToggleProps> = ({
             className={`slider ${isMbtiFilterVisible ? 'active' : ''}`}
           ></div>
         </div>
+        <button
+          className='reload-button'
+          onClick={() => window.location.reload()}
+        >
+          초기화
+        </button>
       </div>
       {isMbtiFilterVisible && (
         <div className='modal-filter'>

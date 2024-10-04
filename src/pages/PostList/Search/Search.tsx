@@ -16,8 +16,8 @@ const Search = ({
 
   const handleCloseModal = () => {
     onClose()
-    setSearch('')
-    setSelectedMbti(null) // 모달 닫을 때만 MBTI 초기화
+    // setSearch('')
+    // setSelectedMbti(null) // 모달 닫을 때만 MBTI 초기화
   }
 
   const handleSearch = () => {
@@ -36,7 +36,7 @@ const Search = ({
 
   return (
     <ModalComponent
-      isOpen={true}
+      isOpen={isSearchModalOpen}
       onClose={handleCloseModal} // 모달을 닫을 때만 onClose 호출
       buttonText={'닫기'}
       instruction='검색'
