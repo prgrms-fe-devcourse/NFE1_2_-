@@ -3,6 +3,7 @@ import { FormattedPost, Post, User, Notification } from '@/typings/types'
 import formatPostData from './formatPostData'
 
 const END_POINT = 'https://kdt.frontend.5th.programmers.co.kr:5001/'
+
 export const USER_ID = localStorage.getItem('userId')
 export const USER_TOKEN = localStorage.getItem('token')
 
@@ -383,13 +384,15 @@ export const formatFormData = (formData: UpdatePost) => {
 
 export const updatePost = async (formData: FormData) => {
   try {
-    const response = await axios.put(`${END_POINT}posts/update`, formData, {
-      headers: {
-        Authorization: `Bearer ${ADMIN_TOKEN}`,
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    return response.data
+    if (ADMIN_TOKEN) {
+      const response = await axios.put(`${END_POINT}posts/update`, formData, {
+        headers: {
+          Authorization: `Bearer ${ADMIN_TOKEN}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      return response.data
+    }
   } catch (error) {
     throw handleError(error)
   }
@@ -397,8 +400,10 @@ export const updatePost = async (formData: FormData) => {
 
 export const getMyPostList = async () => {
   try {
-    const response = await axios.get(`${END_POINT}posts/author/${USER_ID}`)
-    return response.data
+    if (USER_ID) {
+      const response = await axios.get(`${END_POINT}posts/author/${USER_ID}`)
+      return response.data
+    }
   } catch (error) {
     throw handleError(error)
   }

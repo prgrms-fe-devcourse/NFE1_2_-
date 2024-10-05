@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import './FilterSection.css'
 import { getMyPostList } from '@/utils/api'
 import formatPostData from '@/utils/formatPostData'
 import { FormattedPost, Post } from '@/typings/types'
 import axios from 'axios'
+import { useAuthStore } from '@/store/authStore'
 
 interface FilterSectionProps {
   isCollectionActive: boolean
@@ -20,6 +20,8 @@ const FilterSection = ({
   setAllPosts,
   setIsCollectionActive,
 }: FilterSectionProps) => {
+  const { isLoggedIn } = useAuthStore()
+
   //인기순/최신순
   const handleSortClick = (sortType: 'popular' | 'latest') => {
     setSelectedSort(sortType) //부모 컴포넌트 상태 변경
@@ -27,27 +29,30 @@ const FilterSection = ({
 
   //내 글 모아보기
   const handleCollectionClick = async () => {
-    if (!isCollectionActive) {
+    if (!isCollectionActive && isLoggedIn) {
       const myPostList = await getMyPostList()
       if (myPostList) {
         const formattedMyPostList: FormattedPost[] = myPostList.map(
           (mypost: Post) => formatPostData(mypost),
         )
+
         setAllPosts(formattedMyPostList)
         setIsCollectionActive(true)
       }
     } else {
-      try {
-        const response = await axios.get(
-          `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
-        )
-        const formattedPostList: FormattedPost[] = response.data.map(
-          (post: Post) => formatPostData(post),
-        )
-        setAllPosts(formattedPostList)
-        setIsCollectionActive(false)
-      } catch (error) {
-        console.error('전체 포스트를 가져오는 데 실패했습니다:', error)
+      if (isLoggedIn) {
+        try {
+          const response = await axios.get(
+            `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
+          )
+          const formattedPostList: FormattedPost[] = response.data.map(
+            (post: Post) => formatPostData(post),
+          )
+          setAllPosts(formattedPostList)
+          setIsCollectionActive(false)
+        } catch (error) {
+          console.error('전체 포스트를 가져오는 데 실패했습니다:', error)
+        }
       }
     }
   }

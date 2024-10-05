@@ -23,6 +23,7 @@ const PreviewPost = ({ post }: { post: Post }) => {
       }
 
       const formData = formatFormData(updateData)
+
       await updatePost(formData).then(() => {
         navigate(`/post/${_id}`)
       })
