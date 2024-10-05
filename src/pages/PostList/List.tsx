@@ -105,6 +105,7 @@ const PostList = () => {
     fetchAllPosts() // 전체 포스트 다시 로드
     setSelectedMbti(null)
     setIsCollectionActive(false)
+    setSelectedSort('latest')
   }
 
   const openSearchModal = () => {
@@ -125,6 +126,7 @@ const PostList = () => {
           setAllPosts={setAllPosts}
           setIsCollectionActive={setIsCollectionActive}
           setSelectedSort={setSelectedSort}
+          selectedSort={selectedSort}
         />
         {isSearchModalOpen && (
           <Search
