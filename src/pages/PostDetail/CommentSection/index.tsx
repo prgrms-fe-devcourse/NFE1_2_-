@@ -7,6 +7,7 @@ import CommentInput from '../CommentInput'
 import ReplyCard from '../ReplyCard'
 import formatCommentList from '@/utils/formatCommentList'
 import BeforePollImg from '@assets/imgs/투표 전 사진.png'
+import FakeComment from '@assets/imgs/낚시댓글.png'
 
 interface CommentSectionProps {
   post: FormattedPost
@@ -29,22 +30,34 @@ const CommentSection = ({ post, isVoted }: CommentSectionProps) => {
   }
 
   if (!isVoted) {
+    const randomNumber = Math.floor(Math.random() * 10) + 1
+    const randomArr = Array(randomNumber).fill(0)
     return (
       <>
         <section className='comment-section'>
-          <p className='comment-total'>댓글 17</p>
-          <img src={BeforePollImg} />
+          <p className='comment-total'>댓글 {randomNumber}</p>
+          {randomArr.map((_, index) => {
+            return (
+              <img
+                alt={`낚시 댓글 ${index}`}
+                src={FakeComment}
+                key={index}
+              ></img>
+            )
+          })}
         </section>
       </>
     )
   }
-  
+
   const commentList = formatCommentList(comments)
   return (
     <>
       <section className='comment-section'>
         <p className='comment-total'>댓글 {comments.length}</p>
-        {!comments.length && <p>댓글을 남겨주세요.</p>}
+        {!comments.length && (
+          <p style={{ marginLeft: '1rem' }}>댓글을 남겨주세요.</p>
+        )}
         {commentList.map((comment) => (
           <div key={comment._id}>
             {/* 부모 댓글 렌더링 */}
