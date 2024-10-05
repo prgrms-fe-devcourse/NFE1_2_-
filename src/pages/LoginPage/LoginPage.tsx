@@ -103,7 +103,7 @@ const LoginPage: React.FC = () => {
               {passwordError && <span className="error">{passwordError}</span>}
             </div>
             <Link to="/join" className="join-link">계정이 없으신가요? <span>회원가입</span></Link>
-            <button type="submit" className="submit-button">로그인</button>
+            <button type="submit" className="submit-button-login">로그인</button>
           </form>
         </section>
       </div>

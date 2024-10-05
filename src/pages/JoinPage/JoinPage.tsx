@@ -269,7 +269,7 @@ const JoinPage: React.FC = () => {
             </Link>
             <button
               type='submit'
-              className='submit-button'
+              className='submit-button-join'
             >
               회원가입
             </button>
