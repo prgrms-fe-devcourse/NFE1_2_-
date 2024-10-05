@@ -62,7 +62,7 @@ const PostCreate = () => {
       ['type']: postData.title.type,
       ['title']: postData.title.title,
       ['body']: postData.title.body,
-      ['checkCount'] : postData.title.checkCount,
+      ['checkCount']: postData.title.checkCount,
       ['poll']: postData.title.poll,
     }))
     if (postData.image) {
@@ -109,30 +109,32 @@ const PostCreate = () => {
     <Loading />
   ) : (
     <DetailPageLayout newPath={true}>
-      <div className='post-create'>
-        <CategorySelect
-          category={postData.type}
-          onChangeCategory={handlePostChange('type')}
-        />
-        <PostContent
-          title={postData.title}
-          content={postData.body}
-          onChangeTitle={handlePostChange('title')}
-          onChangeContent={handlePostChange('body')}
-        />
-        <AddImage
-          isUpload={isUpload}
-          onChangeUpload={setIsUpload}
-          onChangeImgDelete={setIsImgDelete}
-          postImage={postImage}
-          onChangeImage={setPostImage}
-        />
-        <QuestionSelect
-          isPoll={isPoll}
-          category={postData.type}
-          question={postData.poll.title}
-          onChangeQuestion={handlePollChange('title')}
-        />
+      <div className='post-create-wrapper'>
+        <div className='post-create'>
+          <CategorySelect
+            category={postData.type}
+            onChangeCategory={handlePostChange('type')}
+          />
+          <PostContent
+            title={postData.title}
+            content={postData.body}
+            onChangeTitle={handlePostChange('title')}
+            onChangeContent={handlePostChange('body')}
+          />
+          <AddImage
+            isUpload={isUpload}
+            onChangeUpload={setIsUpload}
+            onChangeImgDelete={setIsImgDelete}
+            postImage={postImage}
+            onChangeImage={setPostImage}
+          />
+          <QuestionSelect
+            isPoll={isPoll}
+            category={postData.type}
+            question={postData.poll.title}
+            onChangeQuestion={handlePollChange('title')}
+          />
+        </div>
         <PostCreateButton
           isEdit={isEdit}
           isImgDelete={isImgDelete}

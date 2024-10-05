@@ -72,7 +72,7 @@ const Carousel = ({
 
   useEffect(() => {
     if (carouselRef.current) {
-      const slideWidth = 140 + 10
+      const slideWidth = 160 + 10
       carouselRef.current.style.transition = 'transform 0.3s ease-in-out'
       carouselRef.current.style.transform = `translateX(-${currentIndex * slideWidth}px)`
     }
@@ -92,7 +92,10 @@ const Carousel = ({
         className='carousel-notification'
         onClick={() => navigate('/notification')}
       >
-        <Notification />
+        <Notification
+          width={28}
+          height={28}
+        />
       </button>
       <div className='carousel-container'>
         {currentIndex !== 0 && (
