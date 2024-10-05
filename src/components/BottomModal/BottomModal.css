@@ -44,7 +44,7 @@
 
 .bottom-modal-button {
   margin: 10px auto;
-  font-weight: normal;
-  font-size: 16px;
-  background-color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #3d3d3d;
 }
