@@ -1,12 +1,12 @@
 .read-button-container {
   display: flex;
   justify-content: flex-end;
+  color: #393939;
 
   .read-button {
     width: 6rem;
     height: 2rem;
-    margin-right: 1rem;
-    font-size: 14px;
+    font-size: 0.9rem;
     background-color: #eeeeee;
     border-radius: 5px;
 

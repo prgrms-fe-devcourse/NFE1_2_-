@@ -12,18 +12,18 @@
     .question-title {
       margin: 0.5rem 0;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 1.3rem;
       text-align: center;
     }
     .question-subtitle {
-      font-size: 16px;
+      font-size: 1rem;
       text-align: center;
     }
   }
 
   .question-list-basic-container {
     margin: 1rem;
-    font-size: 14px;
+    font-size: 1rem;
 
     .question-list-basic {
       display: flex;
@@ -37,6 +37,7 @@
       border-radius: 5px;
       border: 1px solid #eeeeee;
       background: none;
+      font-size: 0.9rem;
     }
 
     .active {
@@ -48,10 +49,11 @@
 
   .question-list-input-container {
     margin: 1rem;
-    font-size: 14px;
+    font-size: .9rem;
 
     .question-list-input-title {
       margin: 0.5rem 0;
+      font-weight: 500;
     }
 
     .question-list-input {
@@ -61,6 +63,7 @@
       background-color: #eeeeee;
       border: none;
       border-radius: 5px;
+      font-size: 0.9rem;
     }
 
     .question-list-input:focus {
@@ -75,7 +78,7 @@
 
     .question-list-error {
       display: none;
-      font-size: 12px;
+      font-size: 0.8rem;
       margin: 0.5rem 0;
     }
 

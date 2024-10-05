@@ -51,15 +51,15 @@ const QuestionSelect = (props: QuestionProps) => {
         </div>
       ) : (
         <>
-          <p className='category-not-select'>
-            카테고리를 선택하면 질문이 자동으로 추천됩니다.
-          </p>
           <button
             onClick={() => setIsModalOpen(true)}
             className='question-select-button'
           >
             질문 선택
           </button>
+          <p className='category-not-select'>
+            카테고리를 선택하면 질문이 자동으로 추천됩니다.
+          </p>
         </>
       )}
 

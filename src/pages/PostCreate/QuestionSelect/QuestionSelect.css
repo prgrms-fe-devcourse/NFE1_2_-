@@ -3,30 +3,32 @@
   flex-direction: column;
   align-items: center;
   height: 200px;
+  margin: 1rem;
 
   .category-not-select {
-    font-size: 14px;
+    font-size: 0.9rem;
     color: #7d7d7d;
+    margin: 1rem 0;
   }
 
   .question-select-button {
-    width: 80%;
+    width: 100%;
     height: 50px;
-    margin: 12px;
     background-color: #f2f2f2;
     border-radius: 5px;
     color: #7d7d7d;
+    font-size: 1rem;
   }
 
   .question-selected {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     height: 100%;
 
     .question-selected-title {
       margin: 12px 0;
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: 500;
       color: #393939;
     }
@@ -39,20 +41,20 @@
       padding: 1rem;
       border: 1px solid #fd3747;
       border-radius: 5px;
-      font-size: 14px;
+      font-size: 0.9rem;
       color: #393939;
     }
 
     .question-reselect {
       margin: 1.5rem 0;
-      font-size: 14px;
+      font-size: 0.9rem;
       color: #7d7d7d;
       background: none;
     }
 
     .question-reselect-error {
       margin: 1.5rem 0;
-      font-size: 14px;
+      font-size: 0.9rem;
       color: #7d7d7d;
       text-align: center;
     }
