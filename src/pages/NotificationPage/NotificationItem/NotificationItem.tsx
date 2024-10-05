@@ -4,7 +4,7 @@ import Popular from '@assets/icons/notification_congratulation.svg?react'
 import Comment from '@assets/icons/notification_comment.svg?react'
 import Like from '@assets/icons/notification_like.svg?react'
 import formatTime from '@/utils/formatTime'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getPostData } from '@/utils/api'
 import { parseIfString } from '@/utils/formatPostData'
 import { useNavigate } from 'react-router-dom'
@@ -32,7 +32,7 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
     getPostTitle(notification)
   }, [notification])
 
-  const setNotificationData = useCallback<() => NotificationData>(() => {
+  const setNotificationData = () : NotificationData => {
     if (notification.like !== undefined) {
       return {
         notificationIcon: <Like />,
@@ -48,7 +48,7 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
       notificationIcon: <Popular />,
       notificationText: `[${postTitle}] 알림이 도착했습니다.`,
     }
-  }, [notification, postTitle])
+  }
 
   const { notificationIcon, notificationText } = setNotificationData()
   const notificationTime = formatTime(notification.createdAt)
