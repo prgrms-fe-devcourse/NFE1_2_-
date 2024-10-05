@@ -141,7 +141,6 @@ const JoinPage: React.FC = () => {
         localStorage.setItem('userId', response.data.user._id)
         localStorage.setItem('token', response.data.token)
         login()
-        console.log('Login status:', useAuthStore.getState().isLoggedIn)
         navigate('/joincomplete', { state: { username } })
       } else {
         alert(

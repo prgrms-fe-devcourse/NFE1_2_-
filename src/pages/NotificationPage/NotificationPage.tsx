@@ -10,7 +10,7 @@ import Loading from '../Loading/Loading'
 import NotFound from '../NotFound/NotFound'
 
 const NotificationPage = () => {
-  const { data, error, isLoading } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => getNotification(),
     // refetchInterval : 1000 //새로고침
@@ -28,7 +28,7 @@ const NotificationPage = () => {
     return <Loading />
   }
 
-  if (error) {
+  if (isError) {
     return <NotFound />
   }
 
