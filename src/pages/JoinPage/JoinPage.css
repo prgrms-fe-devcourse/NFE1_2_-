@@ -13,7 +13,6 @@
 
 .form-section {
   width: 100%;
-  max-width: 300px;
   flex-grow: 1;
 }
 
@@ -22,6 +21,7 @@
   flex-direction: column;
   height: 100%;
   justify-content: flex-start;
+  width: 100%;
 }
 
 .input-wrapper {
@@ -94,7 +94,7 @@ input::placeholder {
   color: white;
   border: none;
   border-radius: 50px;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   margin-top: 20px;
   text-align: center;

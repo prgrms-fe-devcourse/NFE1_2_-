@@ -1,31 +1,13 @@
-import { useState } from 'react'
+
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import ModalComponent from '../Component/ModalComponent/ModalComponent'
-import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
-import { User } from '@/typings/types'
 import { logoutUser } from '@/utils/api'
 import { useAuthStore } from '@/store/authStore'
 
-interface SectionProps {
-  userData: User | undefined
-  isModalOpen: boolean
-  onChangeOpenModal: () => void
-  onChangeCloseModal: () => void
-}
-
-const OtherSection = (props: SectionProps) => {
-  const { userData, isModalOpen, onChangeOpenModal, onChangeCloseModal } = props
-  const [deletePassword, setDeletePassword] = useState('')
+const OtherSection = () => {
   const navigate = useNavigate()
   const logout = useAuthStore((state) => state.logout) 
-
-  const handleCloseModal = () => {
-    onChangeCloseModal()
-    setDeletePassword('')
-  }
-
   const handleLogout = async () => {
     try {
       await logoutUser()
@@ -46,32 +28,9 @@ const OtherSection = (props: SectionProps) => {
   }
 
   return (
-    <>
-      <InfoSection title='기타'>
-        <button
-          className='info-item'
-          onClick={onChangeOpenModal}
-        >
-          회원탈퇴
-        </button>
-        <button className='info-item' onClick={handleLogout}>로그아웃</button>
-      </InfoSection>
-      {isModalOpen && (
-        <ModalComponent
-          onClose={handleCloseModal}
-          buttonText={deletePassword ? '확인' : '닫기'}
-          instruction='탈퇴 하시겠습니까?'
-        >
-          <p className='modal-label'>비밀번호 확인</p>
-          <input
-            type='password'
-            className='modal-input'
-            value={deletePassword}
-            onChange={(e) => setDeletePassword(e.target.value)}
-          />
-        </ModalComponent>
-      )}
-    </>
+    <div className='logout-section'>
+        <button className='logout-btn' onClick={handleLogout}>로그아웃</button>
+    </div>
   )
 }
 

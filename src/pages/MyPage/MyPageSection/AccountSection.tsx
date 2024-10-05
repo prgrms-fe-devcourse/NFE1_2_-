@@ -4,6 +4,7 @@ import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
 import { User } from '@/typings/types'
 import { updateUserPassword } from '@/utils/api'
+import OtherSection from './OtherSection'
 
 interface SectionProps {
   userData: User | undefined
@@ -55,7 +56,9 @@ const AccountSection = (props: SectionProps) => {
         >
           비밀번호 변경
         </button>
+        
       </InfoSection>
+      <OtherSection></OtherSection>
       {isModalOpen && (
         <ModalComponent
           onClose={handleCloseModal}
