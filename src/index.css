@@ -10,14 +10,16 @@
   font-weight: normal;
 }
 
-/* section {
-  padding-inline: 1.5rem;
-} */
-
 button {
   border: none;
   cursor: pointer;
   background: none;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* NotoSansKR Medium */

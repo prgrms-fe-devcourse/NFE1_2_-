@@ -1,6 +1,6 @@
 .interaction-icon {
   display: flex;
-  width: 500px;
+  width: 100%;
   margin-top: -1.2rem;
   flex-direction: row;
   justify-content: space-around;
