@@ -43,7 +43,15 @@ const PreviewPostList = ({
 
     // 검색 결과가 있으면 검색 결과를 설정
     if (searchResults && searchResults.length > 0) {
-      setPosts(searchResults)
+      //검색결과가 있고 내 글 모아보기가 같이 눌리면 검색결과에서 사용자 글만 필터링
+      if (isCollectionActive) {
+        const filteredPosts = searchResults.filter(
+          (post) => post.authorId === authorId,
+        )
+        setPosts(filteredPosts)
+      } else {
+        setPosts(searchResults)
+      }
     } else if (!searchResults || searchResults.length === 0) {
       // 검색 결과가 없을 때 전체 포스트 숨기기 처리
       setPosts([]) // 검색 결과 없으면 포스트 목록 초기화

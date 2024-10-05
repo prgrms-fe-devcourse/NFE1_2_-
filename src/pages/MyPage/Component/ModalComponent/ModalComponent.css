@@ -48,6 +48,11 @@
     right: 50px;
     bottom: 50px;
   }
+  .search-button.active {
+    position: absolute;
+    right: 50px;
+    bottom: 80px;
+  }
 
   .modal-input.active {
     margin-left: 35px;

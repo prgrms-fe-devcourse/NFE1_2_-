@@ -1,4 +1,5 @@
 import ModalComponent from '@/pages/MyPage/Component/ModalComponent/ModalComponent'
+import './Search.css'
 import { useState } from 'react'
 import SearchButton from '@assets/icons/list_search.svg?react'
 import MbtiToggle from '@/pages/PostList/MbtiToggle/MbtiToggle'
@@ -14,11 +15,13 @@ const Search = ({
   const [search, setSearch] = useState('')
   const [isMbtiFilterVisible, setIsMbtiFilterVisible] = useState(false)
   const [selectedMbti, setSelectedMbti] = useState<string | null>(null)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleAdditionalReset = () => {
     onReset()
     setSearch('')
     setIsMbtiFilterVisible(false)
+    setErrorMessage('')
   }
 
   const handleCloseModal = () => {
@@ -28,8 +31,13 @@ const Search = ({
   }
 
   const handleSearch = () => {
-    onSearch(search, selectedMbti) // 검색어와 선택된 MBTI 전달
-    // handleCloseModal() // 검색 후 모달 닫기
+    if (search === '') {
+      setErrorMessage('검색어를 입력해주세요')
+    } else {
+      setErrorMessage('') // 에러 메시지 초기화
+      onSearch(search, selectedMbti) // 검색어와 선택된 MBTI 전달
+      // handleCloseModal(); // 검색 후 모달 닫기
+    }
   }
 
   const handleMbtiToggle = () => {
@@ -59,24 +67,36 @@ const Search = ({
           onReset={handleAdditionalReset} // MbtiToggle에 초기화 함수 전달
         />
       </div>
-      <input
-        type='text'
-        className={`modal-input ${isMbtiFilterVisible ? 'active' : ''}`}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleSearch()
-          }
-        }}
-        placeholder='검색어를 입력해주세요'
-      />
-      <button
-        className='search-button'
-        onClick={handleSearch}
-      >
-        <SearchButton />
-      </button>
+      <div>
+        <input
+          type='text'
+          className={`modal-input ${isMbtiFilterVisible ? 'active' : ''}`}
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value)
+            if (errorMessage) {
+              setErrorMessage('') // 입력 시작 시 에러 메시지 초기화
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSearch()
+            }
+          }}
+          placeholder='검색어를 입력해주세요'
+        />
+        <button
+          className={`search-button ${errorMessage ? 'active' : ''}`}
+          onClick={handleSearch}
+        >
+          <SearchButton />
+        </button>
+      </div>
+      {errorMessage && (
+        <p className={`error-message ${isMbtiFilterVisible ? 'active' : ''}`}>
+          검색어는 필수로 입력해주세요.
+        </p>
+      )}
     </ModalComponent>
   )
 }
