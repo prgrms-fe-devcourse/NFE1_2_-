@@ -25,19 +25,18 @@ const PostCard = ({
           <Bedge
             type='mbti'
             body={post.author.fullName.mbti}
-          />{' '}
+          />
           {post.author.fullName.gender}/{post.author.fullName.ageGroup}대
         </div>
         <div className='category_right'>
-          {formatTime(post.createdAt)}
-          <div className='right_icon'>
+          <span className='post-time'>{formatTime(post.createdAt)}</span>
+          <span className='right_icon'>
             <ViewsIcon
-              width={24}
-              height={24}
+              width={20}
+              height={20}
             />
-
             {post.title.checkCount}
-          </div>
+          </span>
         </div>
       </div>
       {post.image && (

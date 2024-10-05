@@ -83,7 +83,7 @@ const PreviewPostList = ({
   })
 
   return (
-    <section>
+    <section className='preview-post-container'>
       {sortedPosts.length === 0 ? (
         <p className='no-posts'>검색 결과가 없습니다.</p>
       ) : (

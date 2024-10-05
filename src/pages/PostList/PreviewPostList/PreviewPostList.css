@@ -1,6 +1,11 @@
-.no-posts{
+.no-posts {
   font-size: 1.3rem;
   margin-top: 10%;
   text-align: center;
+}
+
+.preview-post-container {
+  .post-section:last-child {
+    margin-bottom: 80px;
   }
-  
+}
