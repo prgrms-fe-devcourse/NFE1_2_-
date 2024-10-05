@@ -18,20 +18,15 @@ const Carousel = ({
   const handleICategoryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const currentCategory = e.currentTarget.textContent
     const currentIndex = parseInt(e.currentTarget.dataset.index as string)
-
     setCurrentIndex(currentIndex)
-
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
-
-  const handleImageClick = (category: string, index: number) => {
-    setClickedImageIndex(index)
-    if (category === '전체' || category === null) {
-      setClickedImageIndex(0)
+    if (currentCategory === '전체' || currentCategory === null) {
+      setCurrentIndex(0)
       setSelectedCategory(null)
     } else {
       setSelectedCategory(currentCategory as string)
     }
   }
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
 
   useEffect(() => {
     if (resetClickedImageIndex) {
@@ -43,47 +38,20 @@ const Carousel = ({
   const navigate = useNavigate()
 
   return (
-    <div className='carousel-list-header'>
-      {isLoggedIn && (
     <nav className='main-post-nav'>
       <div className='carousel-list-header'>
         <h1 className='nav-log-img'>
           <img src={LogoImg} />
         </h1>
-        <button
-          className='carousel-notification'
-          onClick={() => navigate('/notification')}
-        >
-          <Notification
-            width={28}
-            height={28}
-          />
-        </button>
-      )}
-
-      <div className='carousel-container'>
-        {currentIndex !== 0 && (
+        {isLoggedIn && (
           <button
-            onClick={prevSlide}
-            className='carousel-nav-button carousel-prev'
+            className='carousel-notification'
+            onClick={() => navigate('/notification')}
           >
-            <BackButton />
-          </button>
-        )}
-        <div className='carousel-viewport'>
-          <div
-            className='carousel-image-wrapper'
-            ref={carouselRef}
-          >
-            {showImages()}
-          </div>
-        </div>
-        {currentIndex !== 3 && (
-          <button
-            onClick={nextSlide}
-            className='carousel-nav-button carousel-next'
-          >
-            <NextButton />
+            <Notification
+              width={28}
+              height={28}
+            />
           </button>
         )}
       </div>
@@ -105,5 +73,4 @@ const Carousel = ({
     </nav>
   )
 }
-
 export default Carousel
