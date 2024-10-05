@@ -59,19 +59,23 @@ const PostList = () => {
 
   const formatPostDataSearch = async (post: any) => {
     const { author, ...restPost } = post
-    const userIdArray = Object.values(author).slice(0, 24)
-    const userId = userIdArray.join('')
+    const authorId = Object.values(author).slice(0, 24).join('')
+
     try {
-      const userData = await getUserData(userId)
+      const userData = await getUserData(authorId)
       return {
         ...restPost,
-        author: { ...author, fullName: userData?.fullName || '알수없음' },
+        author: {
+          ...author,
+          fullName: userData?.fullName || '알 수 없음',
+          authorId,
+        },
       }
     } catch (error) {
-      console.error(`Failed to fetch fullName for userId: ${userId}`, error)
+      console.error(`Failed to fetch fullName for userId: ${authorId}`, error)
       return {
         ...restPost,
-        author: { ...author, fullName: '알 수 없음' },
+        author: { ...author, fullName: '알 수 없음', authorId },
       }
     }
   }
@@ -160,6 +164,7 @@ const PostList = () => {
             selectedSort={selectedSort}
             searchResults={hasSearched ? searchResults : allPosts}
             selectedMbti={selectedMbti}
+            hasSearched={hasSearched}
           />
         )}
       </section>
