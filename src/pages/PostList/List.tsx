@@ -99,12 +99,16 @@ const PostList = () => {
     }
   }
 
+  const [resetClickedImageIndex, setResetClickedImageIndex] = useState(false)
+
   // 초기화 버튼을 눌렀을 때 전체 포스트를 다시 불러오는 함수
   const handleReset = () => {
     setHasSearched(false) // 검색 여부 초기화
     fetchAllPosts() // 전체 포스트 다시 로드
     setSelectedMbti(null)
     setIsCollectionActive(false)
+    setSelectedCategory(null)
+    setResetClickedImageIndex(true) // Carousel의 상태 초기화
   }
 
   const openSearchModal = () => {
@@ -118,7 +122,10 @@ const PostList = () => {
   return (
     <MainPageLayout>
       <section className='section-container'>
-        <Carousel setSelectedCategory={setSelectedCategory} />
+        <Carousel
+          setSelectedCategory={setSelectedCategory}
+          resetClickedImageIndex={resetClickedImageIndex}
+        />
         <FilterSection
           isCollectionActive={isCollectionActive}
           setAuthorId={setAuthorId}

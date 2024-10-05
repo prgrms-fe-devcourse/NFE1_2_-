@@ -16,19 +16,20 @@ const images = [
 
 const Carousel = ({
   setSelectedCategory,
+  resetClickedImageIndex,
 }: {
   setSelectedCategory: (category: string | null) => void
+  resetClickedImageIndex: boolean // prop 타입 설정
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [clickedImageIndex, setClickedImageIndex] = useState<number | null>(
-    null,
-  )
+  const [clickedImageIndex, setClickedImageIndex] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   const handleImageClick = (category: string, index: number) => {
     setClickedImageIndex(index)
-    if (category === '전체') {
+    if (category === '전체' || category === null) {
+      setClickedImageIndex(0)
       setSelectedCategory(null)
     } else {
       setSelectedCategory(category)
@@ -53,6 +54,13 @@ const Carousel = ({
       </button>
     ))
   }
+
+  useEffect(() => {
+    if (resetClickedImageIndex) {
+      setClickedImageIndex(0) // 전체 버튼 초기화
+      setSelectedCategory(null) // 전체 버튼 선택 시 category null 설정
+    }
+  }, [resetClickedImageIndex])
 
   const nextSlide = () => {
     if (isTransitioning || currentIndex === 3) {
