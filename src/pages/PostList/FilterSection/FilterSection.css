@@ -1,53 +1,54 @@
 .post-collection {
   display: flex;
-  margin-bottom: 20px;
+  margin-block: 1rem;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.sort-options{
+.sort-options {
   display: flex;
   position: relative;
-  padding:6px 8px;
+  padding: 6px 10px;
   flex-direction: row;
-  border-radius: 5px;
-  background-color: #F6F7F9;
-  gap:5px;
+  border-radius: 7px;
+  background-color: #f6f7f9;
+  gap: 5px;
+  font-size: 13px;
   cursor: pointer;
 }
 
-.collection-title{
-  padding:6px 8px;
-  border-radius: 5px;
-  background-color: #F6F7F9;  
+.collection-title {
+  padding: 6px 10px;
+  border-radius: 7px;
+  background-color: #eee;
   cursor: pointer;
 }
 
-.collected-title{
-  padding: 3px 12px;
+.collected-title {
+  padding: 5px 12px;
   border-radius: 5px;
-  font-size: 16px;
-  font-weight:500;
-
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.popular, .latest{
-  padding: 3px 12px;
+.popular,
+.latest {
+  padding: 6px 10px;
   border-radius: 5px;
-  font-size: 16px;
-  font-weight:500;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .popular.active {
-  background-color: #FFF;
+  background-color: #fff;
 }
 
 .latest.active {
   background-color: #fff;
 }
 
-.collection-title.active{
+.collection-title.active {
   .collected-title {
-    background-color: #fff; 
+    background-color: #fff;
   }
 }
