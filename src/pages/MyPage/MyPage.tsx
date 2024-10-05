@@ -4,19 +4,19 @@ import AccountSection from './MyPageSection/AccountSection'
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getUserData, updateUserData } from '@/utils/api'
+import Loading from '../Loading/Loading'
+import NotFound from '../NotFound/NotFound'
 
 const MyPage = () => {
   const [modalOpen, setModalOpen] = useState({
     profileModal: false,
     passwordModal: false,
-    withdrawModal: false,
   })
-  const { profileModal, passwordModal, withdrawModal } = modalOpen
+  const { profileModal, passwordModal } = modalOpen
   const handleOpenModal = (modal: string) => {
     setModalOpen({
       profileModal: false,
       passwordModal: false,
-      withdrawModal: false,
       [modal]: true,
     })
   }
@@ -28,7 +28,7 @@ const MyPage = () => {
   }
   const userId = localStorage.getItem('userId')
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['user', userId],
     queryFn: () => getUserData(userId as string),
     enabled: !!userId,
@@ -45,10 +45,10 @@ const MyPage = () => {
   })
 
   if (isLoading) {
-    return <div>Loading</div>
+    return <Loading />
   }
   if (isError) {
-    return <div>{error.message}</div>
+    return <NotFound />
   }
 
   return (

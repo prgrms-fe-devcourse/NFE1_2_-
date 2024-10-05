@@ -1,94 +1,52 @@
+.main-post-nav {
+  background-color: #393939;
+  padding-block: 1rem;
+}
+
 .carousel-list-header {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 1rem;
+
+  h1 {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .nav-log-img img {
+    width: 100%;
+  }
 }
 
 .carousel-notification {
   display: flex;
-  justify-content: flex-end;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
 }
 
-.carousel-container {
-  position: relative;
-  width: 500px; /* (140px * 3) + (10px * 2) */
-  margin: 0 auto;
-}
-
-.carousel-viewport {
-  width: 100%;
-  overflow: hidden;
-}
-
-.carousel-image-wrapper {
+.filter-list {
   display: flex;
-  transition: transform 0.3s ease-in-out;
-}
+  width: 100%;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  padding-top: 0.5rem;
 
-.carousel-image-container {
-  flex: 0 0 140px;
-  height: 80px;
-  margin-right: 10px;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  position: relative;
-}
+  a {
+    cursor: pointer;
+    font-size: 1rem;
+    color: #eee;
+    z-index: 999;
+  }
 
-.carousel-img {
-  width: 160px;
-  height: 63px;
-  border-radius: 10px;
-  object-fit: cover;
-  filter: brightness(80%);
-  transition: filter 0.3s ease;
+  li {
+    padding-block: 2px;
+  }
 }
-
-.carousel-img:hover {
-  filter: brightness(25%);
-}
-
-.carousel-img.clicked {
-  filter: brightness(25%);
-}
-
-.carousel-text-overlay {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 500;
-  white-space: nowrap;
-  text-shadow: 2px 2px 4px rgba(78, 78, 78, 0.8);
-  text-align: center;
-}
-
-.carousel-nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 10;
-  padding: 10px;
-}
-
-.carousel-prev {
-  left: -15px;
-}
-
-.carousel-next {
-  right: -15px;
-}
-
-.carousel-nav-button svg {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
+.filter-activate {
+  a {
+    font-weight: bold;
+  }
+  border-bottom: 3px solid #eee;
 }

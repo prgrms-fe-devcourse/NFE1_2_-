@@ -61,7 +61,6 @@ const QuestionModal = (props: QuestionProps) => {
     if(!isValidQuestion){
       onChangeQuestion(question)
     }
-    console.log(isValidQuestion)
   },[])
 
   return (

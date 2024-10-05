@@ -47,7 +47,6 @@ const Search = ({
 
   const handleMbtiSelect = (result: string) => {
     setSelectedMbti(result)
-    console.log('선택된 MBTI:', result)
   }
 
   return (

@@ -70,7 +70,6 @@ const PreviewPostList = ({
     : filteredPosts // MBTI 필터링 적용
   const sortedPosts = mbtiFilteredPosts.sort((postA, postB) => {
     if (selectedSort === 'popular') {
-      console.log(postA)
       return postB.likes.length - postA.likes.length // 인기순으로 정렬
     } else if (selectedSort === 'latest') {
       return (

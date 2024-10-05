@@ -1,19 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Notification from '@/assets/icons/list_notification.svg?react'
-import NextButton from '@/assets/icons/next_button.svg?react'
-import BackButton from '@/assets/icons/back_button.svg?react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
+import LogoImg from '@assets/imgs/VS.png'
 import './Carousel.css'
-
-const images = [
-  { src: 'src/assets/imgs/전체.png', alt: '전체', category: '전체' },
-  { src: 'src/assets/imgs/이별.jpg', alt: '이별', category: '이별' },
-  { src: 'src/assets/imgs/짝사랑.jpg', alt: '짝사랑', category: '짝사랑' },
-  { src: 'src/assets/imgs/썸.png', alt: '썸', category: '썸' },
-  { src: 'src/assets/imgs/데이트.jpg', alt: '데이트', category: '데이트' },
-  { src: 'src/assets/imgs/기타.jpg', alt: '기타', category: '기타' },
-]
 
 const Carousel = ({
   setSelectedCategory,
@@ -22,10 +12,14 @@ const Carousel = ({
   setSelectedCategory: (category: string | null) => void
   resetClickedImageIndex: boolean // prop 타입 설정
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [clickedImageIndex, setClickedImageIndex] = useState(0)
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const categoryList = ['전체', '이별', '짝사랑', '썸', '데이트', '기타']
+
+  const handleICategoryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const currentCategory = e.currentTarget.textContent
+    const currentIndex = parseInt(e.currentTarget.dataset.index as string)
+
+    setCurrentIndex(currentIndex)
 
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
 
@@ -35,71 +29,27 @@ const Carousel = ({
       setClickedImageIndex(0)
       setSelectedCategory(null)
     } else {
-      setSelectedCategory(category)
+      setSelectedCategory(currentCategory as string)
     }
-  }
-
-  const showImages = () => {
-    return images.map((image, index) => (
-      <button
-        className='carousel-image-container'
-        key={index}
-        onClick={() => handleImageClick(image.category, index)}
-      >
-        <img
-          className={`carousel-img ${clickedImageIndex === index ? 'clicked' : ''}`}
-          src={image.src}
-          alt={image.alt}
-          width={140}
-          height={80}
-        />
-        <div className='carousel-text-overlay'>{image.alt}</div>
-      </button>
-    ))
   }
 
   useEffect(() => {
     if (resetClickedImageIndex) {
-      setClickedImageIndex(0) // 전체 버튼 초기화
+      setCurrentIndex(0) // 전체 버튼 초기화
       setSelectedCategory(null) // 전체 버튼 선택 시 category null 설정
     }
-  }, [resetClickedImageIndex])
-
-  const nextSlide = () => {
-    if (isTransitioning || currentIndex === 3) {
-      return
-    }
-    setIsTransitioning(true)
-    setCurrentIndex((prevIndex) => prevIndex + 3)
-  }
-
-  const prevSlide = () => {
-    if (isTransitioning || currentIndex === 0) {
-      return
-    }
-    setIsTransitioning(true)
-    setCurrentIndex((prevIndex) => prevIndex - 3)
-  }
-
-  useEffect(() => {
-    if (carouselRef.current) {
-      const slideWidth = 160 + 10
-      carouselRef.current.style.transition = 'transform 0.3s ease-in-out'
-      carouselRef.current.style.transform = `translateX(-${currentIndex * slideWidth}px)`
-    }
-
-    const timer = setTimeout(() => {
-      setIsTransitioning(false)
-    }, 300)
-
-    return () => clearTimeout(timer)
-  }, [currentIndex])
+  }, [resetClickedImageIndex, setSelectedCategory])
 
   const navigate = useNavigate()
 
   return (
     <div className='carousel-list-header'>
       {isLoggedIn && (
+    <nav className='main-post-nav'>
+      <div className='carousel-list-header'>
+        <h1 className='nav-log-img'>
+          <img src={LogoImg} />
+        </h1>
         <button
           className='carousel-notification'
           onClick={() => navigate('/notification')}
@@ -137,7 +87,22 @@ const Carousel = ({
           </button>
         )}
       </div>
-    </div>
+      <ul className='filter-list'>
+        {categoryList.map((category, index) => (
+          <li
+            key={category}
+            className={currentIndex === index ? 'filter-activate' : ''}
+          >
+            <a
+              onClick={handleICategoryClick}
+              data-index={index}
+            >
+              {category}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   )
 }
 
