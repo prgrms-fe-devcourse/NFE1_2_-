@@ -13,7 +13,8 @@
 
 .form-section {
   width: 100%;
-  max-width: 300px;
+  /* max-width: 300px; */
+  padding-inline: 3.5rem 3.5rem;
   flex-grow: 1;
 }
  
@@ -46,6 +47,10 @@
   height: 30px;
 }
 
+.input:focus{
+  border-bottom: 2px solid #fd3747;
+}
+
 .error {
   color: #ff0000;
   font-size: 12px;
@@ -75,7 +80,7 @@
   color: white;
   border: none;
   border-radius: 50px;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   margin-top: 20px;
   margin-bottom: 50px;

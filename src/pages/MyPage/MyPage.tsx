@@ -1,7 +1,6 @@
 import MainPageLayout from '@/layouts/MainPageLayout/MainPageLayout'
 import ProfileSection from './MyPageSection/ProfileSection'
 import AccountSection from './MyPageSection/AccountSection'
-import OtherSection from './MyPageSection/OtherSection'
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getUserData, updateUserData } from '@/utils/api'
@@ -70,12 +69,6 @@ const MyPage = () => {
           isModalOpen={passwordModal}
           onChangeOpenModal={() => handleOpenModal('passwordModal')}
           onChangeCloseModal={() => handleCloseModal('passwordModal')}
-        />
-        <OtherSection
-          userData={data}
-          isModalOpen={withdrawModal}
-          onChangeOpenModal={() => handleOpenModal('withdrawModal')}
-          onChangeCloseModal={() => handleCloseModal('withdrawModal')}
         />
       </section>
     </MainPageLayout>

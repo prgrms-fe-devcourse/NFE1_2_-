@@ -10,3 +10,13 @@
     font-weight: bold;
   }
 }
+
+.logout-btn{
+  padding-top: 20px;
+  width: 100%;
+}
+.logout-btn{
+  font-size: 1rem;
+  margin: 0 auto;
+  color: #393939;
+}
