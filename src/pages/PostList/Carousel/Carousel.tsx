@@ -3,6 +3,7 @@ import Notification from '@/assets/icons/list_notification.svg?react'
 import NextButton from '@/assets/icons/next_button.svg?react'
 import BackButton from '@/assets/icons/back_button.svg?react'
 import { useNavigate } from 'react-router-dom'
+import { useAuthStore } from '@/store/authStore'
 import './Carousel.css'
 
 const images = [
@@ -25,6 +26,8 @@ const Carousel = ({
   const [clickedImageIndex, setClickedImageIndex] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
+
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
 
   const handleImageClick = (category: string, index: number) => {
     setClickedImageIndex(index)
@@ -96,15 +99,18 @@ const Carousel = ({
 
   return (
     <div className='carousel-list-header'>
-      <button
-        className='carousel-notification'
-        onClick={() => navigate('/notification')}
-      >
-        <Notification
-          width={28}
-          height={28}
-        />
-      </button>
+      {isLoggedIn && (
+        <button
+          className='carousel-notification'
+          onClick={() => navigate('/notification')}
+        >
+          <Notification
+            width={28}
+            height={28}
+          />
+        </button>
+      )}
+
       <div className='carousel-container'>
         {currentIndex !== 0 && (
           <button
