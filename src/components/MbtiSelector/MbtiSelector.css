@@ -23,7 +23,7 @@
   flex: 0 0 calc(50% - 10px);
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
 }
 
 .mbti-label {
@@ -35,7 +35,7 @@
 .mbti-slider {
   position: relative;
   height: 40px;
-  width: 200px; 
+  width: 200px;
   background-color: #fff;
   border-radius: 16px;
   cursor: pointer;
@@ -44,12 +44,16 @@
   align-items: center;
   justify-content: space-between;
   padding: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease-in-out;
 }
 
 .mbti-slider:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.15),
+    0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .mbti-slider-option {
@@ -71,7 +75,7 @@
   width: 50%;
   height: calc(100% - 4px);
   top: 2px;
-  background-color: #FD3747;
+  background-color: #fd3747;
   border-radius: 14px;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -105,5 +109,3 @@
   color: #ef4444;
   font-weight: bold;
 }
-
-
