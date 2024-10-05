@@ -3,16 +3,15 @@
   display: flex;
   flex-direction: column;
   color: #393939;
+  padding-inline: 1rem;
 
   .period-name {
     font-size: 1.2rem;
     font-weight: bold;
     margin: 1rem 0;
   }
+}
 
-  .container-line {
-    width: 80%;
-    margin: 0 auto;
-    border: 1px solid #eeeeee;
-  }
+.notification-container>div:last-child{
+  border-bottom: 1px solid #eeeeee;
 }

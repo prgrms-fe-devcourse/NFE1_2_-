@@ -4,6 +4,7 @@ import formatPostData from '@/utils/formatPostData'
 import { FormattedPost, Post } from '@/typings/types'
 import axios from 'axios'
 import { useAuthStore } from '@/store/authStore'
+import { useNavigate } from 'react-router-dom'
 
 interface FilterSectionProps {
   isCollectionActive: boolean
@@ -20,7 +21,9 @@ const FilterSection = ({
   setAllPosts,
   setIsCollectionActive,
 }: FilterSectionProps) => {
+  
   const { isLoggedIn } = useAuthStore()
+  const navigate = useNavigate()
 
   //인기순/최신순
   const handleSortClick = (sortType: 'popular' | 'latest') => {
@@ -29,7 +32,11 @@ const FilterSection = ({
 
   //내 글 모아보기
   const handleCollectionClick = async () => {
-    if (!isCollectionActive && isLoggedIn) {
+    if (!isLoggedIn) {
+      navigate('/login')
+      return
+    }
+    if (!isCollectionActive) {
       const myPostList = await getMyPostList()
       if (myPostList) {
         const formattedMyPostList: FormattedPost[] = myPostList.map(
@@ -63,7 +70,10 @@ const FilterSection = ({
         className={`collection-title ${isCollectionActive ? 'active' : ''}`}
         onClick={handleCollectionClick}
       >
-        <div className='collected-title'>내 글 모아보기</div>
+        <div className='collected-title'>
+          {' '}
+          {isLoggedIn ? '내 글 모아보기' : '로그인'}
+        </div>
       </button>
       <div className='sort-options'>
         <div

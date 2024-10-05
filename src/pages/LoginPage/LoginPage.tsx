@@ -61,7 +61,6 @@ const LoginPage: React.FC = () => {
       localStorage.setItem('userId', response.data.user._id);
       localStorage.setItem('token', response.data.token);
       login();// Zustand 스토어의 로그인 상태를 true로 설정
-      console.log('로그인 상태:', useAuthStore.getState().isLoggedIn);
       // 포스트페이지로 이동
       navigate('/');
     } catch (error) {
