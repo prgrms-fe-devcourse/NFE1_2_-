@@ -1,4 +1,4 @@
-import create from 'zustand'
+import { create } from 'zustand'
 
 // Zustand 스토어 생성
 export const useModalStore = create((set) => ({

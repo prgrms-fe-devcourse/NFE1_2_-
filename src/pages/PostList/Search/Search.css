@@ -1,19 +1,18 @@
-.error-message{
-  margin: .3rem 0;
+.error-message {
+  margin: 0.3rem 0;
   font-size: 0.9rem;
   font-weight: bold;
   color: #fd3747;
 }
 
 .error-message.active {
-  margin: .3rem 0; /* active일 때만 margin 설정 */
+  margin: 0.3rem 0; /* active일 때만 margin 설정 */
   margin-left: 35px; /* 또는 다른 스타일 추가 */
 }
 
-.searchInput{
+.searchInput {
   display: flex;
   flex-direction: row;
-
 }
 
 .search-button {
