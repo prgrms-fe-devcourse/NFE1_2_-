@@ -113,6 +113,7 @@ const PostList = () => {
     setTimeout(() => {
       setResetClickedImageIndex(false)
     }, 0)
+    setSelectedSort('latest')
   }
 
   const openSearchModal = () => {
@@ -136,6 +137,7 @@ const PostList = () => {
           setAllPosts={setAllPosts}
           setIsCollectionActive={setIsCollectionActive}
           setSelectedSort={setSelectedSort}
+          selectedSort={selectedSort}
         />
         {isSearchModalOpen && (
           <Search
