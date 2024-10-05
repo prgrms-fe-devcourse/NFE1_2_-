@@ -109,6 +109,10 @@ const PostList = () => {
     setIsCollectionActive(false)
     setSelectedCategory(null)
     setResetClickedImageIndex(true) // Carousel의 상태 초기화
+    // setTimeout을 사용하여 한 번의 사이클 후 false로 변경
+    setTimeout(() => {
+      setResetClickedImageIndex(false)
+    }, 0)
   }
 
   const openSearchModal = () => {
