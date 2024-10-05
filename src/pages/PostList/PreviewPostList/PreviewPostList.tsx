@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import PreviewPost from '../PreviewPost/PreviewPost'
 import './PreviewPostList.css'
+import { USER_ID } from '@/utils/api'
 
 interface PreviewPostListProps {
   channelId: string
@@ -19,28 +20,12 @@ const PreviewPostList = ({
   selectedSort,
   searchResults, // 검색 결과 받기
   selectedMbti, // 선택된 MBTI 추가
+  hasSearched,
 }: PreviewPostListProps) => {
   const [posts, setPosts] = useState<any[]>([])
 
   //내 글 모아보기가 활성화되면 특정 글만, 활성화 안 되면 모든 글
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const url = isCollectionActive
-          ? `https://kdt.frontend.5th.programmers.co.kr:5001/posts/author/${authorId}`
-          : `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/${channelId}`
-
-        const response = await fetch(url)
-        if (!response.ok) {
-          throw new Error('포스트를 가져오는 데 실패했습니다.')
-        }
-        const data = await response.json()
-        setPosts(data)
-      } catch (error) {
-        console.error(error instanceof Error ? error.message : '오류 발생')
-      }
-    }
-
     // 검색 결과가 있으면 검색 결과를 설정
     if (searchResults && searchResults.length > 0) {
       setPosts(searchResults)
@@ -55,13 +40,21 @@ const PreviewPostList = ({
     return <p className='no-posts'>검색 결과가 없습니다.</p>
   }
   //필터링
+
+  const filteredCollection =
+    hasSearched && isCollectionActive
+      ? posts.filter((post) => {
+          return post.author.authorId === USER_ID
+        })
+      : posts
+
   const filteredPosts = selectedCategory
-    ? posts.filter((post) => {
+    ? filteredCollection.filter((post) => {
         const titleObject =
           typeof post.title === 'string' ? JSON.parse(post.title) : post.title
         return titleObject.type === selectedCategory
       })
-    : posts
+    : filteredCollection
   const mbtiFilteredPosts = selectedMbti
     ? filteredPosts.filter((post) => {
         const postMbti = JSON.parse(post.author.fullName).mbti // MBTI 정보가 post.title에 있다고 가정
@@ -70,6 +63,7 @@ const PreviewPostList = ({
     : filteredPosts // MBTI 필터링 적용
   const sortedPosts = mbtiFilteredPosts.sort((postA, postB) => {
     if (selectedSort === 'popular') {
+      console.log(postA)
       return postB.likes.length - postA.likes.length // 인기순으로 정렬
     } else if (selectedSort === 'latest') {
       return (
@@ -79,6 +73,7 @@ const PreviewPostList = ({
     }
     return 0
   })
+  console.log(sortedPosts)
 
   return (
     <section>
