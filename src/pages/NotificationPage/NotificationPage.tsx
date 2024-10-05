@@ -6,9 +6,11 @@ import { Notification } from '@/typings/types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import timeSeparation from '@/utils/timeSeparation'
 import { getNotification, putNotification } from '@/utils/api'
+import Loading from '../Loading/Loading'
+import NotFound from '../NotFound/NotFound'
 
 const NotificationPage = () => {
-  const { data, error, isLoading } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => getNotification(),
     // refetchInterval : 1000 //새로고침
@@ -23,13 +25,13 @@ const NotificationPage = () => {
   })
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>
+  if (isError) {
+    return <NotFound />
   }
-  console.log(data)
+
   const unreadNotifications: Notification[] = []
   const todayNotifications: Notification[] = []
   const yesterdayNotifications: Notification[] = []

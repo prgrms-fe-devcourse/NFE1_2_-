@@ -356,7 +356,6 @@ export const putNotification = async () => {
         },
       },
     )
-    console.log('읽기 완료')
     return response.data
   } catch (error) {
     console.error('알림 보기 오류:', error)
