@@ -18,7 +18,7 @@ const NotificationContainer = (props: NotificationProps) => {
           notification={notification}
         />
       ))}
-      <div className='container-line' />
+      {/* <div className='container-line' /> */}
     </div>
   )
 }
