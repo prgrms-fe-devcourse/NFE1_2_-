@@ -43,15 +43,7 @@ const PreviewPostList = ({
 
     // 검색 결과가 있으면 검색 결과를 설정
     if (searchResults && searchResults.length > 0) {
-      //검색결과가 있고 내 글 모아보기가 같이 눌리면 검색결과에서 사용자 글만 필터링
-      if (isCollectionActive) {
-        const filteredPosts = searchResults.filter(
-          (post) => post.authorId === authorId,
-        )
-        setPosts(filteredPosts)
-      } else {
-        setPosts(searchResults)
-      }
+      setPosts(searchResults)
     } else if (!searchResults || searchResults.length === 0) {
       // 검색 결과가 없을 때 전체 포스트 숨기기 처리
       setPosts([]) // 검색 결과 없으면 포스트 목록 초기화
@@ -62,7 +54,6 @@ const PreviewPostList = ({
   if (posts.length === 0) {
     return <p className='no-posts'>검색 결과가 없습니다.</p>
   }
-
   //필터링
   const filteredPosts = selectedCategory
     ? posts.filter((post) => {
@@ -91,7 +82,7 @@ const PreviewPostList = ({
   })
 
   return (
-    <section className='preview-post-container'>
+    <section>
       {sortedPosts.length === 0 ? (
         <p className='no-posts'>검색 결과가 없습니다.</p>
       ) : (
