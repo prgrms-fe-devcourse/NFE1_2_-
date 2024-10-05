@@ -1,5 +1,5 @@
 # Vote Solve
-<img src="https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd" alt="VoteSolveLogo" width="400">
+<img src="https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd" alt="VoteSolveLogo" width="100%">
 
 - 프로그래머스 프론트엔드 데브코스 1기 2차 프로젝트 어? 금지팀 (1팀)
 - 개발 기간 : 2024.09.12 ~ 24.10.07
@@ -17,44 +17,11 @@
 <br>
 
 ## 팀원 구성
-<table>
-  <tr>
-    <th>팀장</th>
-    <th>팀원</th>
-    <th>팀원</th>
-    <th>팀원</th>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://avatars.githubusercontent.com/june960427?v=4" width="100" />
-    </td>
-    <td align="center">
-      <img src="https://avatars.githubusercontent.com/hyejun-fe?v=4" width="100" />
-    </td>
-    <td align="center">
-      <img src="https://avatars.githubusercontent.com/eunjju2?v=4" width="100" />
-    </td>
-    <td align="center">
-      <img src="https://avatars.githubusercontent.com/ahcgnoej?v=4" width="100" />
-    </td>
-  </tr>
-    <tr>
-    <td align="center">
-     <a href="https://github.com/june960427">이준희</a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/hyejun-fe">김혜준</a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/eunjju2">이은수</a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/ahcgnoej">진채정</a>
-    </td>
-  </tr>
-</table>
 
-
+| 팀장 | 팀원 | 팀원 | 팀원 |
+|:------:|:------:|:------:|:------:|
+| ![이준희](https://avatars.githubusercontent.com/june960427?v=4) | ![김혜준](https://avatars.githubusercontent.com/hyejun-fe?v=4) | ![이은수](https://avatars.githubusercontent.com/eunjju2?v=4) | ![진채정](https://avatars.githubusercontent.com/ahcgnoej?v=4) |
+| [이준희](https://github.com/june960427) | [김혜준](https://github.com/hyejun-fe) | [이은수](https://github.com/eunjju2) | [진채정](https://github.com/ahcgnoej) |
 
 <br>
 
@@ -138,68 +105,29 @@
 
 ## 주요 기능
 
-<table>
-  <tr>
-    <th>프로필 설정</th>
-    <th>기능</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd" alt="VoteSolveLogo" width="200"></td>
-    <td>회원가입 시 성별, 연령대 설정을 위한 생년월일, 그리고 MBTI를 입력받습니다. 추후 프로필 정보를 수정할 수 있습니다.</td>
-  </tr>
-</table>
+| 프로필 설정 | 기능 |
+|-------------|------------|
+| ![VoteSolveLogo](https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd) | 회원가입 시 성별, 연령대 설정을 위한 생년월일, 그리고 MBTI를 입력받습니다. 추후 프로필 정보를 수정할 수 있습니다. |
 
-<table>
-  <tr>
-    <th>포스트 목록</th>
-    <th>기능</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd" alt="VoteSolveLogo" width="200"></td>
-    <td>모든 사용자는 전체보기 / 카테고리 별 / 내글 모아보기 / 인기순 / 최신순으로 정렬하여 포스트를 확인할 수 있습니다.</td>
-  </tr>
-</table>
+| 포스트 목록 | 기능 |
+|-------------|------------|
+| ![VoteSolveLogo](https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd) | 모든 사용자는 전체보기 / 카테고리 별 / 내글 모아보기 / 인기순 / 최신순으로 정렬하여 포스트를 확인할 수 있습니다. |
 
-<table>
-  <tr>
-    <th>검색 기능</th>
-    <th>기능</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd" alt="VoteSolveLogo" width="200"></td>
-    <td>포스트 제목 또는 MBTI를 검색하여 포스트 목록을 필터링할 수 있습니다.</td>
-  </tr>
-</table>
+| 검색 기능 | 기능 |
+|-------------|------------|
+| ![VoteSolveLogo](https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd) | 포스트 제목 또는 MBTI를 검색하여 포스트 목록을 필터링할 수 있습니다. |
 
-<table>
-  <tr>
-    <th>카테고리별 질문 추천</th>
-    <th>기능</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd" alt="VoteSolveLogo" width="200"></td>
-    <td>서비스에 가입한 사용자는 포스트를 작성할 수 있습니다. 포스트 작성 시 카테고리를 선택하면, 해당 카테고리에 맞는 투표 질문이 자동으로 추천됩니다. 또한 질문을 직접 작성할 수 있습니다.</td>
-  </tr>
-</table>
+| 카테고리별 질문 추천 | 기능 |
+|-------------|------|
+| ![VoteSolveLogo](https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd) | 서비스에 가입한 사용자는 포스트를 작성할 수 있습니다. 포스트 작성 시 카테고리를 선택하면, 해당 카테고리에 맞는 투표 질문이 자동으로 추천됩니다. 또한 질문을 직접 작성할 수 있습니다. |
 
-<table>
-  <tr>
-    <th>투표 기능 및 댓글 블러 처리</th>
-    <th>기능</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd" alt="VoteSolveLogo" width="200"></td>
-    <td>사용자는 다른 사용자의 포스트에 찬성 또는 반대 투표를 할 수 있으며, 투표를 완료해야 댓글을 볼 수 있도록 댓글이 블러 처리됩니다.</td>
-  </tr>
-</table>
+| 투표 기능 및 댓글 블러 처리 | 기능 |
+|-------------|------|
+| ![VoteSolveLogo](https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd) | 사용자는 다른 사용자의 포스트에 찬성 또는 반대 투표를 할 수 있으며, 투표를 완료해야 댓글을 볼 수 있도록 댓글이 블러 처리됩니다. |
 
-<table>
-  <tr>
-    <th>알림</th>
-    <th>기능</th>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd" alt="VoteSolveLogo" width="200"></td>
-    <td>내 게시물에 다른 사용자가 좋아요를 누르거나 댓글을 달면 알림을 받습니다.</td>
-  </tr>
-</table>
+| 알림 | 기능 |
+|-------------|------|
+| ![VoteSolveLogo](https://github.com/user-attachments/assets/21bdf19a-08a8-4b5e-84d8-f9354632fbbd) | 내 게시물에 다른 사용자가 좋아요를 누르거나 댓글을 달면 알림을 받습니다. |
+
+
+
