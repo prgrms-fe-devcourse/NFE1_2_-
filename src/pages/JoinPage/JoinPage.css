@@ -87,7 +87,7 @@ input::placeholder {
   color: #393939;
 }
 
-.submit-button {
+.submit-button-join {
   width: 100%;
   padding: 10px 0;
   background-color: #333;
@@ -97,6 +97,7 @@ input::placeholder {
   font-size: 1rem;
   cursor: pointer;
   margin-top: 20px;
+  margin-bottom: 50px;
   text-align: center;
 }
 
