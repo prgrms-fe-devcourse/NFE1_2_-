@@ -1,13 +1,13 @@
 .notification-container {
-  margin: 1rem;
-  margin-top: 10px;
+  /* margin: 1rem; */
   display: flex;
   flex-direction: column;
+  color: #393939;
 
   .period-name {
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: bold;
-    margin: 1rem;
+    margin: 1rem 0;
   }
 
   .container-line {

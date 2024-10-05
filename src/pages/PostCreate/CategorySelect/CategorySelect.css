@@ -1,12 +1,11 @@
-.category {
+.post-category {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   width: 100%;
-  padding: 12px;
-  /* margin-top: 30px; */
+  padding: 0.5rem 0;
 
   .category-container {
     display: flex;
@@ -21,21 +20,22 @@
 
       .category-title {
         margin-right: 1rem;
-        font-size: 0.9rem;
+        font-size: 1rem;
         font-weight: normal;
+        color: #393939;
       }
     }
   }
 }
 
 .category-list-container {
-  width: 80%;
+  width: 100%;
 
   .category-list {
     position: absolute;
     width: 5rem;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: normal;
     border: 1px solid #ccc;
     border-radius: 3px;

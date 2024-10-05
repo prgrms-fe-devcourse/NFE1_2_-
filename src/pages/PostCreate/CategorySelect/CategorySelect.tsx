@@ -19,7 +19,7 @@ const CategorySelect = (props : CategorySelectProps) => {
     setShowlist(!showlist)
   }
   return (
-    <div className='category'>
+    <div className='post-category'>
       <div className='category-container'>
         <button
           className='category-button'
