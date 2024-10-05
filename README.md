@@ -103,6 +103,19 @@
 
 <br>
 
+## 폴더 설명
+
+- assets/ : 이미지, 폰트, 아이콘 같은 정적 파일을 저장하는 폴더
+- components/ : 재사용 가능한 UI 컴포넌트
+- hooks/ : 커스텀 React 훅을 저장하는 폴더
+- layouts/ : 여러 페이지에서 공통으로 사용하는 레이아웃
+- pages/ : 앱의 각 페이지를 나타내는 상위 컴포넌트
+- store/ : 전역 상태 관련 설정 및 관리
+- typings/ : 사용자 정의 타입 및 인터페이스 파일
+- utils/ : 프로젝트 전반에서 사용할 수 있는 유틸리티 함수
+
+<br>
+
 ## 프로젝트 실행
 
 ### Node Version
@@ -117,6 +130,11 @@ $ cd NFE1_2_Uh_Ban_Team
 ### Package Installation
 ```
 npm install
+```
+
+### Run
+```
+npm run dev
 ```
 
 <br>
