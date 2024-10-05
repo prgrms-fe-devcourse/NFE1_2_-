@@ -10,19 +10,18 @@ interface FilterSectionProps {
   setIsCollectionActive: (active: boolean) => void
   setAuthorId: (id: string | null) => void
   setSelectedSort: (sort: 'popular' | 'latest') => void
+  selectedSort: 'popular' | 'latest'
 }
 
 const FilterSection = ({
   isCollectionActive,
+  selectedSort,
   setSelectedSort,
   setAllPosts,
   setIsCollectionActive,
 }: FilterSectionProps) => {
-  const [selectedSort, setSelectedSortState] = useState('latest')
-
   //인기순/최신순
   const handleSortClick = (sortType: 'popular' | 'latest') => {
-    setSelectedSortState(sortType) //선택된 정렬 옵션에 맞게 클래스를 추가할 수 있도록 함 (로컬 상태 관리용)
     setSelectedSort(sortType) //부모 컴포넌트 상태 변경
   }
 
