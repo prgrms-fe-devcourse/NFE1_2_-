@@ -76,7 +76,7 @@ const LoginPage: React.FC = () => {
     <DetailPageLayout>
       <div className="page-wrapper">
         <header>
-          <img src={Logo} className='logo' alt="Logo" />
+          <img src={Logo} className='logo-login' alt="Logo" />
         </header>
         <section className="form-section">
           <form className="form" onSubmit={handleSubmit}>

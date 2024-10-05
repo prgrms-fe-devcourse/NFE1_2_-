@@ -2,18 +2,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  height: 100vh;
+  height: calc(100vh - 60px);
+  padding: 0 20px 20px; 
 }
 
-.logo {
-  margin-top: 100px;
+
+.logo-login {
+  margin-top: 60px; 
   margin-bottom: 50px;
 }
 
 .form-section {
   width: 100%;
-  /* max-width: 300px; */
+
   padding-inline: 3.5rem 3.5rem;
   flex-grow: 1;
 }
@@ -27,7 +28,6 @@
 
 .input-wrapper {
   margin-bottom: 20px;
-  /* 입력 필드와 에러 메시지를 포함하는 컨테이너의 높이를 고정 */
   height: 70px;
 }
 
@@ -82,7 +82,7 @@
   border-radius: 50px;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 20px;
+  margin-bottom: 30px; /* 하단 여백 줄임 */
   margin-bottom: 50px;
   text-align: center;
 }

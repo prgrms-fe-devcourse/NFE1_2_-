@@ -23,7 +23,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinished }) => {
   return (
     <Container>
       <section className="splash-container">
-        <img src={Logo} alt="Vote Solve Logo" className="logo" />
+        <img src={Logo} alt="Vote Solve Logo" className="logo-splash" />
         <p className="subtitle">연예 고민, 함께 결정하고 해결하는 공간</p>
         <footer className="footer">Uh? Ban Team</footer>
       </section>
