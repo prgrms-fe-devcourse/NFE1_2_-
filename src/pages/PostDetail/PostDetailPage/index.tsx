@@ -5,7 +5,6 @@ import PostSection from '../PostSection'
 import './index.css'
 import { useQuery } from '@tanstack/react-query'
 import formatPostData from '@/utils/formatPostData'
-import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { getPostData } from '@/utils/api'
 import { useState } from 'react'
@@ -39,12 +38,6 @@ const PostDetailPage = () => {
 
     return (
       <>
-        {/* 토스티파이 사용을 위한 영역 지정 */}
-        <ToastContainer
-          position='top-right'
-          autoClose={3000}
-          limit={1}
-        />
         <DetailPageLayout
           pageName='post-detail'
           newPath={isFromNotification}
