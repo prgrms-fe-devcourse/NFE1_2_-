@@ -49,7 +49,7 @@ const PostCreateButton = (props: PostCreateProps) => {
       if (postImage) {
         newFormData.append('image', postImage)
       }
-      newFormData.append('channelId', '66f6b3b7e5593e2a995daf1f')
+      newFormData.append('channelId', '66f4aafbcdb3ce68a6a139c3')
       const newPost = await createPost(newFormData)
 
       const newPostId = newPost._id
@@ -83,7 +83,7 @@ const PostCreateButton = (props: PostCreateProps) => {
       if (isEdit && isImgDelete) {
         newFormData.append('imageToDeletePublicId', imagePublicId)
       }
-      newFormData.append('channelId', '66f6b3b7e5593e2a995daf1f')
+      newFormData.append('channelId', '66f4aafbcdb3ce68a6a139c3')
       const newPost = await editPost(newFormData)
       const newPostId = newPost._id
       navigate(`/post/${newPostId}`)

@@ -21,7 +21,6 @@ const FilterSection = ({
   setAllPosts,
   setIsCollectionActive,
 }: FilterSectionProps) => {
-  
   const { isLoggedIn } = useAuthStore()
   const navigate = useNavigate()
 
@@ -50,7 +49,7 @@ const FilterSection = ({
       if (isLoggedIn) {
         try {
           const response = await axios.get(
-            `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
+            `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f4aafbcdb3ce68a6a139c3`,
           )
           const formattedPostList: FormattedPost[] = response.data.map(
             (post: Post) => formatPostData(post),

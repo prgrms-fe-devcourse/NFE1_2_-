@@ -12,7 +12,9 @@ import { useEffect, useState } from 'react'
 import { parseIfString } from '@/utils/formatPostData'
 
 const NotificationPage = () => {
-  const [currentData, setCurrentData] = useState<FormatNotification[] | null>(null)
+  const [currentData, setCurrentData] = useState<FormatNotification[] | null>(
+    null,
+  )
   const [loading, setLoading] = useState<boolean>(false)
   const { data, isError, isLoading } = useQuery({
     queryKey: ['notifications'],
@@ -43,7 +45,7 @@ const NotificationPage = () => {
       const formatPromise = promise.map(
         (data) => parseIfString(data.title).title,
       )
-      const formatNotiData : FormatNotification[] = data.map((data, index) => ({
+      const formatNotiData: FormatNotification[] = data.map((data, index) => ({
         ...data,
         postTitle: formatPromise[index],
       }))
@@ -83,54 +85,56 @@ const NotificationPage = () => {
   })
 
   return (
-    <div>
-    {loading ? <Loading /> : 
-    <DetailPageLayout
-      pageName='notification'
-      pageText='알림'
-    >
-      <div className='read-button-container'>
-        <button
-          className='read-button'
-          onClick={() => mutate()}
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <DetailPageLayout
+          pageName='notification'
+          pageText='알림'
         >
-          읽음 처리
-        </button>
-      </div>
-      {unreadNotifications && unreadNotifications.length > 0 && (
-        <NotificationContainer
-          period='읽지 않음'
-          notifications={unreadNotifications}
-        />
+          <div className='read-button-container'>
+            <button
+              className='read-button'
+              onClick={() => mutate()}
+            >
+              읽음 처리
+            </button>
+          </div>
+          {unreadNotifications && unreadNotifications.length > 0 && (
+            <NotificationContainer
+              period='읽지 않음'
+              notifications={unreadNotifications}
+            />
+          )}
+          {todayNotifications.length > 0 && (
+            <NotificationContainer
+              period='오늘'
+              notifications={todayNotifications}
+            />
+          )}
+          {yesterdayNotifications.length > 0 && (
+            <NotificationContainer
+              period='어제'
+              notifications={yesterdayNotifications}
+            />
+          )}
+          {weekNotifications.length > 0 && (
+            <NotificationContainer
+              period='최근 7일'
+              notifications={weekNotifications}
+            />
+          )}
+          {pastNotifications.length > 0 && (
+            <NotificationContainer
+              period='이전 활동'
+              notifications={pastNotifications}
+            />
+          )}
+          <Navigator />
+        </DetailPageLayout>
       )}
-      {todayNotifications.length > 0 && (
-        <NotificationContainer
-          period='오늘'
-          notifications={todayNotifications}
-        />
-      )}
-      {yesterdayNotifications.length > 0 && (
-        <NotificationContainer
-          period='어제'
-          notifications={yesterdayNotifications}
-        />
-      )}
-      {weekNotifications.length > 0 && (
-        <NotificationContainer
-          period='최근 7일'
-          notifications={weekNotifications}
-        />
-      )}
-      {pastNotifications.length > 0 && (
-        <NotificationContainer
-          period='이전 활동'
-          notifications={pastNotifications}
-        />
-      )}
-      <Navigator />
-    </DetailPageLayout>
-    }
-    </div>
+    </>
   )
 }
 

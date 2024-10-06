@@ -30,7 +30,7 @@ const PostList = () => {
     setIsLoading(true) // 데이터 로딩 시작
     try {
       const response = await axios.get(
-        `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
+        `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f4aafbcdb3ce68a6a139c3`,
       )
       setAllPosts(response.data) // 전체 포스트 저장
     } catch (error) {
@@ -90,7 +90,7 @@ const PostList = () => {
       )
       const data = response.data
       const filteredData = data.filter(
-        (post: any) => post.channel === '66f6b3b7e5593e2a995daf1f',
+        (post: any) => post.channel === '66f4aafbcdb3ce68a6a139c3',
       )
       const formattedData = await Promise.all(
         filteredData.map(async (post: any) => await formatPostDataSearch(post)),
@@ -162,7 +162,7 @@ const PostList = () => {
           </div>
         ) : (
           <PreviewPostList
-            channelId='66f6b3b7e5593e2a995daf1f'
+            channelId='66f4aafbcdb3ce68a6a139c3'
             selectedCategory={selectedCategory}
             isCollectionActive={isCollectionActive}
             authorId={authorId}
