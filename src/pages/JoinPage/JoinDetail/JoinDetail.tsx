@@ -9,14 +9,12 @@ import './JoinDetail.css'
 // 컴포넌트 props 타입 정의
 interface JoinDetailProps {
   initialData?: { gender: '남' | '여'; birthDate?: string; mbti: string }
-  isEdit?: boolean
   onSubmit: (gender: '남' | '여', birthDate: string, mbti: string) => void
   onClose: () => void
 }
 
 const JoinDetail: React.FC<JoinDetailProps> = ({
   initialData,
-  isEdit,
   onSubmit,
   onClose,
 }) => {
@@ -130,22 +128,21 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
             </div>
           </div>
         </div>
+
         {/* 생년월일 입력 섹션 */}
-        {!isEdit && (
-          <div className='birth-date-selector'>
-            <h3>생년월일</h3>
-            <input
-              type='text'
-              className='birth-date-input'
-              value={birthDate}
-              onChange={handleAgeChange}
-              placeholder='YYYY-MM-DD'
-            />
-            {!isBirthDate && (
-              <p className='select-error-text'>생년월일을 입력하세요.</p>
-            )}
-          </div>
-        )}
+        <div className='birth-date-selector'>
+          <h3>생년월일</h3>
+          <input
+            type='text'
+            className='birth-date-input'
+            value={birthDate}
+            onChange={handleAgeChange}
+            placeholder='YYYY-MM-DD'
+          />
+          {!isBirthDate && (
+            <p className='select-error-text'>생년월일을 입력하세요.</p>
+          )}
+        </div>
 
         {/* MBTI 선택 섹션 */}
         <div className='mbti-selector'>

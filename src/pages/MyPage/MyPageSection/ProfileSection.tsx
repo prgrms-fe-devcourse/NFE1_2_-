@@ -67,7 +67,6 @@ const ProfileSection = (props: SectionProps) => {
       {isModalOpen && (
         <JoinDetail
           initialData={fullName}
-          isEdit={true}
           onSubmit={handleEditProfile}
           onClose={onChangeCloseModal}
         />
