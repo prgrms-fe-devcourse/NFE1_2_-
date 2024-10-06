@@ -1,9 +1,19 @@
-import ModalComponent from '@/pages/MyPage/Component/ModalComponent/ModalComponent'
-import './Search.css'
 import { useState } from 'react'
+import ModalComponent from '@/pages/MyPage/Component/ModalComponent/ModalComponent'
 import SearchButton from '@assets/icons/list_search.svg?react'
 import MbtiToggle from '@/pages/PostList/MbtiToggle/MbtiToggle'
-const Search = ({
+import './Search.css'
+
+interface SearchProps {
+  isSearchModalOpen: boolean
+  onClose: () => void
+  onSearch: (searchTerm: string, mbti: string | null) => void
+  onReset: () => void
+  searchTerm: string
+  setSearchTerm: (term: string) => void
+}
+
+const Search: React.FC<SearchProps> = ({
   isSearchModalOpen,
   onClose,
   onSearch,
@@ -14,14 +24,13 @@ const Search = ({
   onClose: () => void
   onSearch: (searchTerm: string, mbti: string | null) => void
 }) => {
-  const [search, setSearch] = useState('')
   const [isMbtiFilterVisible, setIsMbtiFilterVisible] = useState(false)
   const [selectedMbti, setSelectedMbti] = useState<string | null>(null)
   const [errorMessage, setErrorMessage] = useState('')
 
   const handleAdditionalReset = () => {
     onReset()
-    setSearch('')
+    setSearchTerm('')
     setIsMbtiFilterVisible(false)
     setErrorMessage('')
   }
@@ -34,14 +43,14 @@ const Search = ({
     if (searchTerm === '') {
       setErrorMessage('검색어를 입력해주세요')
     } else {
-      setErrorMessage('') // 에러 메시지 초기화
-      onSearch(searchTerm, selectedMbti) // 검색어와 선택된 MBTI 전달
+      setErrorMessage('')
+      onSearch(searchTerm, selectedMbti)
       handleCloseModal()
     }
   }
 
   const handleMbtiToggle = () => {
-    setIsMbtiFilterVisible(!isMbtiFilterVisible) // MBTI 토글 상태만 제어
+    setIsMbtiFilterVisible(!isMbtiFilterVisible)
     setSelectedMbti(null)
   }
 
@@ -52,7 +61,7 @@ const Search = ({
   return (
     <ModalComponent
       isOpen={isSearchModalOpen}
-      onClose={handleCloseModal} // 모달을 닫을 때만 onClose 호출
+      onClose={handleCloseModal}
       buttonText={'닫기'}
       instruction='검색'
       detail='검색할 포스트 제목을 입력하거나, MBTI 필터링 기능을 이용해보세요.'
@@ -61,9 +70,9 @@ const Search = ({
       <div className='mbti'>
         <MbtiToggle
           isMbtiFilterVisible={isMbtiFilterVisible}
-          onToggleFilter={handleMbtiToggle} // 토글 상태만 제어
-          onSelect={handleMbtiSelect} // 선택된 M BTI 상태 업데이트
-          onReset={handleAdditionalReset} // MbtiToggle에 초기화 함수 전달
+          onToggleFilter={handleMbtiToggle}
+          onSelect={handleMbtiSelect}
+          onReset={handleAdditionalReset}
         />
       </div>
       <div>
@@ -74,7 +83,7 @@ const Search = ({
           onChange={(e) => {
             setSearchTerm(e.target.value)
             if (errorMessage) {
-              setErrorMessage('') // 입력 시작 시 에러 메시지 초기화
+              setErrorMessage('')
             }
           }}
           onKeyDown={(e) => {

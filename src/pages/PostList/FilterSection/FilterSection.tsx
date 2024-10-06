@@ -1,33 +1,32 @@
-import './FilterSection.css'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { getMyPostList } from '@/utils/api'
 import formatPostData from '@/utils/formatPostData'
 import { FormattedPost, Post } from '@/typings/types'
-import axios from 'axios'
 import { useAuthStore } from '@/store/authStore'
-import { useNavigate } from 'react-router-dom'
+import './FilterSection.css'
 
 interface FilterSectionProps {
+  setAllPosts: React.Dispatch<React.SetStateAction<FormattedPost[]>>
   isCollectionActive: boolean
   setIsCollectionActive: (active: boolean) => void
-  setAuthorId: (id: string | null) => void
-  setSelectedSort: (sort: 'popular' | 'latest') => void
   selectedSort: 'popular' | 'latest'
+  setSelectedSort: (sort: 'popular' | 'latest') => void
 }
 
 const FilterSection = ({
+  setAllPosts,
   isCollectionActive,
+  setIsCollectionActive,
   selectedSort,
   setSelectedSort,
-  setAllPosts,
-  setIsCollectionActive,
 }: FilterSectionProps) => {
-  
   const { isLoggedIn } = useAuthStore()
   const navigate = useNavigate()
 
   //인기순/최신순
   const handleSortClick = (sortType: 'popular' | 'latest') => {
-    setSelectedSort(sortType) //부모 컴포넌트 상태 변경
+    setSelectedSort(sortType)
   }
 
   //내 글 모아보기
@@ -58,7 +57,7 @@ const FilterSection = ({
           setAllPosts(formattedPostList)
           setIsCollectionActive(false)
         } catch (error) {
-          console.error('전체 포스트를 가져오는 데 실패했습니다:', error)
+          console.error('전체 포스트를 가져오는 데에 실패했습니다:', error)
         }
       }
     }
@@ -71,7 +70,6 @@ const FilterSection = ({
         onClick={handleCollectionClick}
       >
         <div className='collected-title'>
-          {' '}
           {isLoggedIn ? '내 글 모아보기' : '로그인'}
         </div>
       </button>

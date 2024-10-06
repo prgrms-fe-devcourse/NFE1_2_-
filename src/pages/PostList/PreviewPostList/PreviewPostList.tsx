@@ -1,46 +1,44 @@
 import { useEffect, useState } from 'react'
 import PreviewPost from '../PreviewPost/PreviewPost'
-import './PreviewPostList.css'
 import { USER_ID } from '@/utils/api'
+import './PreviewPostList.css'
+import { Post } from '@/typings/types'
 
 interface PreviewPostListProps {
   channelId: string
   selectedCategory: string | null
   isCollectionActive: boolean
-  authorId: string | null
   selectedSort: 'popular' | 'latest'
-  searchResults?: string[]
+  searchResults?: Post[]
   selectedMbti: string | null
+  hasSearched: boolean
 }
+
 const PreviewPostList = ({
   channelId,
   selectedCategory,
   isCollectionActive,
-  authorId,
   selectedSort,
-  searchResults, // 검색 결과 받기
-  selectedMbti, // 선택된 MBTI 추가
+  searchResults,
+  selectedMbti,
   hasSearched,
 }: PreviewPostListProps) => {
-  const [posts, setPosts] = useState<any[]>([])
+  const [posts, setPosts] = useState<Post[]>([])
 
-  //내 글 모아보기가 활성화되면 특정 글만, 활성화 안 되면 모든 글
   useEffect(() => {
-    // 검색 결과가 있으면 검색 결과를 설정
     if (searchResults && searchResults.length > 0) {
       setPosts(searchResults)
     } else if (!searchResults || searchResults.length === 0) {
-      // 검색 결과가 없을 때 전체 포스트 숨기기 처리
-      setPosts([]) // 검색 결과 없으면 포스트 목록 초기화
+      setPosts([])
     } else {
-      fetchPosts() // 검색 결과가 없으면 전체 포스트 가져옴
+      setPosts([])
     }
-  }, [channelId, isCollectionActive, authorId, searchResults])
+  }, [channelId, isCollectionActive, searchResults])
   if (posts.length === 0) {
     return <p className='no-posts'>검색 결과가 없습니다.</p>
   }
-  //필터링
 
+  //필터링
   const filteredCollection =
     hasSearched && isCollectionActive
       ? posts.filter((post) => {
@@ -55,21 +53,23 @@ const PreviewPostList = ({
         return titleObject.type === selectedCategory
       })
     : filteredCollection
+
   const mbtiFilteredPosts = selectedMbti
     ? filteredPosts.filter((post) => {
-        const postMbti = JSON.parse(post.author.fullName).mbti // MBTI 정보가 post.title에 있다고 가정
-        return postMbti === selectedMbti // 선택된 MBTI와 일치하는지 확인
+        const postMbti = JSON.parse(post.author.fullName).mbti
+        return postMbti === selectedMbti
       })
-    : filteredPosts // MBTI 필터링 적용
+    : filteredPosts
+
   const sortedPosts = mbtiFilteredPosts.sort((postA, postB) => {
     if (selectedSort === 'popular') {
       console.log(postA)
-      return postB.likes.length - postA.likes.length // 인기순으로 정렬
+      return postB.likes.length - postA.likes.length
     } else if (selectedSort === 'latest') {
       return (
         new Date(postB.createdAt).getTime() -
         new Date(postA.createdAt).getTime()
-      ) // 최신순으로 정렬
+      )
     }
     return 0
   })

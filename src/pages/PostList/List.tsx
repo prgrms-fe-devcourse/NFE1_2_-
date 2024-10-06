@@ -6,14 +6,15 @@ import PreviewPostList from './PreviewPostList/PreviewPostList'
 import FilterSection from './FilterSection/FilterSection'
 import Search from './Search/Search'
 import { useModalStore } from '@/store/ModalStore'
+import { getUserData } from '@/utils/api'
 import { Loader2 } from 'lucide-react'
+import { toast } from 'react-toastify'
 import './List.css'
 
 const PostList = () => {
   const { isSearchModalOpen, setIsSearchModalOpen } = useModalStore()
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [isCollectionActive, setIsCollectionActive] = useState(false)
-  const [authorId, setAuthorId] = useState<string | null>(null)
   const [selectedSort, setSelectedSort] = useState<'popular' | 'latest'>(
     'latest',
   )
@@ -22,7 +23,6 @@ const PostList = () => {
   const [allPosts, setAllPosts] = useState<any[]>([])
   const [hasSearched, setHasSearched] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-
   const [searchTerm, setSearchTerm] = useState<string>('')
 
   // 전체 포스트 로드 함수
@@ -32,32 +32,20 @@ const PostList = () => {
       const response = await axios.get(
         `https://kdt.frontend.5th.programmers.co.kr:5001/posts/channel/66f6b3b7e5593e2a995daf1f`,
       )
-      setAllPosts(response.data) // 전체 포스트 저장
+      setAllPosts(response.data)
     } catch (error) {
-      console.error('전체 포스트를 가져오는 데 실패했습니다:', error)
+      console.error('전체 포스트를 가져오는 데에 실패했습니다:', error)
+      toast.error('전체 포스트를 가져오는 데에 실패했습니다')
     } finally {
-      setIsLoading(false) // 데이터 로딩 완료
+      setIsLoading(false)
     }
   }
 
-  // 컴포넌트가 처음 로드될 때 전체 포스트 불러오기
   useEffect(() => {
     if (!hasSearched) {
-      fetchAllPosts() // 포스트 로드
+      fetchAllPosts()
     }
   }, [hasSearched])
-
-  const getUserData = async (userId: string) => {
-    try {
-      const response = await axios.get(
-        `https://kdt.frontend.5th.programmers.co.kr:5001/users/${userId}`,
-      )
-      return response.data || null
-    } catch (error) {
-      console.error('유저 데이터를 가져오는 데 실패했습니다:', error)
-      return null
-    }
-  }
 
   const formatPostDataSearch = async (post: any) => {
     const { author, ...restPost } = post
@@ -123,10 +111,6 @@ const PostList = () => {
     setSearchTerm('') // 검색어 상태 초기화
   }
 
-  const openSearchModal = () => {
-    setIsSearchModalOpen(true)
-  }
-
   const closeSearchModal = () => {
     setIsSearchModalOpen(false)
   }
@@ -140,7 +124,6 @@ const PostList = () => {
         />
         <FilterSection
           isCollectionActive={isCollectionActive}
-          setAuthorId={setAuthorId}
           setAllPosts={setAllPosts}
           setIsCollectionActive={setIsCollectionActive}
           setSelectedSort={setSelectedSort}
@@ -151,7 +134,7 @@ const PostList = () => {
             isSearchModalOpen={isSearchModalOpen}
             onClose={closeSearchModal}
             onSearch={handleSearch}
-            onReset={handleReset} // 초기화 함수 전달
+            onReset={handleReset}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
           />
@@ -165,7 +148,6 @@ const PostList = () => {
             channelId='66f6b3b7e5593e2a995daf1f'
             selectedCategory={selectedCategory}
             isCollectionActive={isCollectionActive}
-            authorId={authorId}
             selectedSort={selectedSort}
             searchResults={hasSearched ? searchResults : allPosts}
             selectedMbti={selectedMbti}
