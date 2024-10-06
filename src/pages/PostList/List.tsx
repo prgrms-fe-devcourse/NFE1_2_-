@@ -23,6 +23,8 @@ const PostList = () => {
   const [hasSearched, setHasSearched] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
+  const [searchTerm, setSearchTerm] = useState<string>('')
+
   // 전체 포스트 로드 함수
   const fetchAllPosts = async () => {
     setIsLoading(true) // 데이터 로딩 시작
@@ -118,6 +120,7 @@ const PostList = () => {
       setResetClickedImageIndex(false)
     }, 0)
     setSelectedSort('latest')
+    setSearchTerm('') // 검색어 상태 초기화
   }
 
   const openSearchModal = () => {
@@ -149,6 +152,8 @@ const PostList = () => {
             onClose={closeSearchModal}
             onSearch={handleSearch}
             onReset={handleReset} // 초기화 함수 전달
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
           />
         )}
         {isLoading ? (

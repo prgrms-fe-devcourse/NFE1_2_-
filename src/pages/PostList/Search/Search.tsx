@@ -8,6 +8,8 @@ const Search = ({
   onClose,
   onSearch,
   onReset,
+  searchTerm,
+  setSearchTerm,
 }: {
   onClose: () => void
   onSearch: (searchTerm: string, mbti: string | null) => void
@@ -26,17 +28,15 @@ const Search = ({
 
   const handleCloseModal = () => {
     onClose()
-    // setSearch('')
-    // setSelectedMbti(null) // 모달 닫을 때만 MBTI 초기화
   }
 
   const handleSearch = () => {
-    if (search === '') {
+    if (searchTerm === '') {
       setErrorMessage('검색어를 입력해주세요')
     } else {
       setErrorMessage('') // 에러 메시지 초기화
-      onSearch(search, selectedMbti) // 검색어와 선택된 MBTI 전달
-      // handleCloseModal(); // 검색 후 모달 닫기
+      onSearch(searchTerm, selectedMbti) // 검색어와 선택된 MBTI 전달
+      handleCloseModal()
     }
   }
 
@@ -70,9 +70,9 @@ const Search = ({
         <input
           type='text'
           className={`modal-input ${isMbtiFilterVisible ? 'active' : ''}`}
-          value={search}
+          value={searchTerm}
           onChange={(e) => {
-            setSearch(e.target.value)
+            setSearchTerm(e.target.value)
             if (errorMessage) {
               setErrorMessage('') // 입력 시작 시 에러 메시지 초기화
             }
