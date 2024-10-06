@@ -154,6 +154,10 @@ export interface Notification {
   updatedAt: string
 }
 
+export interface FormatNotification extends Notification {
+  postTitle: string
+}
+
 // Message 모델
 export interface Message {
   _id: string
