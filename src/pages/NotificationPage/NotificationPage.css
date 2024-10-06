@@ -9,6 +9,7 @@
     font-size: 0.9rem;
     background-color: #eeeeee;
     border-radius: 5px;
+    margin-right: 1rem;
 
     &:active {
       background-color: #7d7d7d;

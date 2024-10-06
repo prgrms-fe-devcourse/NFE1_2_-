@@ -2,19 +2,24 @@ import DetailPageLayout from '@/layouts/DetailPageLayout/DetailPageLayout'
 import './NotificationPage.css'
 import Navigator from '@/components/Navigatior/Navigator'
 import NotificationContainer from './NotificationContainer/NotificationContainer'
-import { Notification } from '@/typings/types'
+import { FormatNotification, Notification } from '@/typings/types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import timeSeparation from '@/utils/timeSeparation'
-import { getNotification, putNotification } from '@/utils/api'
+import { getNotification, getPostData, putNotification } from '@/utils/api'
 import Loading from '../Loading/Loading'
 import NotFound from '../NotFound/NotFound'
+import { useEffect, useState } from 'react'
+import { parseIfString } from '@/utils/formatPostData'
 
 const NotificationPage = () => {
+  const [currentData, setCurrentData] = useState<FormatNotification[] | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
   const { data, isError, isLoading } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => getNotification(),
     // refetchInterval : 1000 //새로고침
   })
+
   const mutationFn = () => putNotification()
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
@@ -23,6 +28,30 @@ const NotificationPage = () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] })
     },
   })
+
+  useEffect(() => {
+    const fetchNotiData = async () => {
+      if (!data) {
+        return
+      }
+      setLoading(true)
+      const postData = data.map(({ post }) => post)
+      const promisePostData = postData.map(
+        async (postId) => await getPostData(postId as string),
+      )
+      const promise = await Promise.all(promisePostData)
+      const formatPromise = promise.map(
+        (data) => parseIfString(data.title).title,
+      )
+      const formatNotiData : FormatNotification[] = data.map((data, index) => ({
+        ...data,
+        postTitle: formatPromise[index],
+      }))
+      setCurrentData(formatNotiData)
+      setLoading(false)
+    }
+    fetchNotiData()
+  }, [data])
 
   if (isLoading) {
     return <Loading />
@@ -38,7 +67,7 @@ const NotificationPage = () => {
   const weekNotifications: Notification[] = []
   const pastNotifications: Notification[] = []
 
-  data?.forEach((notification) => {
+  currentData?.forEach((notification) => {
     const timeNotification = timeSeparation(notification.createdAt)
     if (!notification.seen) {
       unreadNotifications?.push(notification)
@@ -54,6 +83,8 @@ const NotificationPage = () => {
   })
 
   return (
+    <div>
+    {loading ? <Loading /> : 
     <DetailPageLayout
       pageName='notification'
       pageText='알림'
@@ -98,6 +129,8 @@ const NotificationPage = () => {
       )}
       <Navigator />
     </DetailPageLayout>
+    }
+    </div>
   )
 }
 
