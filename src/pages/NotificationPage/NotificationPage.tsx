@@ -48,7 +48,6 @@ const NotificationPage = () => {
         postTitle: formatPromise[index],
       }))
       setCurrentData(formatNotiData)
-      console.log(formatNotiData)
       setLoading(false)
     }
     fetchNotiData()
