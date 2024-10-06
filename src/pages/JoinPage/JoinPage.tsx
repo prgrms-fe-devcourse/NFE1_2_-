@@ -8,7 +8,7 @@ import Container from '@components/Conatiner/Container'
 import { useAuthStore } from '@store/authStore'
 
 interface User {
-  email: string;
+  email: string
 }
 
 const JoinPage: React.FC = () => {
@@ -42,7 +42,9 @@ const JoinPage: React.FC = () => {
 
   const fetchAllUsers = async (): Promise<User[]> => {
     try {
-      const response = await axios.get('https://kdt.frontend.5th.programmers.co.kr:5001/users/get-users')
+      const response = await axios.get(
+        'https://kdt.frontend.5th.programmers.co.kr:5001/users/get-users',
+      )
       return response.data
     } catch (error) {
       console.error('Error fetching users:', error)
@@ -50,7 +52,9 @@ const JoinPage: React.FC = () => {
     }
   }
 
-  const checkUsernameAvailability = async (username: string): Promise<boolean> => {
+  const checkUsernameAvailability = async (
+    username: string,
+  ): Promise<boolean> => {
     const allUsers = await fetchAllUsers()
     return !allUsers.some((user) => user.email === username)
   }
@@ -134,7 +138,7 @@ const JoinPage: React.FC = () => {
           email: username,
           fullName: JSON.stringify(fullNameObject),
           password,
-        }
+        },
       )
 
       if (response.status === 200) {
@@ -144,7 +148,7 @@ const JoinPage: React.FC = () => {
         navigate('/joincomplete', { state: { username } })
       } else {
         alert(
-          `회원가입 실패: ${response.data.message || '알 수 없는 오류가 발생했습니다.'}`
+          `회원가입 실패: ${response.data.message || '알 수 없는 오류가 발생했습니다.'}`,
         )
       }
     } catch (error) {
@@ -243,9 +247,15 @@ const JoinPage: React.FC = () => {
             <div className='input-wrapper'>
               {detailInfo && (
                 <div className='detail-info-display'>
-                  <p><span>MBTI</span> <span>{detailInfo.mbti}</span></p>
-                  <p><span>성별</span> <span>{detailInfo.gender}</span></p>
-                  <p><span>나이</span> <span>{detailInfo.birthDate}</span></p>                  
+                  <p>
+                    <span>성별</span> <span>{detailInfo.gender}</span>
+                  </p>
+                  <p>
+                    <span>나이</span> <span>{detailInfo.birthDate}</span>
+                  </p>
+                  <p>
+                    <span>MBTI</span> <span>{detailInfo.mbti}</span>
+                  </p>
                 </div>
               )}
               <button
@@ -277,7 +287,7 @@ const JoinPage: React.FC = () => {
 
         {showDetailModal && (
           <JoinDetail
-          initialData={detailInfo? detailInfo : undefined}
+            initialData={detailInfo ? detailInfo : undefined}
             onSubmit={handleDetailSubmit}
             onClose={() => setShowDetailModal(false)}
           />

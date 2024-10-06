@@ -3,7 +3,6 @@ import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
 import { parseIfString } from '@/utils/formatPostData'
 import JoinDetail from '@/pages/JoinPage/JoinDetail/JoinDetail'
-import { useState } from 'react'
 
 interface SectionProps {
   mutate: (fullname: string) => void
@@ -50,13 +49,13 @@ const ProfileSection = (props: SectionProps) => {
     <>
       <InfoSection title='프로필'>
         <p className='info-item'>
-          MBTI<span className='value'>{mbti}</span>
-        </p>
-        <p className='info-item'>
           성별<span className='value'>{gender}</span>
         </p>
         <p className='info-item'>
           나이<span className='value'>{ageGroup}대</span>
+        </p>
+        <p className='info-item'>
+          MBTI<span className='value'>{mbti}</span>
         </p>
         <button
           className='info-edit'
@@ -68,7 +67,7 @@ const ProfileSection = (props: SectionProps) => {
       {isModalOpen && (
         <JoinDetail
           initialData={fullName}
-          isEdit = {true}
+          isEdit={true}
           onSubmit={handleEditProfile}
           onClose={onChangeCloseModal}
         />
