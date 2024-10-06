@@ -42,3 +42,7 @@
     background: #282828;
   }
 }
+
+.disabled {
+  cursor: not-allowed;
+}

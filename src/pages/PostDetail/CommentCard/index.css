@@ -22,6 +22,7 @@
   font-size: 1rem;
   font-weight: medium;
   word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .comment-detail-container {
