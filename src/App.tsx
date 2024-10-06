@@ -70,7 +70,17 @@ const App = () => {
             element={<Navigate to='/' replace />} />
         </Routes>
       </Suspense>
-      <ToastContainer />
+      <ToastContainer
+        position='top-center'
+        autoClose={3000} 
+        hideProgressBar={false} 
+        closeOnClick 
+        rtl={false} 
+        pauseOnFocusLoss
+        draggable
+        theme='colored'
+        limit={1}
+      />
     </>
   )
 }
