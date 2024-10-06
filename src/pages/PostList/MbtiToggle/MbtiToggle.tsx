@@ -4,8 +4,8 @@ import './MbtiTogle.css'
 interface MbtiToggleProps {
   isMbtiFilterVisible: boolean
   onToggleFilter: () => void
-  onSelect: (result: string) => void
-  onReset: () => void // 초기화 함수 prop 추가
+  onSelect: (result: string | null) => void
+  onReset: () => void
 }
 
 const MbtiToggle: React.FC<MbtiToggleProps> = ({

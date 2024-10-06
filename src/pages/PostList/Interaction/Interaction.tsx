@@ -1,8 +1,8 @@
 import ListComment from '@assets/icons/list_comment.svg?react'
 import ListVote from '@assets/icons/list_vote.svg?react'
 import HeartBefore from '@assets/icons/heart_before_select.svg?react'
-import './Interaction.css'
 import { FormattedPost } from '@/typings/types'
+import './Interaction.css'
 
 const Interaction = ({ post }: { post: FormattedPost }) => {
   const {
