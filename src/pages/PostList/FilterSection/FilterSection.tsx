@@ -38,9 +38,9 @@ const FilterSection = ({
     if (!isCollectionActive) {
       const myPostList = await getMyPostList()
       if (myPostList) {
-        const formattedMyPostList: FormattedPost[] = myPostList.map(
-          (mypost: Post) => formatPostData(mypost),
-        )
+        const formattedMyPostList: FormattedPost[] = myPostList
+          .map((mypost: Post) => formatPostData(mypost))
+          .filter(({ channel }) => channel._id === '66f4aafbcdb3ce68a6a139c3')
 
         setAllPosts(formattedMyPostList)
         setIsCollectionActive(true)

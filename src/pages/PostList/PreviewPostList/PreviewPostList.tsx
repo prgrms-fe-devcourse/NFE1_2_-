@@ -63,7 +63,6 @@ const PreviewPostList = ({
 
   const sortedPosts = mbtiFilteredPosts.sort((postA, postB) => {
     if (selectedSort === 'popular') {
-      console.log(postA)
       return postB.likes.length - postA.likes.length
     } else if (selectedSort === 'latest') {
       return (
@@ -73,7 +72,6 @@ const PreviewPostList = ({
     }
     return 0
   })
-  console.log(sortedPosts)
 
   return (
     <section>
