@@ -3,6 +3,7 @@ import InfoSection from '../Component/InfoSection/InfoSection'
 import '../MyPage.css'
 import { parseIfString } from '@/utils/formatPostData'
 import JoinDetail from '@/pages/JoinPage/JoinDetail/JoinDetail'
+import { useState } from 'react'
 
 interface SectionProps {
   mutate: (fullname: string) => void
@@ -67,6 +68,7 @@ const ProfileSection = (props: SectionProps) => {
       {isModalOpen && (
         <JoinDetail
           initialData={fullName}
+          isEdit = {true}
           onSubmit={handleEditProfile}
           onClose={onChangeCloseModal}
         />
