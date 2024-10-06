@@ -8,15 +8,13 @@ import './JoinDetail.css'
 
 // 컴포넌트 props 타입 정의
 interface JoinDetailProps {
-  initialData?: { gender: '남' | '여'; birthDate?: string; mbti: string }
-  isEdit?: boolean
+  initialData?: { gender: '남' | '여'; birthDate? : string; mbti: string }
   onSubmit: (gender: '남' | '여', birthDate: string, mbti: string) => void
   onClose: () => void
 }
 
 const JoinDetail: React.FC<JoinDetailProps> = ({
   initialData,
-  isEdit,
   onSubmit,
   onClose,
 }) => {
@@ -29,7 +27,7 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
     if (initialData) {
       setGender(initialData.gender)
       setMbti(initialData.mbti)
-      if (initialData.birthDate) {
+      if(initialData.birthDate) {
         setBirthDate(initialData.birthDate)
         setIsBirthDate(true)
       }
@@ -55,18 +53,12 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
 
       setBirthDate(formattedValue)
 
-      if (formattedValue.length === 10 && validateDate(formattedValue)) {
+      if (formattedValue.length === 10) {
         setIsBirthDate(true)
       } else {
         setIsBirthDate(false)
       }
     }
-  }
-
-  //날짜 겅규식 검토
-  const validateDate = (date: string) => {
-    const dateRegex = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/
-    return dateRegex.test(date)
   }
 
   //날짜 선택 핸들러
@@ -130,22 +122,22 @@ const JoinDetail: React.FC<JoinDetailProps> = ({
             </div>
           </div>
         </div>
+
         {/* 생년월일 입력 섹션 */}
-        {!isEdit && (
-          <div className='birth-date-selector'>
-            <h3>생년월일</h3>
-            <input
-              type='text'
-              className='birth-date-input'
-              value={birthDate}
-              onChange={handleAgeChange}
-              placeholder='YYYY-MM-DD'
-            />
-            {!isBirthDate && (
-              <p className='select-error-text'>생년월일을 입력하세요.</p>
-            )}
-          </div>
-        )}
+        <div className='birth-date-selector'>
+          <h3>생년월일</h3>
+          <input
+            type='text'
+            className='birth-date-input'
+            value={birthDate}
+            onChange={handleAgeChange}
+            placeholder='YYYY-MM-DD'
+            maxLength={10}
+          />
+          {!isBirthDate && (
+            <p className='select-error-text'>생년월일을 입력하세요.</p>
+          )}
+        </div>
 
         {/* MBTI 선택 섹션 */}
         <div className='mbti-selector'>
