@@ -119,7 +119,7 @@
 ## 프로젝트 실행
 
 ### Node Version
-> v16.15.0
+> v20.17.0
 
 ### Repository Clone
 ```
